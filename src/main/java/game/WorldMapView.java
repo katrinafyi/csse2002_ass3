@@ -1,5 +1,6 @@
 package game;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -12,13 +13,16 @@ public class WorldMapView extends GridPane {
 
     public WorldMapView() {
         super();
-        this.setMinHeight(Double.MAX_VALUE);
+        this.setMaxWidth(Double.MAX_VALUE);
         this.setMaxHeight(Double.MAX_VALUE);
 
         this.minHeightProperty().bind(this.widthProperty());
 
+        this.setVgap(5);
+        this.setHgap(5);
+
         generateGrid();
-    }
+        }
 
     private void generateGrid() {
         for (int i = 0; i < COLUMNS; i++) {
