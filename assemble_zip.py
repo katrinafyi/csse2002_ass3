@@ -6,6 +6,7 @@ import zipfile
 import shutil
 import subprocess
 import json
+import glob
 
 
 
@@ -47,8 +48,17 @@ def do_zip_assemble(config):
 
     for file_structure in (src_files, test_files):
         for f in file_structure['include']:
-            print('    Adding', file_structure['src_path']+f)
-            zf.write(file_structure['src_path']+f, file_structure['dest_path']+f)
+            if not file_structure.get('glob', False):
+                print('    Adding', file_structure['src_path']+f)
+                zf.write(file_structure['src_path']+f, file_structure['dest_path']+f)
+            else:
+                print('    Adding files matching', file_structure['src_path']+f)
+                for f2 in glob.glob(os.path.join(file_structure['src_path'], f)):
+                    print('     Adding', f2)
+                    zf.write(
+                        f2,
+                        os.path.join(file_structure['dest_path'], f2)
+                    )
     print('Removing temp directory...')
     os.chdir('..')
     shutil.rmtree('__temp')

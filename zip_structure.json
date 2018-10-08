@@ -1,25 +1,17 @@
 {
     "src": {
-        "src_path": "src/main/java/csse2002/block/world/",
-        "dest_path": "src/csse2002/block/world/",
+        "src_path": "src/main/java/game/",
+        "dest_path": "src/game/",
         "include": [
-            "Action.java",
-            "ActionFormatException.java",
-            "Main.java",
-            "Position.java",
-            "SparseTileArray.java",
-            "WorldMap.java",
-            "WorldMapFormatException.java",
-            "WorldMapInconsistentException.java"
+            "*.java"
         ],
+        "glob": true,
         "clean": false
     },
     "test": {
         "src_path": "src/test/java/csse2002/block/world/",
         "dest_path": "test/csse2002/block/world/",
         "include": [
-            "ActionTest.java",
-            "SparseTileArrayTest.java"
         ]
     }
 }
