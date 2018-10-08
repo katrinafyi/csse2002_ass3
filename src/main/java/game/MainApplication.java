@@ -2,8 +2,10 @@ package game;
 
 import javafx.application.Application;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -17,11 +19,7 @@ public class MainApplication extends Application {
         primaryStage.setTitle("Window title");
         GridPane grid = new GridPane();
 
-        Button worldMap = new Button("World Map");
-        worldMap.setMaxWidth(Double.MAX_VALUE);
-        worldMap.setMaxHeight(Double.MAX_VALUE);
-        worldMap.minHeightProperty().bind(worldMap.widthProperty());
-
+        GridPane worldMap = new WorldMapView();
 
         Button b = new Button("DIG");
 
