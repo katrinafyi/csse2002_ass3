@@ -1,8 +1,6 @@
 package game;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,8 +9,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
-
-import java.awt.*;
 
 
 public class MainApplication extends Application {
@@ -51,6 +47,7 @@ public class MainApplication extends Application {
         Scene scene = new Scene(grid);
         primaryStage.setScene(scene);
         primaryStage.setMinWidth(500);
+        primaryStage.setMinHeight(300);
         primaryStage.show();
     }
 }
