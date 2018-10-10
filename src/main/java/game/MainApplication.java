@@ -2,10 +2,8 @@ package game;
 
 import javafx.application.Application;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -19,7 +17,7 @@ public class MainApplication extends Application {
         primaryStage.setTitle("Window title");
         GridPane grid = new GridPane();
 
-        GridPane worldMap = new WorldMapView();
+        GridPane worldMap = new WorldMapGrid();
 
         Button b = new Button("DIG");
 

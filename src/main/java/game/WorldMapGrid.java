@@ -1,17 +1,17 @@
 package game;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
-public class WorldMapView extends GridPane {
+public class WorldMapGrid extends GridPane {
 
     private static final int COLUMNS = 4;
     private static final int ROWS = 8;
 
-    public WorldMapView() {
+    public WorldMapGrid()
+    {
         super();
         this.setMaxWidth(Double.MAX_VALUE);
         this.setMaxHeight(Double.MAX_VALUE);
@@ -22,7 +22,7 @@ public class WorldMapView extends GridPane {
         this.setHgap(5);
 
         generateGrid();
-        }
+    }
 
     private void generateGrid() {
         for (int i = 0; i < COLUMNS; i++) {
