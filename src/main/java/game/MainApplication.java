@@ -28,10 +28,6 @@ public class MainApplication extends Application {
         GridPane worldMap = new WorldMapGridPane();
 
 
-
-
-
-
         rootGrid.add(worldMap, 0, 0);
         GridPane.setValignment(worldMap, VPos.TOP);
 
@@ -50,7 +46,7 @@ public class MainApplication extends Application {
 
         rootGrid.getColumnConstraints().addAll(col0, col1, col2);
         RowConstraints row0 = new RowConstraints();
-        row0.minHeightProperty().bind(worldMap.widthProperty());
+        row0.setPercentHeight(100);
         rootGrid.getRowConstraints().add(row0);
 
         Scene scene = new Scene(rootGrid);
