@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -40,8 +41,9 @@ public class WorldMap3DGroup extends Group {
         box.setTranslateY(0);
         box.setTranslateX(0);
         box.setTranslateZ(0);
-        box.setMaterial(new PhongMaterial(color));
-        box.setDrawMode(DrawMode.LINE);
+        PhongMaterial phong = new PhongMaterial();
+        phong.setDiffuseMap(new Image("file:src/main/resources/acacia_door_bottom.png"));
+        box.setMaterial(phong);
         return box;
     }
 

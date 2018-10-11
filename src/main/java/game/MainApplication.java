@@ -104,8 +104,8 @@ public class MainApplication extends Application {
         Button debug = new Button("(Debug)");
         debug.setOnAction((e) -> {
             System.out.println(worldMap);
-            System.out.println(""+worldMap.getWidth() + "x"+worldMap.getHeight());
             System.out.println(""+primaryStage.getWidth() + "x"+primaryStage.getHeight());
+            System.out.println(""+worldMap.getWidth() + "x"+worldMap.getHeight());
         });
 
         Button b2 = new Button("(Size to scene)");
