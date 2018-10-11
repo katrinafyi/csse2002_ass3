@@ -2,7 +2,6 @@ package game;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import csse2002.block.world.Position;
 
 public class WorldMapGridPane extends UniformGridPane {
     public WorldMapGridPane() {
