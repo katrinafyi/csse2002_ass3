@@ -14,9 +14,8 @@ public class DPadGrid extends UniformGridPane {
             return null;
         }
         Button b = new Button("<--");
-        b.setMaxWidth(Double.MAX_VALUE);
-        b.setMaxHeight(Double.MAX_VALUE);
-        b.setPrefHeight(b.getWidth());
+        Utilities.setMaxWidthHeight(b);
+        b.prefHeightProperty().bind(b.widthProperty());
         return b;
     }
 }

@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 public class WorldMapGridPane extends UniformGridPane {
     public WorldMapGridPane() {
         super(9, 9);
+        this.setPrefWidth(500);
     }
 
     protected Node generateCell(int col, int row) {

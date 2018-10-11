@@ -2,6 +2,7 @@ package game;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -17,7 +18,10 @@ public abstract class UniformGridPane extends GridPane {
         ROWS = rows;
         Utilities.setMaxWidthHeight(this);
 
-        this.maxHeightProperty().bind(this.widthProperty());
+        this.prefHeightProperty().bind(this.widthProperty());
+        this.setMaxHeight(Control.USE_PREF_SIZE);
+        this.setMinHeight(Control.USE_PREF_SIZE);
+
 
         this.setVgap(5);
         this.setHgap(5);
