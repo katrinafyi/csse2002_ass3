@@ -17,7 +17,6 @@ public abstract class UniformGridPane extends GridPane {
         ROWS = rows;
         Utilities.setMaxWidthHeight(this);
 
-        this.minHeightProperty().bind(this.widthProperty());
         this.maxHeightProperty().bind(this.widthProperty());
 
         this.setVgap(5);

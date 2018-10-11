@@ -18,6 +18,9 @@ import javafx.stage.Stage;
 
 
 public class MainApplication extends Application {
+
+    private GridPane worldMap;
+
     public void start(Stage primaryStage) throws Exception {
 
         primaryStage.setTitle("Window title");
@@ -25,7 +28,7 @@ public class MainApplication extends Application {
         rootGrid.setPadding(new Insets(10));
         rootGrid.setHgap(10);
 
-        GridPane worldMap = new WorldMapGridPane();
+        worldMap = new WorldMapGridPane();
 
 
         rootGrid.add(worldMap, 0, 0);
@@ -41,27 +44,35 @@ public class MainApplication extends Application {
         col0.setHgrow(Priority.ALWAYS);
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPrefWidth(150);
+        col1.setMinWidth(150);
         ColumnConstraints col2 = new ColumnConstraints();
         col2.setPrefWidth(150);
 
         rootGrid.getColumnConstraints().addAll(col0, col1, col2);
         RowConstraints row0 = new RowConstraints();
         row0.setPercentHeight(100);
+        row0.setVgrow(Priority.ALWAYS);
         rootGrid.getRowConstraints().add(row0);
 
         Scene scene = new Scene(rootGrid);
         primaryStage.setScene(scene);
         primaryStage.setMinWidth(500);
-        primaryStage.minHeightProperty().bind(worldMap.minHeightProperty().add(20));
+        primaryStage.minHeightProperty().bind(worldMap.widthProperty().add(20));
         primaryStage.show();
     }
 
     private Region constructCentrePane() {
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.TOP_CENTER);
+        vbox.setSpacing(10);
         DPadGrid grid = new DPadGrid();
-        vbox.getChildren().addAll(grid, new Button("DIG"));
-        vbox.setMargin(grid, new Insets(0, 0, 10, 0));
+
+        Button debug = new Button("(Debug)");
+        debug.setOnAction((e) -> {
+            System.out.println(worldMap);
+        });
+
+        vbox.getChildren().addAll(grid, new Button("DIG"), debug);
         return vbox;
     }
 }

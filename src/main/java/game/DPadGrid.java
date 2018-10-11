@@ -10,9 +10,13 @@ public class DPadGrid extends UniformGridPane {
     }
 
     protected Node generateCell(int col, int row) {
+        if (Math.abs(col-1) == Math.abs(row-1)) {
+            return null;
+        }
         Button b = new Button("<--");
         b.setMaxWidth(Double.MAX_VALUE);
         b.setMaxHeight(Double.MAX_VALUE);
+        b.setPrefHeight(b.getWidth());
         return b;
     }
 }
