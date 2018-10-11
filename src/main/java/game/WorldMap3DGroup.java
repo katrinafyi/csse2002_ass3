@@ -30,6 +30,7 @@ public class WorldMap3DGroup extends Group {
             this.getChildren().add(b3);
         }
 
+
         camera.setTranslateZ(-900);
 
     }
@@ -50,4 +51,6 @@ public class WorldMap3DGroup extends Group {
         scene.setFill(Color.MEDIUMAQUAMARINE);
         return scene;
     }
+
+
 }
