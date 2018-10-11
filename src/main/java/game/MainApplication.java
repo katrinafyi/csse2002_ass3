@@ -7,6 +7,8 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -25,6 +27,7 @@ public class MainApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
 
+
         primaryStage.setTitle("Window title");
         GridPane rootGrid = new GridPane();
         rootGrid.setPadding(new Insets(10));
@@ -39,6 +42,10 @@ public class MainApplication extends Application {
         Region centrePane = constructCentrePane();
         rootGrid.add(centrePane, 1, 0);
         GridPane.setValignment(centrePane, VPos.TOP);
+
+        Region rightPane = constructRightPane();
+        rootGrid.add(rightPane, 2, 0);
+        GridPane.setValignment(rightPane, VPos.TOP);
 
         centrePane.setMaxWidth(Double.MAX_VALUE);
 
@@ -59,6 +66,8 @@ public class MainApplication extends Application {
         Scene scene = new Scene(rootGrid);
         primaryStage.setScene(scene);
         primaryStage.setMinWidth(500);
+        primaryStage.setWidth(873);
+        primaryStage.setHeight(555.5);
         primaryStage.show();
     }
 
@@ -79,6 +88,12 @@ public class MainApplication extends Application {
         b2.setOnAction(e -> primaryStage.sizeToScene());
 
         vbox.getChildren().addAll(grid, new Button("DIG"), debug, b2);
+        return vbox;
+    }
+
+    private Region constructRightPane() {
+        VBox vbox = new VBox();
+        vbox.getChildren().add(new Label("Inventory"));
         return vbox;
     }
 }
