@@ -75,8 +75,11 @@ public class MainApplication extends Application {
 
         Scene scene = new Scene(container);
         primaryStage.setScene(scene);
-        primaryStage.setMinWidth(500);
-        primaryStage.sizeToScene();
+
+        primaryStage.setMinWidth(622);
+        primaryStage.minHeightProperty().bind(worldMap.widthProperty().add(80.5));
+
+        primaryStage.setHeight(580.5);
         primaryStage.show();
     }
 

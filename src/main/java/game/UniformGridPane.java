@@ -45,16 +45,7 @@ public abstract class UniformGridPane extends GridPane {
 
     private void generateGrid() {
         for (int i = 0; i < COLUMNS; i++) {
-            ColumnConstraints columnConstraints = new ColumnConstraints();
-            columnConstraints.setPercentWidth(100.0 / COLUMNS);
-            this.getColumnConstraints().add(columnConstraints);
-
             for (int j = 0; j < ROWS; j++) {
-                if (i == 0) {
-                    RowConstraints rowConstraints = new RowConstraints();
-                    rowConstraints.setPercentHeight(100.0 / ROWS);
-                    this.getRowConstraints().add(rowConstraints);
-                }
                 Node cell = generateCell(i, j);
                 if (cell != null) {
                     this.add(cell, i, j);
