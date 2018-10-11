@@ -8,7 +8,11 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -29,13 +33,19 @@ public class MainApplication extends Application {
 
 
         primaryStage.setTitle("Window title");
+
+
+
         GridPane rootGrid = new GridPane();
         rootGrid.setPadding(new Insets(10));
         rootGrid.setHgap(20);
 
+        // Container for menu and main content.
+        VBox container = new VBox();
+        MenuBar menuBar = constructMenuBar();
+        container.getChildren().addAll(menuBar, rootGrid);
+
         worldMap = new WorldMapGridPane();
-
-
         rootGrid.add(worldMap, 0, 0);
         GridPane.setValignment(worldMap, VPos.TOP);
 
@@ -63,12 +73,26 @@ public class MainApplication extends Application {
         row0.setPercentHeight(100);
         rootGrid.getRowConstraints().add(row0);
 
-        Scene scene = new Scene(rootGrid);
+        Scene scene = new Scene(container);
         primaryStage.setScene(scene);
         primaryStage.setMinWidth(500);
         primaryStage.setWidth(873);
         primaryStage.setHeight(555.5);
         primaryStage.show();
+    }
+
+    private MenuBar constructMenuBar() {
+        MenuBar menuBar = new MenuBar();
+        Menu fileMenu = new Menu("File");
+        fileMenu.getItems().addAll(
+                new MenuItem("Open map"),
+                new MenuItem("Save map"),
+                new MenuItem("Save map as"),
+                new SeparatorMenuItem(),
+                new MenuItem("Exit")
+        );
+        menuBar.getMenus().add(fileMenu);
+        return menuBar;
     }
 
     private Region constructCentrePane() {
