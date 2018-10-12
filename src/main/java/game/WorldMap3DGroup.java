@@ -45,6 +45,10 @@ public class WorldMap3DGroup extends Group {
 
 
         camera.setTranslateZ(-50);
+        camera.setTranslateX(-90);
+        camera.setTranslateY(-90);
+        camera.setFarClip(10000.0);
+
 
     }
 
@@ -52,10 +56,10 @@ public class WorldMap3DGroup extends Group {
         int w = B;
         TriangleMesh mesh = new TriangleMesh();
         mesh.getTexCoords().addAll(
-                0, 0,
-                1, 0,
-                1, 1,
-                0, 1
+                0f, 0f,
+                1f, 0f,
+                1f, 1f,
+                0f, 1f
         );
 
         mesh.getPoints().addAll(
@@ -93,17 +97,16 @@ public class WorldMap3DGroup extends Group {
         );
 
         MeshView meshView = new MeshView(mesh);
+        meshView.setDrawMode(DrawMode.FILL);
 
         PhongMaterial phong = new PhongMaterial();
-        phong.setDiffuseMap(new Image("file:src/main/resources/grass_block_side.png"));
-        meshView.setMaterial(phong);
+        phong.setDiffuseMap(new Image(getClass().getResourceAsStream("/gold_block.png")));
+        //meshView.setMaterial(phong);
+        meshView.setMaterial(new PhongMaterial(Color.GREEN));
         meshView.setCullFace(CullFace.NONE);
         meshView.setTranslateX(0);
         meshView.setTranslateY(0);
         meshView.setTranslateZ(0);
-
-        meshView.setMaterial(new PhongMaterial(Color.YELLOW));
-        meshView.setDrawMode(DrawMode.FILL);
 
         return meshView;
     }
