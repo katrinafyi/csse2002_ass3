@@ -2,7 +2,7 @@ language: java
 env:
   - VERSION_TAG=${TRAVIS_TAG}+${TRAVIS_BUILD_NUMBER} NO_SUBMIT=DO_NOT_SUBMIT_THIS_FILE SUBMISSION_ZIP=csse2002_ass2_${VERSION_TAG}_submission.zip PIT_ZIP=csse2002_ass2_${VERSION_TAG}_report_${NO_SUBMIT}.zip
 install:
- - mvn install:install-file -Dfile=csse2002_block_world.jar -DgroupId=csse2002.block.world -DartifactId=csse2002 -Dversion=1.0 -Dpackaging=jar -DgeneratePom=true
+ - mvn install:install-file -Dfile=csse2002_ass2-1.0-SNAPSHOT.jar -DgroupId=csse2002.block.world -DartifactId=csse2002_ass2 -Dpackaging=jar -Dversion=1.0-SNAPSHOT
  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 before_script:
 # - javac CheckZipAssignment2.java

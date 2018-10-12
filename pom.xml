@@ -17,8 +17,8 @@
     <dependencies>
         <dependency>
             <groupId>csse2002.block.world</groupId>
-            <artifactId>csse2002</artifactId>
-            <version>1.0</version>
+            <artifactId>csse2002_ass2</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
