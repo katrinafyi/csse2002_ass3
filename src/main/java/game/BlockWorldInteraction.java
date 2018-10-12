@@ -13,12 +13,24 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public class BlockWorldInteraction {
-    private final WorldMap worldMap;
-    private final Builder builder;
+    private WorldMap worldMap;
+    private Builder builder;
+
+    public BlockWorldInteraction() {
+
+    }
 
     public BlockWorldInteraction(WorldMap worldMap) {
+        setWorldMap(worldMap);
+    }
+
+    public void setWorldMap(WorldMap worldMap) {
         this.worldMap = worldMap;
         this.builder = worldMap.getBuilder();
+    }
+
+    public WorldMap getWorldMap() {
+        return this.worldMap;
     }
 
     public void move(Direction direction) throws NoExitException {
@@ -46,11 +58,12 @@ public class BlockWorldInteraction {
         return count;
     }
 
-    public void dropBlock(BlockTypes type) throws NoSuchElementException {
+    public void dropBlock(BlockTypes type)
+            throws NoSuchElementException, TooHighException, InvalidBlockException {
         List<Block> inventory = builder.getInventory();
         for (int i = 0; i < inventory.size(); i++) {
             if (type.blockClass.isAssignableFrom(inventory.get(i).getClass())) {
-                inventory.remove(i);
+                builder.dropFromInventory(i);
                 return;
             }
         }

@@ -1,6 +1,11 @@
 package game;
 
+import csse2002.block.world.BlockWorldException;
+import csse2002.block.world.WorldMap;
+import csse2002.block.world.WorldMapFormatException;
+import csse2002.block.world.WorldMapInconsistentException;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -19,7 +24,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
 
 
 public class MainApplication extends Application {
@@ -83,9 +91,30 @@ public class MainApplication extends Application {
         primaryStage.show();
     }
 
+    private void openMapAction(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open map");
+        String filePath = fileChooser.showOpenDialog(primaryStage).getPath();
+        try {
+            worldMap.getWorldInteraction().setWorldMap(new WorldMap(filePath));
+        } catch (WorldMapFormatException | WorldMapInconsistentException e) {
+            showErrorMessage(e.toString());
+        } catch (FileNotFoundException e) {
+            throw new AssertionError(e);
+        }
+    }
+
+    private void showErrorMessage(String message) {
+        System.err.println("ERROR MESSAGE: " + message);
+    }
+
     private MenuBar constructMenuBar() {
         MenuBar menuBar = new MenuBar();
         Menu fileMenu = new Menu("File");
+
+        MenuItem openMap = new MenuItem("Open map");
+        openMap.setOnAction(this::openMapAction);
+
         fileMenu.getItems().addAll(
                 new MenuItem("Open map"),
                 new MenuItem("Save map"),

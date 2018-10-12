@@ -1,35 +1,35 @@
 package game;
 
+import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
-import javafx.scene.shape.CullFace;
-import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.TriangleMesh;
-
-import java.util.AbstractMap;
 
 public class WorldMap3DGroup extends Group {
     private static final int B = 32;
 
     private final PerspectiveCamera camera = new PerspectiveCamera();
 
+    private final BlockWorldInteraction interaction = new BlockWorldInteraction();
+
     public WorldMap3DGroup() {
 
+    }
+
+    public BlockWorldInteraction getWorldInteraction() {
+        return interaction;
+    }
+
+
+    private void addTestShapes() {
         Shape3D b = generateShape(Color.WHITE);
         this.getChildren().add(b);
 
@@ -49,6 +49,8 @@ public class WorldMap3DGroup extends Group {
         camera.setTranslateY(-90);
         camera.setFarClip(10000.0);
 
+
+        this.getChildren().add(new AmbientLight(Color.WHITE));
 
     }
 
@@ -97,13 +99,11 @@ public class WorldMap3DGroup extends Group {
         );
 
         MeshView meshView = new MeshView(mesh);
-        meshView.setDrawMode(DrawMode.FILL);
 
         PhongMaterial phong = new PhongMaterial();
         phong.setDiffuseMap(new Image(getClass().getResourceAsStream("/gold_block.png")));
         //meshView.setMaterial(phong);
-        meshView.setMaterial(new PhongMaterial(Color.GREEN));
-        meshView.setCullFace(CullFace.NONE);
+        meshView.setMaterial(phong);
         meshView.setTranslateX(0);
         meshView.setTranslateY(0);
         meshView.setTranslateZ(0);
