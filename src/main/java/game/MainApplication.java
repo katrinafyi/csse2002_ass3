@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
@@ -23,7 +24,7 @@ import javafx.stage.Stage;
 
 public class MainApplication extends Application {
 
-    private GridPane worldMap;
+    private WorldMap3DGroup worldMap = null;
     private Stage primaryStage;
 
     public void start(Stage primaryStage) throws Exception {
@@ -43,7 +44,8 @@ public class MainApplication extends Application {
         MenuBar menuBar = constructMenuBar();
         container.getChildren().addAll(menuBar, rootGrid);
 
-        SubScene worldMap = new WorldMap3DGroup().generateScene();
+        this.worldMap = new WorldMap3DGroup();
+        SubScene worldMap = this.worldMap.generateScene();
         rootGrid.add(worldMap, 0, 0);
         GridPane.setValignment(worldMap, VPos.TOP);
 
@@ -103,9 +105,9 @@ public class MainApplication extends Application {
 
         Button debug = new Button("(Debug)");
         debug.setOnAction((e) -> {
+            System.out.println(worldMap.getChildren());
             System.out.println(worldMap);
             System.out.println(""+primaryStage.getWidth() + "x"+primaryStage.getHeight());
-            System.out.println(""+worldMap.getWidth() + "x"+worldMap.getHeight());
         });
 
         Button b2 = new Button("(Size to scene)");

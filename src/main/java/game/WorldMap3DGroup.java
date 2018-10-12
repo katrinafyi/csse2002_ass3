@@ -3,6 +3,7 @@ package game;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
@@ -23,6 +24,8 @@ import javafx.scene.shape.TriangleMesh;
 import java.util.AbstractMap;
 
 public class WorldMap3DGroup extends Group {
+    private static final int B = 32;
+
     private final PerspectiveCamera camera = new PerspectiveCamera();
 
     public WorldMap3DGroup() {
@@ -32,22 +35,21 @@ public class WorldMap3DGroup extends Group {
 
         for (int i = 0; i < 4; i++) {
             Shape3D b2 = generateShape(Color.BLUE);
-            b2.setTranslateX((i+1)*100);
+            b2.setTranslateX((i+1)*B);
             this.getChildren().add(b2);
 
             Shape3D b3 = generateCubeMesh();
-            b3.setTranslateY((i+1)*100);
+            b3.setTranslateY((i+1)*B);
             this.getChildren().add(b3);
         }
 
 
-        camera.setTranslateZ(-900);
-        camera.setFieldOfView(100);
+        camera.setTranslateZ(-50);
 
     }
 
     private Shape3D generateCubeMesh() {
-        int w = 100;
+        int w = B;
         TriangleMesh mesh = new TriangleMesh();
         mesh.getTexCoords().addAll(
                 0, 0,
@@ -101,27 +103,26 @@ public class WorldMap3DGroup extends Group {
         meshView.setTranslateZ(0);
 
         meshView.setMaterial(new PhongMaterial(Color.YELLOW));
-        meshView.setDrawMode(DrawMode.LINE);
+        meshView.setDrawMode(DrawMode.FILL);
 
         return meshView;
     }
 
     private Shape3D generateShape(Color color) {
-        Box box = new Box(100, 100, 100);
+        Box box = new Box(B, B, B);
         box.setTranslateY(0);
         box.setTranslateX(0);
         box.setTranslateZ(0);
-        PhongMaterial phong = new PhongMaterial(color);
+        PhongMaterial phong = new PhongMaterial();
+        phong.setDiffuseMap(new Image("file:src/main/resources/dirt.png"));
         box.setMaterial(phong);
         return box;
     }
 
     public SubScene generateScene() {
-        SubScene scene = new SubScene(this, 500, 500);
+        SubScene scene = new SubScene(this, 500, 500, true, SceneAntialiasing.BALANCED);
         scene.setCamera(camera);
         scene.setFill(Color.MEDIUMAQUAMARINE);
         return scene;
     }
-
-
 }
