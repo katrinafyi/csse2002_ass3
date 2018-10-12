@@ -39,10 +39,10 @@ public class BlockWorldInteraction {
         this.worldMap = worldMap;
         this.builder = worldMap.getBuilder();
 
-        loadPositions();
+        createPositionTileMapping();
     }
 
-    private void loadPositions() {
+    private void createPositionTileMapping() {
         // We need to have a copy of the position to tile mapping.
         Set<Position> seenPositions = new HashSet<>();
         Queue<Position> positionsToSearch = new LinkedList<>();

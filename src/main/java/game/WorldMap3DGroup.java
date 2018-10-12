@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.TriangleMesh;
@@ -27,7 +28,7 @@ public class WorldMap3DGroup extends Group {
     private final Map<Position, Tile> positionTileMap = new HashMap<>();
 
     public WorldMap3DGroup() {
-
+        addTestShapes();
     }
 
     private void resetMapState() {
@@ -48,11 +49,11 @@ public class WorldMap3DGroup extends Group {
         this.getChildren().add(b);
 
         for (int i = 0; i < 4; i++) {
-            Shape3D b2 = generateShape(Color.BLUE);
+            Shape3D b2 = generateCubeMesh();
             b2.setTranslateX((i+1)*B);
             this.getChildren().add(b2);
 
-            Shape3D b3 = generateCubeMesh();
+            Shape3D b3 = generateTestMesh();
             b3.setTranslateY((i+1)*B);
             this.getChildren().add(b3);
         }
@@ -68,15 +69,42 @@ public class WorldMap3DGroup extends Group {
 
     }
 
+    private Shape3D generateTestMesh() {
+        TriangleMesh pyramidMesh = new TriangleMesh();
+        pyramidMesh.getTexCoords().addAll(0,0);
+        float h = B;                    // Height
+        float s = B*2;                    // Side
+        pyramidMesh.getPoints().addAll(
+                0,    0,    0,            // Point 0 - Top
+                0,    h,    -s/2,         // Point 1 - Front
+                -s/2, h,    0,            // Point 2 - Left
+                s/2,  h,    0,            // Point 3 - Back
+                0,    h,    s/2           // Point 4 - Right
+        );
+        pyramidMesh.getFaces().addAll(
+                0,0,  2,0,  1,0,          // Front left face
+                0,0,  1,0,  3,0,          // Front right face
+                0,0,  3,0,  4,0,          // Back right face
+                0,0,  4,0,  2,0,          // Back left face
+                4,0,  1,0,  2,0,          // Bottom rear face
+                4,0,  3,0,  1,0           // Bottom front face
+        );
+        MeshView pyramid = new MeshView(pyramidMesh);
+        pyramid.setDrawMode(DrawMode.FILL);
+        pyramid.setMaterial(new PhongMaterial(Color.BLUE));
+        return pyramid;
+    }
+
     private Shape3D generateCubeMesh() {
-        int w = B;
+        float w = B;
         TriangleMesh mesh = new TriangleMesh();
         mesh.getTexCoords().addAll(
                 0f, 0f,
-                1f, 0f,
+                0f, 1f,
                 1f, 1f,
-                0f, 1f
+                1f, 0f
         );
+
 
         mesh.getPoints().addAll(
                 0, 0, 0,
@@ -89,12 +117,12 @@ public class WorldMap3DGroup extends Group {
                 0, w, w
         );
 
-        mesh.getTexCoords().addAll(
+        mesh.getFaces().addAll(
                 // Side faces.
                 4,0, 5,1, 0,3,
                 5,1, 1,2, 0,3,
 
-                5,6, 6,1, 1,3,
+                5,0, 6,1, 1,3,
                 6,1, 2,2, 1,3,
 
                 6,0, 7,1, 2,3,
@@ -115,7 +143,7 @@ public class WorldMap3DGroup extends Group {
         MeshView meshView = new MeshView(mesh);
 
         PhongMaterial phong = new PhongMaterial();
-        phong.setDiffuseMap(new Image(getClass().getResourceAsStream("/gold_block.png")));
+        phong.setDiffuseMap(new Image(getClass().getResourceAsStream("/tnt_side.png")));
         //meshView.setMaterial(phong);
         meshView.setMaterial(phong);
         meshView.setTranslateX(0);
