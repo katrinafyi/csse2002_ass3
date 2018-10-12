@@ -3,6 +3,7 @@ package game;
 import csse2002.block.world.Position;
 import csse2002.block.world.Tile;
 import csse2002.block.world.WorldMap;
+import javafx.geometry.Point3D;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
@@ -60,9 +61,15 @@ public class WorldMap3DGroup extends Group {
 
 
         camera.setTranslateZ(-50);
-        camera.setTranslateX(-90);
+        camera.setTranslateX(90);
         camera.setTranslateY(-90);
         camera.setFarClip(10000.0);
+
+        camera.setRotationAxis(new Point3D(1, 0, 0));
+        camera.setRotate(90);
+
+        camera.setRotationAxis(new Point3D(0, 0, 1));
+        camera.setRotate(90);
 
 
         this.getChildren().add(new AmbientLight(Color.WHITE));
@@ -100,44 +107,44 @@ public class WorldMap3DGroup extends Group {
         TriangleMesh mesh = new TriangleMesh();
         mesh.getTexCoords().addAll(
                 0f, 0f,
-                0f, 1f,
+                1f, 0f,
                 1f, 1f,
-                1f, 0f
+                0f, 1f
         );
 
 
         mesh.getPoints().addAll(
                 0, 0, 0,
-                w, 0, 0,
+                0, w, 0,
                 w, w, 0,
-                0, w, 0,
+                w, 0, 0,
                 0, 0, w,
-                0, w, 0,
+                w, 0, 0,
                 w, w, w,
-                0, w, w
+                w, 0, w
         );
 
         mesh.getFaces().addAll(
                 // Side faces.
-                4,0, 5,1, 0,3,
-                5,1, 1,2, 0,3,
+                0,3, 5,1, 4,0,
+                0,3, 1,2, 5,1,
 
-                5,0, 6,1, 1,3,
-                6,1, 2,2, 1,3,
+                1,3, 6,1, 5,0,
+                1,3, 2,2, 6,1,
 
-                6,0, 7,1, 2,3,
-                7,1, 3,2, 2,3,
+                2,3, 7,1, 6,0,
+                2,3, 3,2, 7,1,
 
-                7,0, 4,1, 3,3,
-                4,1, 0,2, 3,3,
+                3,3, 4,1, 7,0,
+                3,3, 0,2, 4,1,
 
                 // Bottom face.
-                0,0, 1,1, 3,3,
-                1,1, 2,2, 3,3,
+                3,3, 1,1, 0,0,
+                3,3, 2,2, 1,1,
 
                 // Top face.
-                7,0, 6,1, 4,3,
-                6,1, 5,2, 4,3
+                4,3, 6,1, 7,0,
+                4,3, 5,2, 6,1
         );
 
         MeshView meshView = new MeshView(mesh);
