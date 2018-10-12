@@ -1,5 +1,8 @@
 package game;
 
+import csse2002.block.world.Position;
+import csse2002.block.world.Tile;
+import csse2002.block.world.WorldMap;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
@@ -13,14 +16,25 @@ import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.TriangleMesh;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class WorldMap3DGroup extends Group {
     private static final int B = 32;
-
     private final PerspectiveCamera camera = new PerspectiveCamera();
-
     private final BlockWorldInteraction interaction = new BlockWorldInteraction();
 
+    private final Map<Position, Tile> positionTileMap = new HashMap<>();
+
     public WorldMap3DGroup() {
+
+    }
+
+    private void resetMapState() {
+
+    }
+
+    private void drawTile(Position position, Tile tile) {
 
     }
 
@@ -127,5 +141,9 @@ public class WorldMap3DGroup extends Group {
         scene.setCamera(camera);
         scene.setFill(Color.MEDIUMAQUAMARINE);
         return scene;
+    }
+
+    public void updateWorldMap(WorldMap worldMap) {
+        this.interaction.setWorldMap(worldMap);
     }
 }

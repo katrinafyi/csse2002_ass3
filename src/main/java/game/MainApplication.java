@@ -96,7 +96,7 @@ public class MainApplication extends Application {
         fileChooser.setTitle("Open map");
         String filePath = fileChooser.showOpenDialog(primaryStage).getPath();
         try {
-            worldMap.getWorldInteraction().setWorldMap(new WorldMap(filePath));
+            worldMap.updateWorldMap(new WorldMap(filePath));
         } catch (WorldMapFormatException | WorldMapInconsistentException e) {
             showErrorMessage(e.toString());
         } catch (FileNotFoundException e) {
