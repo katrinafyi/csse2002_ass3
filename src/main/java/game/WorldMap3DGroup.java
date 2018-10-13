@@ -34,13 +34,11 @@ public class WorldMap3DGroup extends Group {
     private final PerspectiveCamera camera = new PerspectiveCamera();
     private final BlockWorldInteraction interaction = new BlockWorldInteraction();
 
-    private final Map<Position, Tile> positionTileMap = new HashMap<>();
-
     private final Map<Class<? extends Block>, Image> blockTextures = new HashMap<>();
 
     {
         Map<Class, Pair<String, String>> textureFiles = new HashMap<>();
-        textureFiles.put(GrassBlock.class, new Pair<>("/grass_top.png", "/grass_block_side.png"));
+        textureFiles.put(GrassBlock.class, new Pair<>("/grass_block_side.png", "/grass_top.png"));
         textureFiles.put(WoodBlock.class, new Pair<>("/oak_planks.png", null));
 
         for (Class type : textureFiles.keySet()) {
@@ -95,7 +93,7 @@ public class WorldMap3DGroup extends Group {
         this.getChildren().add(xGroup);
 
 
-        Shape3D mesh = generateCubeMesh();
+        Shape3D mesh = generateBlock(GrassBlock.class);
         mesh.setTranslateZ(-BLOCK_HEIGHT);
         this.getChildren().add(mesh);
 
@@ -113,13 +111,16 @@ public class WorldMap3DGroup extends Group {
         ObservableList<Node> children = tileGroup.getChildren();
         int i = 0;
         for (Block block : tile.getBlocks()) {
-            Shape3D blockShape = generateCubeMesh(
-                    blockTextures.get(block.getClass()));
+            Shape3D blockShape = generateBlock(block.getClass());
             blockShape.setTranslateZ(i*-BLOCK_HEIGHT);
             children.add(blockShape);
             i++;
         }
         return tileGroup;
+    }
+
+    private Shape3D generateBlock(Class<? extends Block> blockClass) {
+        return generateCubeMesh(blockTextures.get(blockClass));
     }
 
     private Shape3D generateCubeMesh(Image diffuseMap) {
@@ -128,12 +129,12 @@ public class WorldMap3DGroup extends Group {
                 // Side textures are left half of image.
                 0f, 0f,
                 0f, 1f,
-                0.5f, 1f,
-                0.5f, 0f,
+                1f/2, 1f,
+                1f/2, 0f,
 
                 // Top textures are right half.
-                0.5f, 0f,
-                0.5f, 1f,
+                1f/2, 0f,
+                1f/2, 1f,
                 1f, 1f,
                 1f, 0f
         );
