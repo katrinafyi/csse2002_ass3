@@ -10,7 +10,6 @@ import csse2002.block.world.WoodBlock;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SnapshotParameters;
@@ -21,7 +20,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
-import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.TriangleMesh;
@@ -34,7 +32,7 @@ import java.util.Map;
 
 public class WorldMap3DGroup extends Group {
 
-    private static final int BLOCK_HEIGHT = 32;
+    private static final int BLOCK = 32;
     private static final int WIDTH = 500;
     private static final int HEIGHT = 500;
     private final RotatingCamera camera = new RotatingCamera();
@@ -115,28 +113,28 @@ public class WorldMap3DGroup extends Group {
 
         for (int i = 0; i < 9; i++) {
             Shape3D b2 = generateShape(Color.RED);
-            b2.setTranslateX((i)* BLOCK_HEIGHT);
+            b2.setTranslateX((i)* BLOCK);
             xGroup.getChildren().add(b2);
 
             Shape3D b3 = generateShape(Color.GREEN);
-            b3.setTranslateY((i+1)* BLOCK_HEIGHT);
+            b3.setTranslateY((i+1)* BLOCK);
             this.getChildren().add(b3);
 
             Shape3D b4 = generateShape(Color.BLUE);
-            b4.setTranslateZ((i+1)* BLOCK_HEIGHT);
+            b4.setTranslateZ((i+1)* BLOCK);
             this.getChildren().add(b4);
 
 //            Shape3D b5 = generateShape(Color.PURPLE);
-//            b5.setTranslateZ((i+1)*-BLOCK_HEIGHT);
+//            b5.setTranslateZ((i+1)*-BLOCK);
 //            this.getChildren().add(b5);
         }
 
-        xGroup.setTranslateX(2* BLOCK_HEIGHT);
+        xGroup.setTranslateX(2* BLOCK);
         this.getChildren().add(xGroup);
 
 
         Shape3D mesh = generateBlock(GrassBlock.class);
-        mesh.setTranslateZ(-BLOCK_HEIGHT);
+        mesh.setTranslateZ(-BLOCK);
         this.getChildren().add(mesh);
     }
 
@@ -147,7 +145,7 @@ public class WorldMap3DGroup extends Group {
         int i = 0;
         for (Block block : tile.getBlocks()) {
             Shape3D blockShape = generateBlock(block.getClass());
-            blockShape.setTranslateZ(i*-BLOCK_HEIGHT);
+            blockShape.setTranslateZ(i*-BLOCK);
             blockShape.setTranslateX(scenePos.getX());
             blockShape.setTranslateY(scenePos.getY());
             children.add(blockShape);
@@ -177,7 +175,7 @@ public class WorldMap3DGroup extends Group {
         );
 
         // Half width. Used to centre the cube.
-        float hw = BLOCK_HEIGHT / 2f;
+        float hw = BLOCK / 2f;
         mesh.getPoints().addAll(
                 // Bottom 4 corners.
                 -hw, hw, -hw,
@@ -228,7 +226,7 @@ public class WorldMap3DGroup extends Group {
     }
 
     private Shape3D generatePlayerCube() {
-        double playerSize = BLOCK_HEIGHT/2f;
+        double playerSize = BLOCK /2f;
         Box box = new Box(playerSize, playerSize, playerSize);
         box.setMaterial(new PhongMaterial(Color.CORAL));
         return box;
@@ -252,7 +250,7 @@ public class WorldMap3DGroup extends Group {
 
     private Shape3D generateShape(Color color) {
         //noinspection SuspiciousNameCombination
-        Box box = new Box(BLOCK_HEIGHT, BLOCK_HEIGHT, BLOCK_HEIGHT);
+        Box box = new Box(BLOCK, BLOCK, BLOCK);
         box.setTranslateY(0);
         box.setTranslateX(0);
         box.setTranslateZ(0);
@@ -271,7 +269,7 @@ public class WorldMap3DGroup extends Group {
     private Point2D positionToScene(Position pos) {
         Position start = interaction.getWorldMap().getStartPosition();
         return new Point2D(pos.getX() - start.getX(), pos.getY() - start.getY())
-                .multiply(BLOCK_HEIGHT);
+                .multiply(BLOCK);
     }
 
     private void removeAllTiles() {
@@ -303,7 +301,7 @@ public class WorldMap3DGroup extends Group {
 
         bindCameraToPlayer(player);
 
-        player.setTranslateZ(-BLOCK_HEIGHT * (1+tile.getBlocks().size()));
+        player.setTranslateZ(-BLOCK * (1+tile.getBlocks().size()));
         player.setTranslateX(0);
         player.setTranslateY(0);
 
