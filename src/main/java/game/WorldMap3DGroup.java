@@ -224,11 +224,11 @@ public class WorldMap3DGroup extends Group {
         VBox vBox = new VBox();
         vBox.getChildren().addAll(new ImageView(image1), new ImageView(image2));
         Image snap = vBox.snapshot(new SnapshotParameters(), null);
-        try {
+        /*try {
             ImageIO.write(SwingFXUtils.fromFXImage(snap, null), "png", new File(image1.toString()+".png"));
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         return snap;
     }
 
