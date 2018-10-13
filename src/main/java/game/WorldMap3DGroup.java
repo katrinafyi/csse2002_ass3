@@ -50,11 +50,11 @@ public class WorldMap3DGroup extends Group {
         this.getChildren().add(b);
 
         for (int i = 0; i < 4; i++) {
-            Shape3D b2 = generateShape(Color.GREEN);
+            Shape3D b2 = generateShape(Color.RED);
             b2.setTranslateX((i+1)*B);
             this.getChildren().add(b2);
 
-            Shape3D b3 = generateShape(Color.RED);
+            Shape3D b3 = generateShape(Color.GREEN);
             b3.setTranslateY((i+1)*B);
             this.getChildren().add(b3);
 
@@ -63,6 +63,10 @@ public class WorldMap3DGroup extends Group {
             this.getChildren().add(b4);
         }
 
+
+        Shape3D mesh = generateCubeMesh();
+        mesh.setTranslateZ(-B);
+        this.getChildren().add(mesh);
 
         camera.setTranslateZ(-50);
         camera.setTranslateX(-90);
@@ -104,44 +108,47 @@ public class WorldMap3DGroup extends Group {
         TriangleMesh mesh = new TriangleMesh();
         mesh.getTexCoords().addAll(
                 0f, 0f,
-                1f, 0f,
+                0f, 1f,
                 1f, 1f,
-                0f, 1f
+                1f, 0f
         );
 
-
+        // Half width. Used to centre the cube.
+        float hw = B/2f;
         mesh.getPoints().addAll(
-                0, -0, 0,
-                w, -0, 0,
-                w, -0, w,
-                0, -0, w,
-                0, -w, 0,
-                0, -0, w,
-                w, -w, w,
-                0, w, w
+                // Bottom 4 corners.
+                -hw, hw, -hw,
+                hw, hw, -hw,
+                hw, hw, hw,
+                -hw, hw, hw,
+                // Top 4 corners.
+                -hw, -hw, -hw,
+                hw, -hw, -hw,
+                hw, -hw, hw,
+                -hw, -hw, hw
         );
 
         mesh.getFaces().addAll(
+                // Top face (xy plane).
+                4,0, 0,1, 5,3,
+                5,3, 0,1, 1,2,
+
                 // Side faces.
-                4,0, 5,1, 0,3,
-                5,1, 1,2, 0,3,
+                0,0, 3,1, 1,3,
+                1,3, 3,1, 2,2,
 
-                5,0, 6,1, 1,3,
-                6,1, 2,2, 1,3,
+                1,0, 2,1, 5,3,
+                5,3, 2,1, 6,2,
 
-                6,0, 7,1, 2,3,
-                7,1, 3,2, 2,3,
+                4,0, 5,1, 6,3,
+                6,3, 5,1, 7,2,
 
-                7,0, 4,1, 3,3,
-                4,1, 0,2, 3,3,
+                4,0, 7,1, 0,3,
+                0,3, 7,1, 3,2,
 
                 // Bottom face.
-                0,0, 1,1, 3,3,
-                1,1, 2,2, 3,3,
-
-                // Top face.
-                7,0, 6,1, 4,3,
-                6,1, 5,2, 4,3
+                6,0, 2,1, 7,3,
+                7,3, 2,1, 3,2
         );
 
         MeshView meshView = new MeshView(mesh);
