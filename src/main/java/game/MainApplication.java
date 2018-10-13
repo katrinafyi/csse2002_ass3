@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -81,7 +82,7 @@ public class MainApplication extends Application {
         row0.setPercentHeight(100);
         rootGrid.getRowConstraints().add(row0);
 
-        Scene scene = new Scene(container);
+        Scene scene = new Scene(container, 800, 600, true, SceneAntialiasing.BALANCED);
         primaryStage.setScene(scene);
 
         primaryStage.setMinWidth(622);

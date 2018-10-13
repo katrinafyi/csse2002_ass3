@@ -47,4 +47,12 @@ public class RotatingCamera extends PerspectiveCamera {
     public Translate getTranslation() {
         return translation;
     }
+
+    public Rotate getHRotate() {
+        return hRotate;
+    }
+
+    public Rotate getVRotate() {
+        return pitchRotate;
+    }
 }

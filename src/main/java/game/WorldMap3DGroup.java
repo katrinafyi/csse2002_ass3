@@ -10,20 +10,24 @@ import csse2002.block.world.WoodBlock;
 import javafx.geometry.Point2D;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
+import javafx.scene.LightBase;
 import javafx.scene.Node;
 import javafx.scene.PointLight;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.SubScene;
+import javafx.scene.effect.Light;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import javafx.scene.shape.CullFace;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.TriangleMesh;
+import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.util.Pair;
 
@@ -38,7 +42,7 @@ public class WorldMap3DGroup extends Group {
     private static final int WIDTH = 500;
     private static final int HEIGHT = 500;
     private final RotatingCamera camera = new RotatingCamera();
-    private final PointLight light = new PointLight(Color.WHITE);
+    private final LightBase light = new PointLight(Color.WHITE);
     private final BlockWorldInteraction interaction;
 
     private final Map<Tile, List<Shape3D>> tileGroups = new HashMap<>();
@@ -74,9 +78,10 @@ public class WorldMap3DGroup extends Group {
         block.setTranslateX(64);
         block.setTranslateY(96);
         this.getChildren().add(block);
-        bindCameraToPlayer(block);
 
         this.getChildren().add(generateShape(Color.BLACK));
+        this.getChildren().add(light);
+        this.getChildren().add(new AmbientLight(Color.BLACK));
     }
 
     public RotatingCamera getRotatingCamera() {
@@ -174,8 +179,8 @@ public class WorldMap3DGroup extends Group {
                 5,7, 0,5, 1,6,
 
                 // Side faces.
-                0,0, 3,1, 1,3,
-                1,3, 3,1, 2,2,
+                1,3, 0,0, 3,1,
+                3,1, 2,2, 1,3,
 
                 1,0, 2,1, 5,3,
                 5,3, 2,1, 6,2,
@@ -191,12 +196,32 @@ public class WorldMap3DGroup extends Group {
                 7,7, 2,5, 3,6
         );
 
+        mesh.getNormals().addAll(
+                0,-1,0,
+                0,-1,0,
+
+                0,0,-1,
+                0,0,-1,
+
+                1,0,0,
+                1,0,0,
+                0,0,1,
+                0,0,1,
+                -1,0,0,
+                -1,0,0,
+
+                0,1,0,
+                0,1,0
+        );
+
         MeshView meshView = new MeshView(mesh);
 
         PhongMaterial phong = new PhongMaterial();
         phong.setDiffuseMap(diffuseMap);
+        phong.setSpecularColor(Color.WHITE);
 
         meshView.setMaterial(phong);
+        meshView.setCullFace(CullFace.BACK);
         meshView.setTranslateX(0);
         meshView.setTranslateY(0);
         meshView.setTranslateZ(0);
@@ -280,7 +305,7 @@ public class WorldMap3DGroup extends Group {
 
         bindCameraToPlayer(player);
 
-        player.setTranslateZ(-BLOCK * (1+tile.getBlocks().size()));
+        player.setTranslateZ(-BLOCK * (tile.getBlocks().size()));
         player.setTranslateX(0);
         player.setTranslateY(0);
 
@@ -294,5 +319,13 @@ public class WorldMap3DGroup extends Group {
         camera.getTranslation().setZ(-200);
 
         camera.bindRotationPivots(player);
+        light.getTransforms().clear();
+        Translate t = new Translate();
+        t.xProperty().bind(player.translateXProperty());
+        t.yProperty().bind(player.translateYProperty());
+        t.setZ(-4000);
+        light.getTransforms().addAll(
+                camera.getHRotate(), camera.getVRotate(), t
+        );
     }
 }
