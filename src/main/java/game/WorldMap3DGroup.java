@@ -46,31 +46,28 @@ public class WorldMap3DGroup extends Group {
 
 
     private void addTestShapes() {
-        Shape3D b = generateShape(Color.WHITE);
+        Shape3D b = generateShape(Color.BLACK);
         this.getChildren().add(b);
 
         for (int i = 0; i < 4; i++) {
-            Shape3D b2 = generateCubeMesh();
+            Shape3D b2 = generateShape(Color.GREEN);
             b2.setTranslateX((i+1)*B);
             this.getChildren().add(b2);
 
-            Shape3D b3 = generateTestMesh();
+            Shape3D b3 = generateShape(Color.RED);
             b3.setTranslateY((i+1)*B);
             this.getChildren().add(b3);
+
+            Shape3D b4 = generateShape(Color.BLUE);
+            b4.setTranslateZ((i+1)*B);
+            this.getChildren().add(b4);
         }
 
 
         camera.setTranslateZ(-50);
-        camera.setTranslateX(90);
+        camera.setTranslateX(-90);
         camera.setTranslateY(-90);
         camera.setFarClip(10000.0);
-
-        camera.setRotationAxis(new Point3D(1, 0, 0));
-        camera.setRotate(90);
-
-        camera.setRotationAxis(new Point3D(0, 0, 1));
-        camera.setRotate(90);
-
 
         this.getChildren().add(new AmbientLight(Color.WHITE));
 
@@ -107,8 +104,8 @@ public class WorldMap3DGroup extends Group {
         TriangleMesh mesh = new TriangleMesh();
         mesh.getTexCoords().addAll(
                 0f, 0f,
-                1f, 1f,
                 1f, 0f,
+                1f, 1f,
                 0f, 1f
         );
 
@@ -165,8 +162,7 @@ public class WorldMap3DGroup extends Group {
         box.setTranslateY(0);
         box.setTranslateX(0);
         box.setTranslateZ(0);
-        PhongMaterial phong = new PhongMaterial();
-        phong.setDiffuseMap(new Image("file:src/main/resources/dirt.png"));
+        PhongMaterial phong = new PhongMaterial(color);
         box.setMaterial(phong);
         return box;
     }
