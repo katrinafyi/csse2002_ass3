@@ -7,5 +7,5 @@ import csse2002.block.world.WorldMap;
 import java.util.Map;
 
 public interface MapLoadedCallback {
-    void callback(WorldMap newMap, Map<Position, Tile> positionTileMap);
+    void call(WorldMap newMap, Map<Position, Tile> positionTileMap);
 }

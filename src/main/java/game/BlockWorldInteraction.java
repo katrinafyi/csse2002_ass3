@@ -54,19 +54,19 @@ public class BlockWorldInteraction {
 
     public void notifyTileCallbacks(Tile tile) {
         for (TileChangedCallback callback : tileChangedCallbacks) {
-            callback.callback(tile);
+            callback.call(tile);
         }
     }
 
     public void notifyBuilderCallbacks(Position oldPosition, Position newPosition) {
         for (BuilderMovedCallback callback : builderMovedCallbacks) {
-            callback.callback(oldPosition, newPosition);
+            callback.call(oldPosition, newPosition);
         }
     }
 
     public void notifyMapCallbacks() {
         for (MapLoadedCallback callback : mapLoadedCallbacks) {
-            callback.callback(worldMap, Collections.unmodifiableMap(positionTileMap));
+            callback.call(worldMap, Collections.unmodifiableMap(positionTileMap));
         }
     }
 
@@ -89,6 +89,7 @@ public class BlockWorldInteraction {
 
     private void createPositionTileMapping() {
         // We need to have a copy of the position to tile mapping.
+        positionTileMap.clear();
         Set<Position> seenPositions = new HashSet<>();
         Queue<Position> positionsToSearch = new LinkedList<>();
         positionsToSearch.add(worldMap.getStartPosition());
