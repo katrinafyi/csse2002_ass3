@@ -162,9 +162,9 @@ public class WorldMap3DGroup extends Group {
                 4,0, 7,1, 0,3,
                 0,3, 7,1, 3,2,
 
-                // Bottom face.
-                6,0, 2,1, 7,3,
-                7,3, 2,1, 3,2
+                // Bottom face. Uses same textures as top.
+                6,4, 2,5, 7,7,
+                7,7, 2,5, 3,6
         );
 
         MeshView meshView = new MeshView(mesh);
