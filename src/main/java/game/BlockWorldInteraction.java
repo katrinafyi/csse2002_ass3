@@ -9,8 +9,12 @@ import csse2002.block.world.Tile;
 import csse2002.block.world.TooHighException;
 import csse2002.block.world.TooLowException;
 import csse2002.block.world.WorldMap;
+import csse2002.block.world.WorldMapFormatException;
+import csse2002.block.world.WorldMapInconsistentException;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -25,6 +29,7 @@ public class BlockWorldInteraction {
     private Builder builder;
     private final List<TileChangedCallback> tileChangedCallbacks = new ArrayList<>();
     private final List<BuilderMovedCallback> builderMovedCallbacks = new ArrayList<>();
+    private final List<MapLoadedCallback> mapLoadedCallbacks = new ArrayList<>();
     private final Map<Position, Tile> positionTileMap = new HashMap<>();
 
     public BlockWorldInteraction() {
@@ -35,11 +40,51 @@ public class BlockWorldInteraction {
         setWorldMap(worldMap);
     }
 
-    public void setWorldMap(WorldMap worldMap) {
+    public void addTileCallback(TileChangedCallback callback) {
+        tileChangedCallbacks.add(callback);
+    }
+
+    public void addBuilderCallback(BuilderMovedCallback callback) {
+        builderMovedCallbacks.add(callback);
+    }
+
+    public void addMapCallback(MapLoadedCallback callback) {
+        mapLoadedCallbacks.add(callback);
+    }
+
+    public void notifyTileCallbacks(Tile tile) {
+        for (TileChangedCallback callback : tileChangedCallbacks) {
+            callback.callback(tile);
+        }
+    }
+
+    public void notifyBuilderCallbacks(Position oldPosition, Position newPosition) {
+        for (BuilderMovedCallback callback : builderMovedCallbacks) {
+            callback.callback(oldPosition, newPosition);
+        }
+    }
+
+    public void notifyMapCallbacks() {
+        for (MapLoadedCallback callback : mapLoadedCallbacks) {
+            callback.callback(worldMap, Collections.unmodifiableMap(positionTileMap));
+        }
+    }
+
+    private void setWorldMap(WorldMap worldMap) {
         this.worldMap = worldMap;
         this.builder = worldMap.getBuilder();
 
         createPositionTileMapping();
+    }
+
+    public void loadWorldMapFile(String filePath)
+            throws WorldMapInconsistentException, WorldMapFormatException,
+            FileNotFoundException {
+        setWorldMap(new WorldMap(filePath));
+    }
+
+    public WorldMap getWorldMap() {
+        return this.worldMap;
     }
 
     private void createPositionTileMapping() {
@@ -62,10 +107,6 @@ public class BlockWorldInteraction {
                 }
             }
         }
-    }
-
-    public WorldMap getWorldMap() {
-        return this.worldMap;
     }
 
     public void move(Direction direction) throws NoExitException {

@@ -129,7 +129,6 @@ public class WorldMap3DGroup extends Group {
         Shape3D mesh = generateBlock(GrassBlock.class);
         mesh.setTranslateZ(-BLOCK_HEIGHT);
         this.getChildren().add(mesh);
-
     }
 
     private Group generateTileGroup(Tile tile) {
@@ -216,6 +215,13 @@ public class WorldMap3DGroup extends Group {
         return meshView;
     }
 
+    private Shape3D generatePlayerCube() {
+        double playerSize = BLOCK_HEIGHT/3f;
+        Box box = new Box(playerSize, playerSize, playerSize);
+        box.setMaterial(new PhongMaterial(Color.WHITE));
+        return box;
+    }
+
     private Image loadImage(String resourcePath) {
         return new Image(getClass().getResourceAsStream(resourcePath));
     }
@@ -233,6 +239,7 @@ public class WorldMap3DGroup extends Group {
     }
 
     private Shape3D generateShape(Color color) {
+        //noinspection SuspiciousNameCombination
         Box box = new Box(BLOCK_HEIGHT, BLOCK_HEIGHT, BLOCK_HEIGHT);
         box.setTranslateY(0);
         box.setTranslateX(0);
@@ -249,7 +256,5 @@ public class WorldMap3DGroup extends Group {
         return scene;
     }
 
-    public void updateWorldMap(WorldMap worldMap) {
-        this.interaction.setWorldMap(worldMap);
-    }
+
 }
