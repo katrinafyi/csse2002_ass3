@@ -7,7 +7,6 @@ import csse2002.block.world.SoilBlock;
 import csse2002.block.world.StoneBlock;
 import csse2002.block.world.Tile;
 import csse2002.block.world.WoodBlock;
-import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -27,7 +26,9 @@ import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.TriangleMesh;
 import javafx.util.Pair;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WorldMap3DGroup extends Group {
@@ -36,7 +37,7 @@ public class WorldMap3DGroup extends Group {
     private final PerspectiveCamera camera = new PerspectiveCamera();
     private final BlockWorldInteraction interaction;
 
-    private final Map<Tile, Group> tileGroupsMap = new HashMap<>();
+    private final Map<Tile, List<Shape3D>> tileGroups = new HashMap<>();
 
     private final Map<Class<? extends Block>, Image> blockTextures = new HashMap<>();
 
@@ -61,7 +62,7 @@ public class WorldMap3DGroup extends Group {
     public WorldMap3DGroup(BlockWorldInteraction interaction) {
         this.interaction = interaction;
 
-        interaction.addMapCallback(this::worldMapLoaded);
+        interaction.addMapCallback(this::worldMapLoadHandler);
 
         addTestShapes();
         setupCameraAndLight();
@@ -74,16 +75,20 @@ public class WorldMap3DGroup extends Group {
     private void setupCameraAndLight() {
         PointLight light = new PointLight(Color.WHITE);
 
-        light.translateXProperty().bind(camera.translateXProperty().add(500));
-        light.translateYProperty().bind(camera.translateYProperty().add(500));
-        light.translateZProperty().bind(camera.translateZProperty().subtract(1000));
+//        light.translateXProperty().bind(camera.translateXProperty());
+//        light.translateYProperty().bind(camera.translateYProperty());
+//        light.translateZProperty().bind(camera.translateZProperty().subtract(400));
 
         camera.setTranslateZ(-400);
-        camera.setTranslateX(-200);
-        camera.setTranslateY(-200);
-        camera.setFarClip(10000.0);
+        camera.setTranslateX(-250);
+        camera.setTranslateY(-250);
+
+        light.setTranslateZ(-4000);
+        light.setTranslateX(0);
+        light.setTranslateY(0);
 
         this.getChildren().addAll(light);
+
     }
 
     private void bindTranslate(Node target, Node source) {
@@ -125,17 +130,20 @@ public class WorldMap3DGroup extends Group {
         this.getChildren().add(mesh);
     }
 
-    private Group generateTileGroup(Tile tile) {
-        Group tileGroup = new Group();
-        ObservableList<Node> children = tileGroup.getChildren();
+    private List<Shape3D> generateBlocksOnTile(Position position, Tile tile) {
+        List<Shape3D> children = new ArrayList<>();
+        Point2D scenePos = positionToScene(position);
+
         int i = 0;
         for (Block block : tile.getBlocks()) {
             Shape3D blockShape = generateBlock(block.getClass());
             blockShape.setTranslateZ(i*-BLOCK_HEIGHT);
+            blockShape.setTranslateX(scenePos.getX());
+            blockShape.setTranslateY(scenePos.getY());
             children.add(blockShape);
             i++;
         }
-        return tileGroup;
+        return children;
     }
 
     private Shape3D generateBlock(Class<? extends Block> blockClass) {
@@ -257,24 +265,20 @@ public class WorldMap3DGroup extends Group {
     }
 
     private void removeAllTiles() {
-        this.getChildren().removeAll(tileGroupsMap.values());
-        tileGroupsMap.clear();
+        for (List<Shape3D> shapes : tileGroups.values()) {
+            this.getChildren().removeAll(shapes);
+        }
+        tileGroups.clear();
     }
 
-    private void worldMapLoaded() {
+    private void worldMapLoadHandler() {
         System.out.println("handling loaded in 3d map");
         removeAllTiles();
         for (Position position : interaction.getPositionTileMap().keySet()) {
             Tile tile = interaction.getPositionTileMap().get(position);
-            Group tileGroup = generateTileGroup(tile);
-            Point2D scenePos = positionToScene(position);
-            tileGroup.setTranslateX(scenePos.getX());
-            tileGroup.setTranslateY(scenePos.getY());
-
-            tileGroupsMap.put(tile, tileGroup);
-            this.getChildren().add(tileGroup);
+            List<Shape3D> tileGroup = generateBlocksOnTile(position, tile);
+            tileGroups.put(tile, tileGroup);
+            this.getChildren().addAll(tileGroup);
         }
     }
-
-
 }
