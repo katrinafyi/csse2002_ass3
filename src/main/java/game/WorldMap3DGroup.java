@@ -211,7 +211,6 @@ public class WorldMap3DGroup extends Group {
         meshView.setTranslateX(0);
         meshView.setTranslateY(0);
         meshView.setTranslateZ(0);
-
         return meshView;
     }
 
@@ -306,13 +305,9 @@ public class WorldMap3DGroup extends Group {
         camera.getTranslation().setZ(-200);
 
         camera.bindRotationPivots(player);
-        light.getTransforms().clear();
-        Translate t = new Translate();
-        t.xProperty().bind(player.translateXProperty());
-        t.yProperty().bind(player.translateYProperty());
-        t.setZ(-4000);
-        light.getTransforms().addAll(
-                camera.getHRotate(), camera.getVRotate(), t
-        );
+
+        light.translateXProperty().bind(player.translateXProperty().add(100));
+        light.translateYProperty().bind(player.translateYProperty().add(100));
+        light.translateZProperty().bind(player.translateZProperty().subtract(400));
     }
 }
