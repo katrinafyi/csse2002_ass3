@@ -35,6 +35,8 @@ public class MainApplication extends Application {
     private WorldMap3DGroup worldMap = null;
     private Stage primaryStage;
 
+    private final BlockWorldInteraction worldInteraction = new BlockWorldInteraction();
+
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
 
@@ -52,7 +54,7 @@ public class MainApplication extends Application {
         MenuBar menuBar = constructMenuBar();
         container.getChildren().addAll(menuBar, rootGrid);
 
-        this.worldMap = new WorldMap3DGroup();
+        this.worldMap = new WorldMap3DGroup(worldInteraction);
         SubScene worldMap = this.worldMap.generateScene();
         rootGrid.add(worldMap, 0, 0);
         GridPane.setValignment(worldMap, VPos.TOP);
@@ -96,7 +98,7 @@ public class MainApplication extends Application {
         fileChooser.setTitle("Open map");
         String filePath = fileChooser.showOpenDialog(primaryStage).getPath();
         try {
-            worldMap.updateWorldMap(new WorldMap(filePath));
+            worldInteraction.loadWorldMapFile(filePath);
         } catch (WorldMapFormatException | WorldMapInconsistentException e) {
             showErrorMessage(e.toString());
         } catch (FileNotFoundException e) {

@@ -39,7 +39,7 @@ public class WorldMap3DGroup extends Group {
 
     private static final int BLOCK_HEIGHT = 32;
     private final PerspectiveCamera camera = new PerspectiveCamera();
-    private final BlockWorldInteraction interaction = new BlockWorldInteraction();
+    private final BlockWorldInteraction interaction;
 
     private final Map<Class<? extends Block>, Image> blockTextures = new HashMap<>();
 
@@ -59,7 +59,9 @@ public class WorldMap3DGroup extends Group {
         }
     }
 
-    public WorldMap3DGroup() {
+    public WorldMap3DGroup(BlockWorldInteraction interaction) {
+        this.interaction = interaction;
+
         addTestShapes();
         setupCameraAndLight();
     }
@@ -71,11 +73,6 @@ public class WorldMap3DGroup extends Group {
     private void drawTile(Position position, Tile tile) {
 
     }
-
-    public BlockWorldInteraction getWorldInteraction() {
-        return interaction;
-    }
-
 
     private void setupCameraAndLight() {
         PointLight light = new PointLight(Color.YELLOW);

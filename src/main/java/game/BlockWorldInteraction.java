@@ -32,13 +32,7 @@ public class BlockWorldInteraction {
     private final List<MapLoadedCallback> mapLoadedCallbacks = new ArrayList<>();
     private final Map<Position, Tile> positionTileMap = new HashMap<>();
 
-    public BlockWorldInteraction() {
-
-    }
-
-    public BlockWorldInteraction(WorldMap worldMap) {
-        setWorldMap(worldMap);
-    }
+    public BlockWorldInteraction() {}
 
     public void addTileCallback(TileChangedCallback callback) {
         tileChangedCallbacks.add(callback);
