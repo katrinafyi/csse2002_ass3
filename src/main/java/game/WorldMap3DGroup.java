@@ -1,13 +1,15 @@
 package game;
 
+import csse2002.block.world.Block;
+import csse2002.block.world.GrassBlock;
 import csse2002.block.world.Position;
 import csse2002.block.world.Tile;
+import csse2002.block.world.WoodBlock;
 import csse2002.block.world.WorldMap;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.geometry.Orientation;
-import javafx.geometry.Point3D;
+import javafx.collections.ObservableList;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SnapshotParameters;
@@ -15,27 +17,42 @@ import javafx.scene.SubScene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
-import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.TriangleMesh;
+import javafx.util.Pair;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class WorldMap3DGroup extends Group {
-    private static final int B = 32;
+
+    private static final int BLOCK_HEIGHT = 32;
     private final PerspectiveCamera camera = new PerspectiveCamera();
     private final BlockWorldInteraction interaction = new BlockWorldInteraction();
 
     private final Map<Position, Tile> positionTileMap = new HashMap<>();
+
+    private final Map<Class<? extends Block>, Image> blockTextures = new HashMap<>();
+
+    {
+        Map<Class, Pair<String, String>> textureFiles = new HashMap<>();
+        textureFiles.put(GrassBlock.class, new Pair<>("/grass_top.png", "/grass_block_side.png"));
+        textureFiles.put(WoodBlock.class, new Pair<>("/oak_planks.png", null));
+
+        for (Class type : textureFiles.keySet()) {
+            String sideTexture = textureFiles.get(type).getKey();
+            String topTexture = textureFiles.get(type).getValue();
+            if (topTexture == null) {
+                topTexture = sideTexture;
+            }
+            blockTextures.put(type,
+                    tileImages(loadImage(sideTexture), loadImage(topTexture)));
+        }
+    }
 
     public WorldMap3DGroup() {
         addTestShapes();
@@ -58,23 +75,28 @@ public class WorldMap3DGroup extends Group {
         Shape3D b = generateShape(Color.BLACK);
         this.getChildren().add(b);
 
+        Group xGroup = new Group();
+
         for (int i = 0; i < 4; i++) {
             Shape3D b2 = generateShape(Color.RED);
-            b2.setTranslateX((i+1)*B);
-            this.getChildren().add(b2);
+            b2.setTranslateX((i)* BLOCK_HEIGHT);
+            xGroup.getChildren().add(b2);
 
             Shape3D b3 = generateShape(Color.GREEN);
-            b3.setTranslateY((i+1)*B);
+            b3.setTranslateY((i+1)* BLOCK_HEIGHT);
             this.getChildren().add(b3);
 
             Shape3D b4 = generateShape(Color.BLUE);
-            b4.setTranslateZ((i+1)*B);
+            b4.setTranslateZ((i+1)* BLOCK_HEIGHT);
             this.getChildren().add(b4);
         }
 
+        xGroup.setTranslateX(2* BLOCK_HEIGHT);
+        this.getChildren().add(xGroup);
+
 
         Shape3D mesh = generateCubeMesh();
-        mesh.setTranslateZ(-B);
+        mesh.setTranslateZ(-BLOCK_HEIGHT);
         this.getChildren().add(mesh);
 
         camera.setTranslateZ(-50);
@@ -86,34 +108,21 @@ public class WorldMap3DGroup extends Group {
 
     }
 
-    private Shape3D generateTestMesh() {
-        TriangleMesh pyramidMesh = new TriangleMesh();
-        pyramidMesh.getTexCoords().addAll(0,0);
-        float h = B;                    // Height
-        float s = B*2;                    // Side
-        pyramidMesh.getPoints().addAll(
-                0,    0,    0,            // Point 0 - Top
-                0,    h,    -s/2,         // Point 1 - Front
-                -s/2, h,    0,            // Point 2 - Left
-                s/2,  h,    0,            // Point 3 - Back
-                0,    h,    s/2           // Point 4 - Right
-        );
-        pyramidMesh.getFaces().addAll(
-                0,0,  2,0,  1,0,          // Front left face
-                0,0,  1,0,  3,0,          // Front right face
-                0,0,  3,0,  4,0,          // Back right face
-                0,0,  4,0,  2,0,          // Back left face
-                4,0,  1,0,  2,0,          // Bottom rear face
-                4,0,  3,0,  1,0           // Bottom front face
-        );
-        MeshView pyramid = new MeshView(pyramidMesh);
-        pyramid.setDrawMode(DrawMode.FILL);
-        pyramid.setMaterial(new PhongMaterial(Color.BLUE));
-        return pyramid;
+    private Group generateTileGroup(Tile tile) {
+        Group tileGroup = new Group();
+        ObservableList<Node> children = tileGroup.getChildren();
+        int i = 0;
+        for (Block block : tile.getBlocks()) {
+            Shape3D blockShape = generateCubeMesh(
+                    blockTextures.get(block.getClass()));
+            blockShape.setTranslateZ(i*-BLOCK_HEIGHT);
+            children.add(blockShape);
+            i++;
+        }
+        return tileGroup;
     }
 
-    private Shape3D generateCubeMesh() {
-        float w = B;
+    private Shape3D generateCubeMesh(Image diffuseMap) {
         TriangleMesh mesh = new TriangleMesh();
         mesh.getTexCoords().addAll(
                 // Side textures are left half of image.
@@ -130,7 +139,7 @@ public class WorldMap3DGroup extends Group {
         );
 
         // Half width. Used to centre the cube.
-        float hw = B/2f;
+        float hw = BLOCK_HEIGHT / 2f;
         mesh.getPoints().addAll(
                 // Bottom 4 corners.
                 -hw, hw, -hw,
@@ -170,16 +179,18 @@ public class WorldMap3DGroup extends Group {
         MeshView meshView = new MeshView(mesh);
 
         PhongMaterial phong = new PhongMaterial();
-        phong.setDiffuseMap(
-tileImages(                new Image(getClass().getResourceAsStream("/tnt_side.png")),
-        new Image(getClass().getResourceAsStream("/tnt_top.png"))));
-        //meshView.setMaterial(phong);
+        phong.setDiffuseMap(diffuseMap);
+
         meshView.setMaterial(phong);
         meshView.setTranslateX(0);
         meshView.setTranslateY(0);
         meshView.setTranslateZ(0);
 
         return meshView;
+    }
+
+    private Image loadImage(String resourcePath) {
+        return new Image(getClass().getResourceAsStream(resourcePath));
     }
 
     private Image tileImages(Image image1, Image image2) {
@@ -189,7 +200,7 @@ tileImages(                new Image(getClass().getResourceAsStream("/tnt_side.p
     }
 
     private Shape3D generateShape(Color color) {
-        Box box = new Box(B, B, B);
+        Box box = new Box(BLOCK_HEIGHT, BLOCK_HEIGHT, BLOCK_HEIGHT);
         box.setTranslateY(0);
         box.setTranslateX(0);
         box.setTranslateZ(0);
