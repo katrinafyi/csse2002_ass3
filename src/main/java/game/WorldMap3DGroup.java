@@ -35,7 +35,9 @@ import java.util.Map;
 public class WorldMap3DGroup extends Group {
 
     private static final int BLOCK_HEIGHT = 32;
-    private final PerspectiveCamera camera = new PerspectiveCamera();
+    private static final int WIDTH = 500;
+    private static final int HEIGHT = 500;
+    private final RotatingCamera camera = new RotatingCamera();
     private final BlockWorldInteraction interaction;
 
     private final Map<Tile, List<Shape3D>> tileGroups = new HashMap<>();
@@ -69,7 +71,7 @@ public class WorldMap3DGroup extends Group {
         setupCameraAndLight();
     }
 
-    public PerspectiveCamera getCamera() {
+    public RotatingCamera getCamera() {
         return camera;
     }
 
@@ -80,15 +82,22 @@ public class WorldMap3DGroup extends Group {
 //        light.translateYProperty().bind(camera.translateYProperty());
 //        light.translateZProperty().bind(camera.translateZProperty().subtract(400));
 
-        camera.setTranslateZ(-400);
-        camera.setTranslateX(-250);
-        camera.setTranslateY(-250);
+//        camera.setTranslateZ(-400);
+//        camera.setTranslateX(-250);
+//        camera.setTranslateY(-100);
+
+        camera.setFieldOfView(100);
 
         light.setTranslateZ(-4000);
         light.setTranslateX(0);
         light.setTranslateY(0);
 
-        this.getChildren().addAll(light);
+        PointLight light2 = new PointLight(Color.WHITE);
+        light2.setTranslateZ(-4000);
+        light2.setTranslateY(100);
+        light2.setTranslateX(100);
+
+        this.getChildren().addAll( light2);
 
     }
 
@@ -117,9 +126,9 @@ public class WorldMap3DGroup extends Group {
             b4.setTranslateZ((i+1)* BLOCK_HEIGHT);
             this.getChildren().add(b4);
 
-            Shape3D b5 = generateShape(Color.PURPLE);
-            b5.setTranslateZ((i+1)*-BLOCK_HEIGHT);
-            this.getChildren().add(b5);
+//            Shape3D b5 = generateShape(Color.PURPLE);
+//            b5.setTranslateZ((i+1)*-BLOCK_HEIGHT);
+//            this.getChildren().add(b5);
         }
 
         xGroup.setTranslateX(2* BLOCK_HEIGHT);
@@ -219,9 +228,9 @@ public class WorldMap3DGroup extends Group {
     }
 
     private Shape3D generatePlayerCube() {
-        double playerSize = BLOCK_HEIGHT;
+        double playerSize = BLOCK_HEIGHT/2f;
         Box box = new Box(playerSize, playerSize, playerSize);
-        box.setMaterial(new PhongMaterial(Color.BLACK));
+        box.setMaterial(new PhongMaterial(Color.CORAL));
         return box;
     }
 
@@ -253,7 +262,7 @@ public class WorldMap3DGroup extends Group {
     }
 
     public SubScene generateScene() {
-        SubScene scene = new SubScene(this, 500, 500, true, SceneAntialiasing.BALANCED);
+        SubScene scene = new SubScene(this, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
         scene.setCamera(camera);
         scene.setFill(Color.MEDIUMAQUAMARINE);
         return scene;
@@ -292,9 +301,19 @@ public class WorldMap3DGroup extends Group {
         Position start = interaction.getWorldMap().getStartPosition();
         Tile tile = interaction.getWorldMap().getTile(start);
 
+        bindCameraToPlayer(player);
+
         player.setTranslateZ(-BLOCK_HEIGHT * (1+tile.getBlocks().size()));
         player.setTranslateX(0);
         player.setTranslateY(0);
+
+
         return player;
+    }
+
+    private void bindCameraToPlayer(Shape3D player) {
+        camera.getTranslation().xProperty().bind(player.translateXProperty().subtract(WIDTH/2f));
+        camera.getTranslation().yProperty().bind(player.translateYProperty().subtract(HEIGHT/2f));
+        camera.getTranslation().setZ(-400);
     }
 }

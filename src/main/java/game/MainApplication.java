@@ -1,7 +1,5 @@
 package game;
 
-import csse2002.block.world.BlockWorldException;
-import csse2002.block.world.WorldMap;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 import javafx.application.Application;
@@ -9,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
@@ -18,6 +15,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -32,7 +30,7 @@ import java.io.FileNotFoundException;
 
 public class MainApplication extends Application {
 
-    private WorldMap3DGroup worldMap = null;
+    private WorldMap3DGroup worldMap3D = null;
     private Stage primaryStage;
 
     private final BlockWorldInteraction worldInteraction = new BlockWorldInteraction();
@@ -54,8 +52,8 @@ public class MainApplication extends Application {
         MenuBar menuBar = constructMenuBar();
         container.getChildren().addAll(menuBar, rootGrid);
 
-        this.worldMap = new WorldMap3DGroup(worldInteraction);
-        SubScene worldMap = this.worldMap.generateScene();
+        this.worldMap3D = new WorldMap3DGroup(worldInteraction);
+        SubScene worldMap = this.worldMap3D.generateScene();
         rootGrid.add(worldMap, 0, 0);
         GridPane.setValignment(worldMap, VPos.TOP);
 
@@ -88,6 +86,30 @@ public class MainApplication extends Application {
 
         primaryStage.setMinWidth(622);
         primaryStage.minHeightProperty().bind(worldMap.widthProperty().add(80.5));
+
+        scene.setOnKeyPressed(e -> {
+            int direction = 0;
+            if (e.getCode() == KeyCode.RIGHT) {
+                direction = -1;
+            } else if (e.getCode() == KeyCode.LEFT) {
+                direction = +1;
+            }
+
+            if (direction != 0) {
+                worldMap3D.getCamera().rotateHorizontal(direction*10);
+            }
+
+            int up = 0;
+            if (e.getCode() == KeyCode.UP)
+                up = 1;
+            else if (e.getCode() == KeyCode.DOWN)
+                up = -1;
+
+            if (up != 0) {
+                worldMap3D.getCamera().rotateVertical(up*10);
+            }
+
+        });
 
         primaryStage.setHeight(580.5);
         primaryStage.show();
@@ -136,8 +158,8 @@ public class MainApplication extends Application {
 
         Button debug = new Button("(Debug)");
         debug.setOnAction((e) -> {
-            System.out.println(worldMap.getChildren());
-            System.out.println(worldMap);
+            System.out.println(worldMap3D.getChildren());
+            System.out.println(worldMap3D);
             System.out.println(""+primaryStage.getWidth() + "x"+primaryStage.getHeight());
         });
 
