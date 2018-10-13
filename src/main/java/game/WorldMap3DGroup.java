@@ -8,6 +8,7 @@ import csse2002.block.world.StoneBlock;
 import csse2002.block.world.Tile;
 import csse2002.block.world.WoodBlock;
 import javafx.geometry.Point2D;
+import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.PointLight;
@@ -23,6 +24,7 @@ import javafx.scene.shape.Box;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.TriangleMesh;
+import javafx.scene.transform.Translate;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class WorldMap3DGroup extends Group {
     private static final int WIDTH = 500;
     private static final int HEIGHT = 500;
     private final RotatingCamera camera = new RotatingCamera();
+    private final PointLight light = new PointLight(Color.WHITE);
     private final BlockWorldInteraction interaction;
 
     private final Map<Tile, List<Shape3D>> tileGroups = new HashMap<>();
@@ -44,7 +47,9 @@ public class WorldMap3DGroup extends Group {
 
     {
         Map<Class<? extends Block>, Pair<String, String>> textureFiles = new HashMap<>();
-        textureFiles.put(GrassBlock.class, new Pair<>("/grass_top2.png", "/grass_block_side.png"));
+//        textureFiles.put(GrassBlock.class, new Pair<>("/grass_top2.png", "/grass_block_side.png"));
+        textureFiles.put(GrassBlock.class, new Pair<>("/tnt_top.png", "/tnt_side.png"));
+
         textureFiles.put(WoodBlock.class, new Pair<>("/oak_planks.png", null));
         textureFiles.put(StoneBlock.class, new Pair<>("/stone.png", null));
         textureFiles.put(SoilBlock.class, new Pair<>("/dirt.png", null));
@@ -65,7 +70,10 @@ public class WorldMap3DGroup extends Group {
 
         interaction.addMapCallback(this::worldMapLoadHandler);
 
-        addTestShapes();
+        Shape3D block = generateBlock(GrassBlock.class);
+        this.getChildren().add(block);
+        bindCameraToPlayer(block);
+
         setupCameraAndLight();
     }
 
@@ -74,8 +82,6 @@ public class WorldMap3DGroup extends Group {
     }
 
     private void setupCameraAndLight() {
-        PointLight light = new PointLight(Color.WHITE);
-
 //        light.translateXProperty().bind(camera.translateXProperty());
 //        light.translateYProperty().bind(camera.translateYProperty());
 //        light.translateZProperty().bind(camera.translateZProperty().subtract(400));
@@ -84,11 +90,6 @@ public class WorldMap3DGroup extends Group {
 //        camera.setTranslateX(-250);
 //        camera.setTranslateY(-100);
 
-        camera.setFieldOfView(100);
-
-        light.setTranslateZ(-4000);
-        light.setTranslateX(0);
-        light.setTranslateY(0);
 
         PointLight light2 = new PointLight(Color.WHITE);
         light2.setTranslateZ(-4000);
@@ -106,6 +107,7 @@ public class WorldMap3DGroup extends Group {
     }
 
     private void addTestShapes() {
+
         Shape3D b = generateShape(Color.BLACK);
         this.getChildren().add(b);
 
@@ -201,8 +203,8 @@ public class WorldMap3DGroup extends Group {
                 1,0, 2,1, 5,3,
                 5,3, 2,1, 6,2,
 
-                4,0, 5,1, 6,3,
-                6,3, 5,1, 7,2,
+                5,0, 6,1, 4,3,
+                4,3, 6,1, 7,2,
 
                 4,0, 7,1, 0,3,
                 0,3, 7,1, 3,2,
