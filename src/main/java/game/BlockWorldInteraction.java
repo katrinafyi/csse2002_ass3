@@ -60,7 +60,7 @@ public class BlockWorldInteraction {
 
     public void notifyMapCallbacks() {
         for (MapLoadedCallback callback : mapLoadedCallbacks) {
-            callback.call(worldMap, Collections.unmodifiableMap(positionTileMap));
+            callback.call();
         }
     }
 
@@ -75,10 +75,15 @@ public class BlockWorldInteraction {
             throws WorldMapInconsistentException, WorldMapFormatException,
             FileNotFoundException {
         setWorldMap(new WorldMap(filePath));
+        notifyMapCallbacks();
     }
 
     public WorldMap getWorldMap() {
         return this.worldMap;
+    }
+
+    public Map<Position, Tile> getPositionTileMap() {
+        return Collections.unmodifiableMap(positionTileMap);
     }
 
     private void createPositionTileMapping() {

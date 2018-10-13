@@ -3,13 +3,12 @@ package game;
 import csse2002.block.world.Block;
 import csse2002.block.world.GrassBlock;
 import csse2002.block.world.Position;
+import csse2002.block.world.SoilBlock;
+import csse2002.block.world.StoneBlock;
 import csse2002.block.world.Tile;
 import csse2002.block.world.WoodBlock;
-import csse2002.block.world.WorldMap;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.geometry.Point3D;
-import javafx.scene.AmbientLight;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
@@ -19,7 +18,6 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -29,9 +27,6 @@ import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.TriangleMesh;
 import javafx.util.Pair;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,12 +36,16 @@ public class WorldMap3DGroup extends Group {
     private final PerspectiveCamera camera = new PerspectiveCamera();
     private final BlockWorldInteraction interaction;
 
+    private final Map<Tile, Group> tileGroupsMap = new HashMap<>();
+
     private final Map<Class<? extends Block>, Image> blockTextures = new HashMap<>();
 
     {
         Map<Class<? extends Block>, Pair<String, String>> textureFiles = new HashMap<>();
         textureFiles.put(GrassBlock.class, new Pair<>("/grass_top2.png", "/grass_block_side.png"));
         textureFiles.put(WoodBlock.class, new Pair<>("/oak_planks.png", null));
+        textureFiles.put(StoneBlock.class, new Pair<>("/stone.png", null));
+        textureFiles.put(SoilBlock.class, new Pair<>("/dirt.png", null));
 
         for (Class<? extends Block> type : textureFiles.keySet()) {
             String topTexture = textureFiles.get(type).getKey();
@@ -62,20 +61,18 @@ public class WorldMap3DGroup extends Group {
     public WorldMap3DGroup(BlockWorldInteraction interaction) {
         this.interaction = interaction;
 
+        interaction.addMapCallback(this::worldMapLoaded);
+
         addTestShapes();
         setupCameraAndLight();
     }
 
-    private void resetMapState() {
-
-    }
-
-    private void drawTile(Position position, Tile tile) {
-
+    public PerspectiveCamera getCamera() {
+        return camera;
     }
 
     private void setupCameraAndLight() {
-        PointLight light = new PointLight(Color.YELLOW);
+        PointLight light = new PointLight(Color.WHITE);
 
         light.translateXProperty().bind(camera.translateXProperty().add(500));
         light.translateYProperty().bind(camera.translateYProperty().add(500));
@@ -251,6 +248,32 @@ public class WorldMap3DGroup extends Group {
         scene.setCamera(camera);
         scene.setFill(Color.MEDIUMAQUAMARINE);
         return scene;
+    }
+
+    private Point2D positionToScene(Position pos) {
+        Position start = interaction.getWorldMap().getStartPosition();
+        return new Point2D(pos.getX() - start.getX(), pos.getY() - start.getY())
+                .multiply(BLOCK_HEIGHT);
+    }
+
+    private void removeAllTiles() {
+        this.getChildren().removeAll(tileGroupsMap.values());
+        tileGroupsMap.clear();
+    }
+
+    private void worldMapLoaded() {
+        System.out.println("handling loaded in 3d map");
+        removeAllTiles();
+        for (Position position : interaction.getPositionTileMap().keySet()) {
+            Tile tile = interaction.getPositionTileMap().get(position);
+            Group tileGroup = generateTileGroup(tile);
+            Point2D scenePos = positionToScene(position);
+            tileGroup.setTranslateX(scenePos.getX());
+            tileGroup.setTranslateY(scenePos.getY());
+
+            tileGroupsMap.put(tile, tileGroup);
+            this.getChildren().add(tileGroup);
+        }
     }
 
 

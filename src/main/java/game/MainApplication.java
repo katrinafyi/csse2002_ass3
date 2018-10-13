@@ -144,7 +144,16 @@ public class MainApplication extends Application {
         Button b2 = new Button("(Size to scene)");
         b2.setOnAction(e -> primaryStage.sizeToScene());
 
-        vbox.getChildren().addAll(grid, new Button("DIG"), debug, b2);
+        Button b3 = new Button("(Load map)");
+        b3.setOnAction(e -> {
+            try {
+                worldInteraction.loadWorldMapFile("validTestCase2.txt");
+            } catch (WorldMapInconsistentException | WorldMapFormatException | FileNotFoundException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        vbox.getChildren().addAll(grid, new Button("DIG"), debug, b2, b3);
         return vbox;
     }
 

@@ -12,4 +12,12 @@ public class Utilities {
     public static Position addPos(Position p1, Position p2) {
         return new Position(p1.getX()+p2.getX(), p1.getY()+p2.getY());
     }
+
+    public static Position negPos(Position p) {
+        return new Position(-p.getX(), -p.getY());
+    }
+
+    public static Position subPos(Position p1, Position p2) {
+        return addPos(p1, negPos(p2));
+    }
 }
