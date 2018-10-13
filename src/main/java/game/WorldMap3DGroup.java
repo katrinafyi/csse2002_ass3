@@ -8,10 +8,12 @@ import csse2002.block.world.WoodBlock;
 import csse2002.block.world.WorldMap;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.Point3D;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
+import javafx.scene.PointLight;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.SubScene;
@@ -43,7 +45,7 @@ public class WorldMap3DGroup extends Group {
 
     {
         Map<Class<? extends Block>, Pair<String, String>> textureFiles = new HashMap<>();
-        textureFiles.put(GrassBlock.class, new Pair<>("/grass_top.png", "/grass_block_side.png"));
+        textureFiles.put(GrassBlock.class, new Pair<>("/grass_top2.png", "/grass_block_side.png"));
         textureFiles.put(WoodBlock.class, new Pair<>("/oak_planks.png", null));
 
         for (Class<? extends Block> type : textureFiles.keySet()) {
@@ -59,6 +61,7 @@ public class WorldMap3DGroup extends Group {
 
     public WorldMap3DGroup() {
         addTestShapes();
+        setupCameraAndLight();
     }
 
     private void resetMapState() {
@@ -74,13 +77,34 @@ public class WorldMap3DGroup extends Group {
     }
 
 
+    private void setupCameraAndLight() {
+        PointLight light = new PointLight(Color.YELLOW);
+
+        light.translateXProperty().bind(camera.translateXProperty().add(500));
+        light.translateYProperty().bind(camera.translateYProperty().add(500));
+        light.translateZProperty().bind(camera.translateZProperty().subtract(1000));
+
+        camera.setTranslateZ(-400);
+        camera.setTranslateX(-200);
+        camera.setTranslateY(-200);
+        camera.setFarClip(10000.0);
+
+        this.getChildren().addAll(light);
+    }
+
+    private void bindTranslate(Node target, Node source) {
+        target.translateXProperty().bind(source.translateXProperty());
+        target.translateYProperty().bind(source.translateYProperty());
+        target.translateZProperty().bind(source.translateZProperty());
+    }
+
     private void addTestShapes() {
         Shape3D b = generateShape(Color.BLACK);
         this.getChildren().add(b);
 
         Group xGroup = new Group();
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 9; i++) {
             Shape3D b2 = generateShape(Color.RED);
             b2.setTranslateX((i)* BLOCK_HEIGHT);
             xGroup.getChildren().add(b2);
@@ -92,6 +116,10 @@ public class WorldMap3DGroup extends Group {
             Shape3D b4 = generateShape(Color.BLUE);
             b4.setTranslateZ((i+1)* BLOCK_HEIGHT);
             this.getChildren().add(b4);
+
+            Shape3D b5 = generateShape(Color.PURPLE);
+            b5.setTranslateZ((i+1)*-BLOCK_HEIGHT);
+            this.getChildren().add(b5);
         }
 
         xGroup.setTranslateX(2* BLOCK_HEIGHT);
@@ -101,11 +129,6 @@ public class WorldMap3DGroup extends Group {
         Shape3D mesh = generateBlock(GrassBlock.class);
         mesh.setTranslateZ(-BLOCK_HEIGHT);
         this.getChildren().add(mesh);
-
-        camera.setTranslateZ(-50);
-        camera.setTranslateX(-90);
-        camera.setTranslateY(-90);
-        camera.setFarClip(10000.0);
 
     }
 
