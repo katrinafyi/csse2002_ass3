@@ -7,6 +7,7 @@ import csse2002.block.world.Tile;
 import csse2002.block.world.WoodBlock;
 import csse2002.block.world.WorldMap;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -17,6 +18,7 @@ import javafx.scene.SubScene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -25,6 +27,9 @@ import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.TriangleMesh;
 import javafx.util.Pair;
 
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,18 +42,18 @@ public class WorldMap3DGroup extends Group {
     private final Map<Class<? extends Block>, Image> blockTextures = new HashMap<>();
 
     {
-        Map<Class, Pair<String, String>> textureFiles = new HashMap<>();
-        textureFiles.put(GrassBlock.class, new Pair<>("/grass_block_side.png", "/grass_top.png"));
+        Map<Class<? extends Block>, Pair<String, String>> textureFiles = new HashMap<>();
+        textureFiles.put(GrassBlock.class, new Pair<>("/grass_top.png", "/grass_block_side.png"));
         textureFiles.put(WoodBlock.class, new Pair<>("/oak_planks.png", null));
 
-        for (Class type : textureFiles.keySet()) {
-            String sideTexture = textureFiles.get(type).getKey();
-            String topTexture = textureFiles.get(type).getValue();
-            if (topTexture == null) {
-                topTexture = sideTexture;
+        for (Class<? extends Block> type : textureFiles.keySet()) {
+            String topTexture = textureFiles.get(type).getKey();
+            String sideTexture = textureFiles.get(type).getValue();
+            if (sideTexture == null) {
+                sideTexture = topTexture;
             }
             blockTextures.put(type,
-                    tileImages(loadImage(sideTexture), loadImage(topTexture)));
+                    tileImages(loadImage(topTexture), loadImage(sideTexture)));
         }
     }
 
@@ -102,8 +107,6 @@ public class WorldMap3DGroup extends Group {
         camera.setTranslateY(-90);
         camera.setFarClip(10000.0);
 
-        this.getChildren().add(new AmbientLight(Color.WHITE));
-
     }
 
     private Group generateTileGroup(Tile tile) {
@@ -126,16 +129,16 @@ public class WorldMap3DGroup extends Group {
     private Shape3D generateCubeMesh(Image diffuseMap) {
         TriangleMesh mesh = new TriangleMesh();
         mesh.getTexCoords().addAll(
-                // Side textures are left half of image.
-                0f, 0f,
+                // Side texture is bottom half.
+                0f, 0.5f,
                 0f, 1f,
-                1f/2, 1f,
-                1f/2, 0f,
-
-                // Top textures are right half.
-                1f/2, 0f,
-                1f/2, 1f,
                 1f, 1f,
+                1f, 0.5f,
+
+                // Top textures are top half.
+                0f, 0f,
+                0f, 0.5f,
+                1f, 0.5f,
                 1f, 0f
         );
 
@@ -195,9 +198,15 @@ public class WorldMap3DGroup extends Group {
     }
 
     private Image tileImages(Image image1, Image image2) {
-        HBox hbox = new HBox();
-        hbox.getChildren().addAll(new ImageView(image1), new ImageView(image2));
-        return hbox.snapshot(new SnapshotParameters(), null);
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(new ImageView(image1), new ImageView(image2));
+        Image snap = vBox.snapshot(new SnapshotParameters(), null);
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(snap, null), "png", new File(image1.toString()+".png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return snap;
     }
 
     private Shape3D generateShape(Color color) {
