@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.TriangleMesh;
@@ -218,9 +219,9 @@ public class WorldMap3DGroup extends Group {
     }
 
     private Shape3D generatePlayerCube() {
-        double playerSize = BLOCK_HEIGHT/3f;
+        double playerSize = BLOCK_HEIGHT;
         Box box = new Box(playerSize, playerSize, playerSize);
-        box.setMaterial(new PhongMaterial(Color.WHITE));
+        box.setMaterial(new PhongMaterial(Color.BLACK));
         return box;
     }
 
@@ -274,11 +275,26 @@ public class WorldMap3DGroup extends Group {
     private void worldMapLoadHandler() {
         System.out.println("handling loaded in 3d map");
         removeAllTiles();
+
         for (Position position : interaction.getPositionTileMap().keySet()) {
             Tile tile = interaction.getPositionTileMap().get(position);
             List<Shape3D> tileGroup = generateBlocksOnTile(position, tile);
             tileGroups.put(tile, tileGroup);
             this.getChildren().addAll(tileGroup);
         }
+
+        this.getChildren().add(generatePlayerModel());
+    }
+
+    private Shape3D generatePlayerModel() {
+        Shape3D player = generatePlayerCube();
+
+        Position start = interaction.getWorldMap().getStartPosition();
+        Tile tile = interaction.getWorldMap().getTile(start);
+
+        player.setTranslateZ(-BLOCK_HEIGHT * (1+tile.getBlocks().size()));
+        player.setTranslateX(0);
+        player.setTranslateY(0);
+        return player;
     }
 }
