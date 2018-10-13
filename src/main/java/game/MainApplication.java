@@ -96,7 +96,7 @@ public class MainApplication extends Application {
             }
 
             if (direction != 0) {
-                worldMap3D.getCamera().rotateHorizontal(direction*10);
+                worldMap3D.getRotatingCamera().rotateHorizontal(direction*10);
             }
 
             int up = 0;
@@ -106,7 +106,7 @@ public class MainApplication extends Application {
                 up = -1;
 
             if (up != 0) {
-                worldMap3D.getCamera().rotateVertical(up*10);
+                worldMap3D.getRotatingCamera().rotateVertical(up*-10);
             }
 
         });

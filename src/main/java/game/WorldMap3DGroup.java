@@ -71,39 +71,16 @@ public class WorldMap3DGroup extends Group {
         interaction.addMapCallback(this::worldMapLoadHandler);
 
         Shape3D block = generateBlock(GrassBlock.class);
+        block.setTranslateX(64);
+        block.setTranslateY(96);
         this.getChildren().add(block);
         bindCameraToPlayer(block);
 
-        setupCameraAndLight();
+        this.getChildren().add(generateShape(Color.BLACK));
     }
 
-    public RotatingCamera getCamera() {
+    public RotatingCamera getRotatingCamera() {
         return camera;
-    }
-
-    private void setupCameraAndLight() {
-//        light.translateXProperty().bind(camera.translateXProperty());
-//        light.translateYProperty().bind(camera.translateYProperty());
-//        light.translateZProperty().bind(camera.translateZProperty().subtract(400));
-
-//        camera.setTranslateZ(-400);
-//        camera.setTranslateX(-250);
-//        camera.setTranslateY(-100);
-
-
-        PointLight light2 = new PointLight(Color.WHITE);
-        light2.setTranslateZ(-4000);
-        light2.setTranslateY(100);
-        light2.setTranslateX(100);
-
-        this.getChildren().addAll( light2);
-
-    }
-
-    private void bindTranslate(Node target, Node source) {
-        target.translateXProperty().bind(source.translateXProperty());
-        target.translateYProperty().bind(source.translateYProperty());
-        target.translateZProperty().bind(source.translateZProperty());
     }
 
     private void addTestShapes() {
@@ -314,6 +291,8 @@ public class WorldMap3DGroup extends Group {
     private void bindCameraToPlayer(Shape3D player) {
         camera.getTranslation().xProperty().bind(player.translateXProperty().subtract(WIDTH/2f));
         camera.getTranslation().yProperty().bind(player.translateYProperty().subtract(HEIGHT/2f));
-        camera.getTranslation().setZ(-400);
+        camera.getTranslation().setZ(-200);
+
+        camera.bindRotationPivots(player);
     }
 }
