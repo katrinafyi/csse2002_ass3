@@ -78,6 +78,7 @@ public class WorldMap3DGroup extends Group {
         block.setTranslateX(64);
         block.setTranslateY(96);
         this.getChildren().add(block);
+        bindCameraToPlayer(block);
 
         this.getChildren().add(generateShape(Color.BLACK));
         this.getChildren().add(light);
@@ -196,29 +197,14 @@ public class WorldMap3DGroup extends Group {
                 7,7, 2,5, 3,6
         );
 
-        mesh.getNormals().addAll(
-                0,-1,0,
-                0,-1,0,
-
-                0,0,-1,
-                0,0,-1,
-
-                1,0,0,
-                1,0,0,
-                0,0,1,
-                0,0,1,
-                -1,0,0,
-                -1,0,0,
-
-                0,1,0,
-                0,1,0
+        mesh.getFaceSmoothingGroups().addAll(
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         );
 
         MeshView meshView = new MeshView(mesh);
 
         PhongMaterial phong = new PhongMaterial();
         phong.setDiffuseMap(diffuseMap);
-        phong.setSpecularColor(Color.WHITE);
 
         meshView.setMaterial(phong);
         meshView.setCullFace(CullFace.BACK);
@@ -258,7 +244,8 @@ public class WorldMap3DGroup extends Group {
         box.setTranslateY(0);
         box.setTranslateX(0);
         box.setTranslateZ(0);
-        PhongMaterial phong = new PhongMaterial(color);
+        PhongMaterial phong = new PhongMaterial();
+        phong.setDiffuseMap(blockTextures.get(GrassBlock.class));
         box.setMaterial(phong);
         return box;
     }
