@@ -17,6 +17,7 @@ import game.view.BuilderControlsView;
 import game.view.InventoryView;
 import game.view.WorldMapView;
 
+import javax.rmi.CORBA.Util;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -34,6 +35,8 @@ public class BlockWorldController {
 
     private WorldMap worldMap;
     private final Map<Position, Tile> positionTileMap = new HashMap<>();
+    private Position currentPosition;
+
 
     private final WorldMapView worldMapView;
     private final BuilderControlsView builderControlsView;
@@ -47,49 +50,33 @@ public class BlockWorldController {
         this.inventoryView = inventoryView;
     }
 
+    public void loadWorldMapFile(String filePath)
+            throws WorldMapInconsistentException, WorldMapFormatException,
+            FileNotFoundException {
+        setWorldMap(new WorldMap(filePath));
+    }
+
     private void setWorldMap(WorldMap worldMap) {
         this.worldMap = worldMap;
 
         computePositionTileMap();
 
+        currentPosition = worldMap.getStartPosition();
         // Inform WorldMap of new builder and tiles.
-        worldMapView.newMapLoaded(worldMap.getStartPosition());
+        worldMapView.newMapLoaded(currentPosition);
         for (Position position : positionTileMap.keySet()) {
             notifyTileHeight(position);
             notifyTopBlock(position);
             notifyTileExits(position);
         }
+
+        // Update other UI components with state.
+        notifyCanDig();
+        notifyCanMoveBuilder();
+        notifyInventory();
     }
 
-    private void notifyTileHeight(Position position) {
-        int height = positionTileMap.get(position).getBlocks().size();
-        worldMapView.updateTileHeight(position, height);
-    }
-
-    private void notifyTopBlock(Position position) {
-        Tile tile = positionTileMap.get(position);
-        int height = tile.getBlocks().size();
-
-        BlockType topType;
-        try {
-            topType = height != 0 ? BlockType.fromBlock(tile.getTopBlock()) : null;
-        } catch (TooLowException e) {
-            throw new AssertionError(e);
-        }
-        worldMapView.updateTopBlock(position, topType);
-    }
-
-    private void notifyTileExits(Position position) {
-        Tile tile = positionTileMap.get(position);
-        for (Direction direction : Direction.values()) {
-            worldMapView.updateTileExit(
-                    position,
-                    direction,
-                    tile.getExits().get(direction.name()) != null
-            );
-        }
-    }
-
+    //region count inventory and generate pos-tile map.
     private Map<BlockType, Integer> countInventoryBlocks() {
         Map<BlockType, Integer> countMap = new HashMap<>();
         for (BlockType type : BlockType.values()) {
@@ -124,27 +111,114 @@ public class BlockWorldController {
             }
         }
     }
+    //endregion
 
-    public void loadWorldMapFile(String filePath)
-            throws WorldMapInconsistentException, WorldMapFormatException,
-            FileNotFoundException {
-        setWorldMap(new WorldMap(filePath));
+    //region notify* methods for WorldMapView
+    private void notifyTileHeight(Position position) {
+        int height = positionTileMap.get(position).getBlocks().size();
+        worldMapView.updateTileHeight(position, height);
     }
 
+    private void notifyTopBlock(Position position) {
+        Tile tile = positionTileMap.get(position);
+        int height = tile.getBlocks().size();
+
+        BlockType topType;
+        try {
+            topType = height != 0 ? BlockType.fromBlock(tile.getTopBlock()) : null;
+        } catch (TooLowException e) {
+            throw new AssertionError(e);
+        }
+        worldMapView.updateTopBlock(position, topType);
+    }
+
+    private void notifyTileExits(Position position) {
+        Tile tile = positionTileMap.get(position);
+        for (Direction direction : Direction.values()) {
+            worldMapView.updateTileExit(
+                    position,
+                    direction,
+                    tile.getExits().get(direction.name()) != null
+            );
+        }
+    }
+
+    private void notifyBuilderMove(Direction dir) {
+        worldMapView.moveBuilder(dir);
+    }
+    //endregion
+
+    //region notify* for BuilderControlsView and InventoryView
+    private void notifyCanMoveBuilder() {
+        for (Direction dir : Direction.values()) {
+            Tile adjTile = worldMap.getBuilder().getCurrentTile()
+                    .getExits().get(dir.name());
+
+            builderControlsView.updateCanMoveBuilder(
+                    dir,
+                    adjTile != null && worldMap.getBuilder().canEnter(adjTile)
+            );
+        }
+    }
+
+    private void notifyCanDig() {
+        boolean canDig = false;
+        try {
+            canDig = worldMap.getBuilder().getCurrentTile().getTopBlock().isDiggable();
+        } catch (TooLowException ignored) {} // No blocks. Can't dig.
+        builderControlsView.updateCanDig(canDig);
+    }
+
+    private void notifyInventory() {
+        inventoryView.updateInventory(countInventoryBlocks());
+    }
+    //endregion
+
+    /**
+     * Notifies all relevant observers when the blocks on the tile at this
+     * position changes.
+     * @param position Position of tile.
+     */
+    private void tileBlocksChanged(Position position) {
+        if (position.equals(currentPosition)) {
+            // If a block is added or removed, the height will change
+            // which will change these.
+            notifyCanDig();
+            notifyCanMoveBuilder();
+        }
+
+        notifyTopBlock(position);
+        notifyTileHeight(position);
+    }
 
     public void moveBuilder(Direction direction) throws NoExitException {
         Tile newTile = worldMap.getBuilder().getCurrentTile()
                 .getExits().get(direction.name());
         worldMap.getBuilder().moveTo(newTile);
+
+        currentPosition = Utilities.addPos(currentPosition,
+                direction.asPosition());
+
+        notifyBuilderMove(direction);
+        notifyCanMoveBuilder();
+        notifyCanDig();
     }
 
     public void dig() throws InvalidBlockException, TooLowException {
         worldMap.getBuilder().digOnCurrentTile();
+
+        tileBlocksChanged(currentPosition);
     }
 
     public void moveBlock(Direction direction)
             throws NoExitException, InvalidBlockException, TooHighException {
         worldMap.getBuilder().getCurrentTile().moveBlock(direction.name());
+
+        // Update the current tile and the tile we moved the block to.
+        Position adjacent = Utilities.addPos(currentPosition, direction.asPosition());
+
+        tileBlocksChanged(currentPosition);
+        tileBlocksChanged(adjacent);
     }
 
     public void dropBlock(BlockType blockType)
@@ -153,6 +227,8 @@ public class BlockWorldController {
         for (int i = 0; i < inventory.size(); i++) {
             if (blockType.blockClass.isAssignableFrom(inventory.get(i).getClass())) {
                 worldMap.getBuilder().dropFromInventory(i);
+
+                tileBlocksChanged(currentPosition);
                 return;
             }
         }
