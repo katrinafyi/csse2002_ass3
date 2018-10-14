@@ -16,7 +16,6 @@ import game.view.BuilderControlsView;
 import game.view.InventoryView;
 import game.view.WorldMapView;
 
-import javax.rmi.CORBA.Util;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -190,6 +189,8 @@ public class BlockWorldController {
         notifyTileHeight(position);
     }
 
+
+    //region  ### Implemented world interaction functions ###
     public void moveBuilder(Direction direction) throws NoExitException {
         Tile newTile = worldMap.getBuilder().getCurrentTile()
                 .getExits().get(direction.name());
@@ -234,4 +235,5 @@ public class BlockWorldController {
         throw new NoSuchElementException(
                 "No block of type "+blockType.name()+" in worldMap.getBuilder()'s inventory.");
     }
+    //endregion
 }
