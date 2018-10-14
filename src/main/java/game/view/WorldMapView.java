@@ -1,9 +1,9 @@
-package game;
+package game.view;
 
 import csse2002.block.world.Position;
 import csse2002.block.world.Tile;
 
-public interface BlockWorldView {
+public interface WorldMapView {
     void updateTile(Position position, Tile tile);
     void resetTiles();
 }

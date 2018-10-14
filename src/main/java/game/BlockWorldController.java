@@ -96,21 +96,21 @@ public class BlockWorldController {
         builder.getCurrentTile().moveBlock(direction.name());
     }
 
-    public int countBlocks(BlockTypes type) {
+    public int countBlocks(Class<? extends Block> type) {
         int count = 0;
         for (Block block : builder.getInventory()) {
-            if (type.blockClass.isAssignableFrom(block.getClass())) {
+            if (type.isAssignableFrom(block.getClass())) {
                 count++;
             }
         }
         return count;
     }
 
-    public void dropBlock(BlockTypes type)
+    public void dropBlock(Class<? extends Block> blockType)
             throws NoSuchElementException, TooHighException, InvalidBlockException {
         List<Block> inventory = builder.getInventory();
         for (int i = 0; i < inventory.size(); i++) {
-            if (type.blockClass.isAssignableFrom(inventory.get(i).getClass())) {
+            if (blockType.isAssignableFrom(inventory.get(i).getClass())) {
                 builder.dropFromInventory(i);
                 return;
             }
