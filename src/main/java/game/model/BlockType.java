@@ -52,7 +52,7 @@ public enum BlockType {
      * @param block Block instance.
      * @return Value from this enum.
      */
-    public BlockType fromBlock(Block block) {
+    public static BlockType fromBlock(Block block) {
         return classToType.get(block.getClass());
     }
 }

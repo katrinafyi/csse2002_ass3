@@ -1,7 +1,7 @@
 package game;
 
 import csse2002.block.world.Block;
-import csse2002.block.world.Builder;
+import csse2002.block.world.worldMap.getBuilder();
 import csse2002.block.world.InvalidBlockException;
 import csse2002.block.world.NoExitException;
 import csse2002.block.world.Position;
@@ -13,6 +13,9 @@ import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 import game.model.BlockType;
 import game.model.Direction;
+import game.view.BuilderControlsView;
+import game.view.InventoryView;
+import game.view.WorldMapView;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -30,23 +33,76 @@ import java.util.Set;
 public class BlockWorldController {
 
     private WorldMap worldMap;
-    private Builder builder;
     private final Map<Position, Tile> positionTileMap = new HashMap<>();
 
-    public BlockWorldController() {}
+    private final WorldMapView worldMapView;
+    private final BuilderControlsView builderControlsView;
+    private final InventoryView inventoryView;
+
+    public BlockWorldController(WorldMapView worldMapView,
+                                BuilderControlsView builderControlsView,
+                                InventoryView inventoryView) {
+        this.worldMapView = worldMapView;
+        this.builderControlsView = builderControlsView;
+        this.inventoryView = inventoryView;
+    }
 
     private void setWorldMap(WorldMap worldMap) {
         this.worldMap = worldMap;
-        this.builder = worldMap.getBuilder();
 
-        createPositionTileMapping();
+        computePositionTileMap();
+
+        // Inform WorldMap of new builder and tiles.
+        worldMapView.newMapLoaded(worldMap.getStartPosition());
+        for (Position position : positionTileMap.keySet()) {
+            notifyTileHeight(position);
+            notifyTopBlock(position);
+            notifyTileExits(position);
+        }
+    }
+
+    private void notifyTileHeight(Position position) {
+        int height = positionTileMap.get(position).getBlocks().size();
+        worldMapView.updateTileHeight(position, height);
+    }
+
+    private void notifyTopBlock(Position position) {
+        Tile tile = positionTileMap.get(position);
+        int height = tile.getBlocks().size();
+
+        BlockType topType;
+        try {
+            topType = height != 0 ? BlockType.fromBlock(tile.getTopBlock()) : null;
+        } catch (TooLowException e) {
+            throw new AssertionError(e);
+        }
+        worldMapView.updateTopBlock(position, topType);
+    }
+
+    private void notifyTileExits(Position position) {
+        Tile tile = positionTileMap.get(position);
+        for (Direction direction : Direction.values()) {
+            worldMapView.updateTileExit(
+                    position,
+                    direction,
+                    tile.getExits().get(direction.name()) != null
+            );
+        }
     }
 
     private Map<BlockType, Integer> countInventoryBlocks() {
-
+        Map<BlockType, Integer> countMap = new HashMap<>();
+        for (BlockType type : BlockType.values()) {
+            countMap.put(type, 0);
+        }
+        for (Block block : worldMap.getBuilder().getInventory()) {
+            BlockType type = BlockType.fromBlock(block);
+            countMap.put(type, countMap.get(type) + 1);
+        }
+        return countMap;
     }
 
-    private void createPositionTileMapping() {
+    private void computePositionTileMap() {
         // We need to have a copy of the position to tile mapping.
         positionTileMap.clear();
         Set<Position> seenPositions = new HashSet<>();
@@ -77,32 +133,30 @@ public class BlockWorldController {
 
 
     public void moveBuilder(Direction direction) throws NoExitException {
-        Tile newTile = builder.getCurrentTile()
+        Tile newTile = worldMap.getBuilder().getCurrentTile()
                 .getExits().get(direction.name());
-        builder.moveTo(newTile);
-
-
+        worldMap.getBuilder().moveTo(newTile);
     }
 
     public void dig() throws InvalidBlockException, TooLowException {
-        builder.digOnCurrentTile();
+        worldMap.getBuilder().digOnCurrentTile();
     }
 
     public void moveBlock(Direction direction)
             throws NoExitException, InvalidBlockException, TooHighException {
-        builder.getCurrentTile().moveBlock(direction.name());
+        worldMap.getBuilder().getCurrentTile().moveBlock(direction.name());
     }
 
     public void dropBlock(BlockType blockType)
             throws NoSuchElementException, TooHighException, InvalidBlockException {
-        List<Block> inventory = builder.getInventory();
+        List<Block> inventory = worldMap.getBuilder().getInventory();
         for (int i = 0; i < inventory.size(); i++) {
             if (blockType.blockClass.isAssignableFrom(inventory.get(i).getClass())) {
-                builder.dropFromInventory(i);
+                worldMap.getBuilder().dropFromInventory(i);
                 return;
             }
         }
         throw new NoSuchElementException(
-                "No block of type "+blockType.name()+" in builder's inventory.");
+                "No block of type "+blockType.name()+" in worldMap.getBuilder()'s inventory.");
     }
 }

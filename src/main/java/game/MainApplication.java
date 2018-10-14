@@ -32,7 +32,7 @@ public class MainApplication extends Application {
 
     private Stage primaryStage;
 
-    private final BlockWorldController worldInteraction = new BlockWorldController();
+    private final BlockWorldController worldInteraction = new BlockWorldController(worldMapView, builderControlsView, inventoryView);
 
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
