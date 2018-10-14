@@ -48,7 +48,6 @@ public class BlockWorldModel extends Model {
             throws WorldMapInconsistentException, WorldMapFormatException,
             FileNotFoundException {
         setWorldMap(new WorldMap(filePath));
-        notifyMapCallbacks();
     }
 
     public WorldMap getWorldMap() {
