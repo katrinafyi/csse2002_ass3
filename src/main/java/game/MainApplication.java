@@ -2,6 +2,7 @@ package game;
 
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
+import game.view.BuilderControlsView;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -32,15 +33,13 @@ public class MainApplication extends Application {
 
     private Stage primaryStage;
 
-    private final BlockWorldController worldInteraction = new BlockWorldController(worldMapView, builderControlsView, inventoryView);
+    private BlockWorldController worldInteraction;
 
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
 
 
         primaryStage.setTitle("Window title");
-
-
 
         GridPane rootGrid = new GridPane();
         rootGrid.setPadding(new Insets(10));
@@ -51,15 +50,15 @@ public class MainApplication extends Application {
         MenuBar menuBar = constructMenuBar();
         container.getChildren().addAll(menuBar, rootGrid);
 
-        GridPane worldMap = new WorldMapGridPane();
-        rootGrid.add(worldMap, 0, 0);
-        GridPane.setValignment(worldMap, VPos.TOP);
+        WorldMapGridPane worldMapView = new WorldMapGridPane();
+        rootGrid.add(worldMapView, 0, 0);
+        GridPane.setValignment(worldMapView, VPos.TOP);
 
-        Region centrePane = constructCentrePane();
+        BuilderControlsPane centrePane = new BuilderControlsPane();
         rootGrid.add(centrePane, 1, 0);
         GridPane.setValignment(centrePane, VPos.TOP);
 
-        Region rightPane = constructRightPane();
+        InventoryPane rightPane = new InventoryPane();
         rootGrid.add(rightPane, 2, 0);
         GridPane.setValignment(rightPane, VPos.TOP);
 
@@ -83,7 +82,7 @@ public class MainApplication extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.setMinWidth(622);
-        primaryStage.minHeightProperty().bind(worldMap.widthProperty().add(80.5));
+        primaryStage.minHeightProperty().bind(worldMapView.widthProperty().add(80.5));
 
         scene.setOnKeyPressed(e -> {
             int direction = 0;
@@ -144,38 +143,5 @@ public class MainApplication extends Application {
         );
         menuBar.getMenus().add(fileMenu);
         return menuBar;
-    }
-
-    private Region constructCentrePane() {
-        VBox vbox = new VBox();
-        vbox.setAlignment(Pos.TOP_CENTER);
-        vbox.setSpacing(10);
-        DPadGrid grid = new DPadGrid();
-
-        Button debug = new Button("(Debug)");
-        debug.setOnAction((e) -> {
-            System.out.println(""+primaryStage.getWidth() + "x"+primaryStage.getHeight());
-        });
-
-        Button b2 = new Button("(Size to scene)");
-        b2.setOnAction(e -> primaryStage.sizeToScene());
-
-        Button b3 = new Button("(Load map)");
-        b3.setOnAction(e -> {
-            try {
-                worldInteraction.loadWorldMapFile("validTestCase2.txt");
-            } catch (WorldMapInconsistentException | WorldMapFormatException | FileNotFoundException e1) {
-                e1.printStackTrace();
-            }
-        });
-
-        vbox.getChildren().addAll(grid, new Button("DIG"), debug, b2, b3);
-        return vbox;
-    }
-
-    private Region constructRightPane() {
-        VBox vbox = new VBox();
-        vbox.getChildren().add(new Label("Inventory"));
-        return vbox;
     }
 }
