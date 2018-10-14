@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
-import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -33,7 +32,7 @@ public class MainApplication extends Application {
 
     private Stage primaryStage;
 
-    private final BlockWorldInteraction worldInteraction = new BlockWorldInteraction();
+    private final BlockWorldModel worldInteraction = new BlockWorldModel();
 
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;

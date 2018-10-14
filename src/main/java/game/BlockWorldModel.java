@@ -24,45 +24,18 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.Set;
 
-public class BlockWorldInteraction {
+public class BlockWorldModel extends Model {
+    public class BlockWorldEvent extends Model.Event {}
+    public class TileChanged extends BlockWorldEvent {}
+    public class BuilderMoved extends BlockWorldEvent {}
+    public class InventoryChanged extends BlockWorldEvent {}
+    public class WorldMapLoaded extends BlockWorldEvent {}
+
     private WorldMap worldMap;
     private Builder builder;
-    private final List<TileChangedCallback> tileChangedCallbacks = new ArrayList<>();
-    private final List<BuilderMovedCallback> builderMovedCallbacks = new ArrayList<>();
-    private final List<MapLoadedCallback> mapLoadedCallbacks = new ArrayList<>();
     private final Map<Position, Tile> positionTileMap = new HashMap<>();
 
-    public BlockWorldInteraction() {}
-
-    public void addTileCallback(TileChangedCallback callback) {
-        tileChangedCallbacks.add(callback);
-    }
-
-    public void addBuilderCallback(BuilderMovedCallback callback) {
-        builderMovedCallbacks.add(callback);
-    }
-
-    public void addMapCallback(MapLoadedCallback callback) {
-        mapLoadedCallbacks.add(callback);
-    }
-
-    public void notifyTileCallbacks(Tile tile) {
-        for (TileChangedCallback callback : tileChangedCallbacks) {
-            callback.call(tile);
-        }
-    }
-
-    public void notifyBuilderCallbacks(Position oldPosition, Position newPosition) {
-        for (BuilderMovedCallback callback : builderMovedCallbacks) {
-            callback.call(oldPosition, newPosition);
-        }
-    }
-
-    public void notifyMapCallbacks() {
-        for (MapLoadedCallback callback : mapLoadedCallbacks) {
-            callback.call();
-        }
-    }
+    public BlockWorldModel() {}
 
     private void setWorldMap(WorldMap worldMap) {
         this.worldMap = worldMap;
