@@ -15,7 +15,7 @@ public enum BlockType {
     soil(SoilBlock.class),
     stone(StoneBlock.class);
 
-    private final Class<? extends Block> blockClass;
+    public final Class<? extends Block> blockClass;
 
     private final static Map<Class, BlockType> classToType = new HashMap<>();
 

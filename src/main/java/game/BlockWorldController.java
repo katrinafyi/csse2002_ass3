@@ -11,6 +11,7 @@ import csse2002.block.world.TooLowException;
 import csse2002.block.world.WorldMap;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
+import game.model.BlockType;
 import game.model.Direction;
 
 import java.io.FileNotFoundException;
@@ -41,7 +42,7 @@ public class BlockWorldController {
         createPositionTileMapping();
     }
 
-    private Map<Class<? extends Block>, Integer> countInventoryBlocks() {
+    private Map<BlockType, Integer> countInventoryBlocks() {
 
     }
 
@@ -92,16 +93,16 @@ public class BlockWorldController {
         builder.getCurrentTile().moveBlock(direction.name());
     }
 
-    public void dropBlock(Class<? extends Block> blockType)
+    public void dropBlock(BlockType blockType)
             throws NoSuchElementException, TooHighException, InvalidBlockException {
         List<Block> inventory = builder.getInventory();
         for (int i = 0; i < inventory.size(); i++) {
-            if (blockType.isAssignableFrom(inventory.get(i).getClass())) {
+            if (blockType.blockClass.isAssignableFrom(inventory.get(i).getClass())) {
                 builder.dropFromInventory(i);
                 return;
             }
         }
         throw new NoSuchElementException(
-                "No block of type "+type.name()+" in builder's inventory.");
+                "No block of type "+blockType.name()+" in builder's inventory.");
     }
 }
