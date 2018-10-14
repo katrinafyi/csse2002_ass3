@@ -29,7 +29,7 @@ import java.util.Set;
 
 // This serves the purpose of a controller as well as dispatching events,
 // because assignment 2's implementation does not do so.
-public class BlockWorldController {
+public class BlockWorldController implements BlockWorldActions {
 
     private WorldMap worldMap;
     private final Map<Position, Tile> positionTileMap = new HashMap<>();
@@ -48,6 +48,7 @@ public class BlockWorldController {
         this.inventoryView = inventoryView;
     }
 
+    @Override
     public void loadWorldMapFile(String filePath)
             throws WorldMapInconsistentException, WorldMapFormatException,
             FileNotFoundException {
@@ -142,7 +143,7 @@ public class BlockWorldController {
     }
 
     private void notifyBuilderMove(Direction dir) {
-        worldMapView.moveBuilder(dir);
+        worldMapView.moveBuilder(dir, currentPosition);
     }
     //endregion
 
@@ -191,6 +192,7 @@ public class BlockWorldController {
 
 
     //region  ### Implemented world interaction functions ###
+    @Override
     public void moveBuilder(Direction direction) throws NoExitException {
         Tile newTile = worldMap.getBuilder().getCurrentTile()
                 .getExits().get(direction.name());
@@ -204,12 +206,14 @@ public class BlockWorldController {
         notifyCanDig();
     }
 
+    @Override
     public void dig() throws InvalidBlockException, TooLowException {
         worldMap.getBuilder().digOnCurrentTile();
 
         tileBlocksChanged(currentPosition);
     }
 
+    @Override
     public void moveBlock(Direction direction)
             throws NoExitException, InvalidBlockException, TooHighException {
         worldMap.getBuilder().getCurrentTile().moveBlock(direction.name());
@@ -221,6 +225,7 @@ public class BlockWorldController {
         tileBlocksChanged(adjacent);
     }
 
+    @Override
     public void dropBlock(BlockType blockType)
             throws NoSuchElementException, TooHighException, InvalidBlockException {
         List<Block> inventory = worldMap.getBuilder().getInventory();

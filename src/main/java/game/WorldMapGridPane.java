@@ -7,22 +7,27 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import csse2002.block.world.Position;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class WorldMapGridPane extends UniformGridPane implements WorldMapView {
+
+    private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
+
+    private Position currentPos;
+
     public WorldMapGridPane() {
         super(9, 9);
         this.setPrefWidth(500);
     }
 
     protected Node generateCell(int col, int row) {
-        Button b = new Button();
-        b.setMaxWidth(Double.MAX_VALUE);
-        b.setMaxHeight(Double.MAX_VALUE);
-        return b;
+        return null;
     }
 
     @Override
     public void newMapLoaded(Position startingPosition) {
-
+        currentPos = startingPosition;
     }
 
     @Override
@@ -36,12 +41,25 @@ public class WorldMapGridPane extends UniformGridPane implements WorldMapView {
     }
 
     @Override
-    public void moveBuilder(Direction direction) {
+    public void moveBuilder(Direction direction, Position newPosition) {
+        currentPos = newPosition;
+    }
 
+    private int posToRow(Position pos) {
+        return pos.getY()-currentPos.getY()+4;
+    }
+
+    private int posToCol(Position pos) {
+        return pos.getX()-currentPos.getY()+4;
     }
 
     @Override
     public void updateTopBlock(Position pos, BlockType blockType) {
+        if (!tileSquareMap.containsKey(pos)) {
+            tileSquareMap.put(pos, new TileSquare());
+        }
+        tileSquareMap.get(pos).setBlockType(blockType);
 
+        this.add(tileSquareMap.get(blockType), posToCol(pos), posToRow(pos));
     }
 }

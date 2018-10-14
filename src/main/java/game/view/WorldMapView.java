@@ -12,6 +12,6 @@ public interface WorldMapView {
     void newMapLoaded(Position startingPosition);
     void updateTileHeight(Position pos, int height);
     void updateTileExit(Position pos, Direction direction, boolean hasExit);
-    void moveBuilder(Direction direction);
+    void moveBuilder(Direction direction, Position newPosition);
     void updateTopBlock(Position pos, BlockType blockType);
 }
