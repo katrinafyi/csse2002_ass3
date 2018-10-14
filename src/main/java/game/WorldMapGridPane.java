@@ -4,7 +4,6 @@ import game.model.BlockType;
 import game.model.Direction;
 import game.view.WorldMapView;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import csse2002.block.world.Position;
 
 import java.util.HashMap;

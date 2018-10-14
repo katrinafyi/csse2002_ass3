@@ -10,6 +10,7 @@ import csse2002.block.world.TooLowException;
 import csse2002.block.world.WorldMap;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
+import game.presenter.BlockWorldActions;
 import game.model.BlockType;
 import game.model.Direction;
 import game.view.BuilderControlsView;
@@ -27,24 +28,27 @@ import java.util.Queue;
 import java.util.Set;
 
 
-// This serves the purpose of a controller as well as dispatching events,
+// This serves the purpose of a presenter as well as dispatching events,
 // because assignment 2's implementation does not do so.
-public class BlockWorldController implements BlockWorldActions {
+public class GamePresenter implements BlockWorldActions {
 
     private WorldMap worldMap;
     private final Map<Position, Tile> positionTileMap = new HashMap<>();
     private Position currentPosition;
 
+    private WorldMapView worldMapView;
+    private BuilderControlsView builderControlsView;
+    private InventoryView inventoryView;
 
-    private final WorldMapView worldMapView;
-    private final BuilderControlsView builderControlsView;
-    private final InventoryView inventoryView;
-
-    public BlockWorldController(WorldMapView worldMapView,
-                                BuilderControlsView builderControlsView,
-                                InventoryView inventoryView) {
+    public void setWorldMapView(WorldMapView worldMapView) {
         this.worldMapView = worldMapView;
+    }
+
+    public void setBuilderControlsView(BuilderControlsView builderControlsView) {
         this.builderControlsView = builderControlsView;
+    }
+
+    public void setInventoryView(InventoryView inventoryView) {
         this.inventoryView = inventoryView;
     }
 
@@ -240,5 +244,6 @@ public class BlockWorldController implements BlockWorldActions {
         throw new NoSuchElementException(
                 "No block of type "+blockType.name()+" in worldMap.getBuilder()'s inventory.");
     }
+
     //endregion
 }
