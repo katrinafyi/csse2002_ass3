@@ -31,7 +31,6 @@ import java.io.FileNotFoundException;
 
 public class MainApplication extends Application {
 
-    private WorldMap3DGroup worldMap3D = null;
     private Stage primaryStage;
 
     private final BlockWorldInteraction worldInteraction = new BlockWorldInteraction();
@@ -53,8 +52,7 @@ public class MainApplication extends Application {
         MenuBar menuBar = constructMenuBar();
         container.getChildren().addAll(menuBar, rootGrid);
 
-        this.worldMap3D = new WorldMap3DGroup(worldInteraction);
-        SubScene worldMap = this.worldMap3D.generateScene();
+        GridPane worldMap = new WorldMapGridPane();
         rootGrid.add(worldMap, 0, 0);
         GridPane.setValignment(worldMap, VPos.TOP);
 
@@ -97,7 +95,6 @@ public class MainApplication extends Application {
             }
 
             if (direction != 0) {
-                worldMap3D.getRotatingCamera().rotateHorizontal(direction*10);
             }
 
             int up = 0;
@@ -107,7 +104,6 @@ public class MainApplication extends Application {
                 up = -1;
 
             if (up != 0) {
-                worldMap3D.getRotatingCamera().rotateVertical(up*-10);
             }
 
         });
@@ -159,8 +155,6 @@ public class MainApplication extends Application {
 
         Button debug = new Button("(Debug)");
         debug.setOnAction((e) -> {
-            System.out.println(worldMap3D.getChildren());
-            System.out.println(worldMap3D);
             System.out.println(""+primaryStage.getWidth() + "x"+primaryStage.getHeight());
         });
 
