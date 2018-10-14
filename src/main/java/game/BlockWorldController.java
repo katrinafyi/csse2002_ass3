@@ -1,7 +1,6 @@
 package game;
 
 import csse2002.block.world.Block;
-import csse2002.block.world.worldMap.getBuilder();
 import csse2002.block.world.InvalidBlockException;
 import csse2002.block.world.NoExitException;
 import csse2002.block.world.Position;
