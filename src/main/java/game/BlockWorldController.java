@@ -13,7 +13,6 @@ import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,21 +20,20 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Observable;
 import java.util.Queue;
 import java.util.Set;
 
-public class BlockWorldModel extends Model {
-    public class BlockWorldEvent extends Model.Event {}
-    public class TileChanged extends BlockWorldEvent {}
-    public class BuilderMoved extends BlockWorldEvent {}
-    public class InventoryChanged extends BlockWorldEvent {}
-    public class WorldMapLoaded extends BlockWorldEvent {}
+
+// This serves the purpose of a controller as well as dispatching events,
+// because assignment 2's implementation does not do so.
+public class BlockWorldController {
 
     private WorldMap worldMap;
     private Builder builder;
     private final Map<Position, Tile> positionTileMap = new HashMap<>();
 
-    public BlockWorldModel() {}
+    public BlockWorldController() {}
 
     private void setWorldMap(WorldMap worldMap) {
         this.worldMap = worldMap;
@@ -85,6 +83,8 @@ public class BlockWorldModel extends Model {
         Tile newTile = builder.getCurrentTile()
                 .getExits().get(direction.name());
         builder.moveTo(newTile);
+
+
     }
 
     public void dig() throws InvalidBlockException, TooLowException {
