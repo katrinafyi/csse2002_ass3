@@ -11,16 +11,15 @@ import csse2002.block.world.TooLowException;
 import csse2002.block.world.WorldMap;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
+import game.model.Direction;
 
 import java.io.FileNotFoundException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Observable;
 import java.util.Queue;
 import java.util.Set;
 
@@ -42,18 +41,8 @@ public class BlockWorldController {
         createPositionTileMapping();
     }
 
-    public void loadWorldMapFile(String filePath)
-            throws WorldMapInconsistentException, WorldMapFormatException,
-            FileNotFoundException {
-        setWorldMap(new WorldMap(filePath));
-    }
+    private Map<Class<? extends Block>, Integer> countInventoryBlocks() {
 
-    public WorldMap getWorldMap() {
-        return this.worldMap;
-    }
-
-    public Map<Position, Tile> getPositionTileMap() {
-        return Collections.unmodifiableMap(positionTileMap);
     }
 
     private void createPositionTileMapping() {
@@ -79,7 +68,14 @@ public class BlockWorldController {
         }
     }
 
-    public void move(Direction direction) throws NoExitException {
+    public void loadWorldMapFile(String filePath)
+            throws WorldMapInconsistentException, WorldMapFormatException,
+            FileNotFoundException {
+        setWorldMap(new WorldMap(filePath));
+    }
+
+
+    public void moveBuilder(Direction direction) throws NoExitException {
         Tile newTile = builder.getCurrentTile()
                 .getExits().get(direction.name());
         builder.moveTo(newTile);
@@ -94,16 +90,6 @@ public class BlockWorldController {
     public void moveBlock(Direction direction)
             throws NoExitException, InvalidBlockException, TooHighException {
         builder.getCurrentTile().moveBlock(direction.name());
-    }
-
-    public int countBlocks(Class<? extends Block> type) {
-        int count = 0;
-        for (Block block : builder.getInventory()) {
-            if (type.isAssignableFrom(block.getClass())) {
-                count++;
-            }
-        }
-        return count;
     }
 
     public void dropBlock(Class<? extends Block> blockType)

@@ -1,7 +1,9 @@
 package game.view;
 
+import game.model.Direction;
+
 public interface BuilderControlsView {
-    void setCanMoveBuilder(Direction direction, boolean canMove);
-    void setCanDig(boolean canDig);
-    void setCanMoveBlock(Direction direction, boolean canMode);
+    void updateCanMoveBuilder(Direction direction, boolean canMove);
+    void upadteCanMoveBlock(Direction direction, boolean canMode);
+    void updateCanDig(boolean canDig);
 }

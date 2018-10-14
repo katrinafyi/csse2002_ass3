@@ -1,4 +1,4 @@
-package game;
+package game.model;
 
 import csse2002.block.world.Position;
 
