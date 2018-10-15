@@ -19,12 +19,14 @@ public class TileSquare extends StackPane {
         blockImages.put(BlockType.stone,
                 new Image(TileSquare.class.getResourceAsStream("/stone.png")));
         blockImages.put(BlockType.wood,
-                new Image(TileSquare.class.getResourceAsStream("/wood.png")));
+                new Image(TileSquare.class.getResourceAsStream("/oak_planks.png")));
     }
 
     private final ImageView imageView = new ImageView();
 
     public TileSquare() {
+        imageView.setPreserveRatio(true);
+        imageView.fitHeightProperty().bind(this.maxHeightProperty());
         this.getChildren().add(imageView);
     }
 

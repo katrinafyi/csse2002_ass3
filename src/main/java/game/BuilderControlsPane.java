@@ -2,6 +2,7 @@ package game;
 
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
+import game.controller.BlockWorldActions;
 import game.model.Direction;
 import game.view.BuilderControlsView;
 import javafx.geometry.Pos;
@@ -11,7 +12,10 @@ import javafx.scene.layout.VBox;
 import java.io.FileNotFoundException;
 
 public class BuilderControlsPane extends VBox implements BuilderControlsView {
-    public BuilderControlsPane() {
+    private final BlockWorldActions controller;
+
+    public BuilderControlsPane(BlockWorldActions controller) {
+        this.controller = controller;
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(10);
         DPadGrid grid = new DPadGrid();
@@ -24,6 +28,11 @@ public class BuilderControlsPane extends VBox implements BuilderControlsView {
 
         Button b3 = new Button("(Load map)");
         b3.setOnAction(e -> {
+            try {
+                controller.loadWorldMapFile("validTestCase2.txt");
+            } catch (WorldMapInconsistentException | WorldMapFormatException | FileNotFoundException e1) {
+                System.out.println(e1);
+            }
         });
 
         this.getChildren().addAll(grid, new Button("DIG"), debug, b2, b3);

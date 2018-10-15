@@ -46,17 +46,23 @@ public class MainApplication extends Application {
         MenuBar menuBar = constructMenuBar();
         container.getChildren().addAll(menuBar, rootGrid);
 
+        GamePresenter presenter = new GamePresenter();
+
         WorldMapGridPane worldMapView = new WorldMapGridPane();
         rootGrid.add(worldMapView, 0, 0);
         GridPane.setValignment(worldMapView, VPos.TOP);
 
-        BuilderControlsPane centrePane = new BuilderControlsPane();
+        BuilderControlsPane centrePane = new BuilderControlsPane(presenter);
         rootGrid.add(centrePane, 1, 0);
         GridPane.setValignment(centrePane, VPos.TOP);
 
         InventoryPane rightPane = new InventoryPane();
         rootGrid.add(rightPane, 2, 0);
         GridPane.setValignment(rightPane, VPos.TOP);
+
+        presenter.setWorldMapView(worldMapView);
+        presenter.setBuilderControlsView(centrePane);
+        presenter.setInventoryView(rightPane);
 
         centrePane.setMaxWidth(Double.MAX_VALUE);
 

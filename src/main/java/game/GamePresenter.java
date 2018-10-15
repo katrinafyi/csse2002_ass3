@@ -68,8 +68,8 @@ public class GamePresenter implements BlockWorldActions {
         // Inform WorldMap of new builder and tiles.
         worldMapView.newMapLoaded(currentPosition);
         for (Position position : positionTileMap.keySet()) {
-            notifyTileHeight(position);
             notifyTopBlock(position);
+            notifyTileHeight(position);
             notifyTileExits(position);
         }
 
