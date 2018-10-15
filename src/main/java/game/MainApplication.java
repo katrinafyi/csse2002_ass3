@@ -46,7 +46,7 @@ public class MainApplication extends Application {
         MenuBar menuBar = constructMenuBar();
         container.getChildren().addAll(menuBar, rootGrid);
 
-        GamePresenter presenter = new GamePresenter();
+        GameAdapter presenter = new GameAdapter();
 
         GameWorldMapView worldMapView = new GameWorldMapView();
         GridPane worldMapGrid = worldMapView.getGridPane();

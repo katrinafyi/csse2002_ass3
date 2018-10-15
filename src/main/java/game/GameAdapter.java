@@ -30,7 +30,7 @@ import java.util.Set;
 
 // This serves the purpose of a presenter as well as dispatching events,
 // because assignment 2's implementation does not do so.
-public class GamePresenter implements BlockWorldActions {
+public class GameAdapter implements BlockWorldActions {
 
     private WorldMap worldMap;
     private final Map<Position, Tile> positionTileMap = new HashMap<>();
@@ -119,7 +119,7 @@ public class GamePresenter implements BlockWorldActions {
     //region notify* methods for WorldMapView
     private void notifyTileHeight(Position position) {
         int height = positionTileMap.get(position).getBlocks().size();
-        worldMapView.updateTileHeight(position, height);
+        worldMapView.setTileHeight(position, height);
     }
 
     private void notifyTopBlock(Position position) {
@@ -132,13 +132,13 @@ public class GamePresenter implements BlockWorldActions {
         } catch (TooLowException e) {
             throw new AssertionError(e);
         }
-        worldMapView.updateTopBlock(position, topType);
+        worldMapView.setTileTopBlock(position, topType);
     }
 
     private void notifyTileExits(Position position) {
         Tile tile = positionTileMap.get(position);
         for (Direction direction : Direction.values()) {
-            worldMapView.updateTileExit(
+            worldMapView.setTileHasExit(
                     position,
                     direction,
                     tile.getExits().get(direction.name()) != null

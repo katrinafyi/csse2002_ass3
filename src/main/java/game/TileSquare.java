@@ -33,17 +33,17 @@ public class TileSquare extends StackPane implements TileView {
     }
 
     @Override
-    public void updateHeight(int height) {
+    public void setHeight(int height) {
 
     }
 
     @Override
-    public void updateExit(Direction direction, boolean hasExit) {
+    public void setHasExit(Direction direction, boolean hasExit) {
 
     }
 
     @Override
-    public void updateTopBlock(BlockType blockType) {
+    public void setTopBlock(BlockType blockType) {
         imageView.setImage(blockImages.get(blockType));
     }
 }
