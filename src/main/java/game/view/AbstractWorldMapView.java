@@ -5,11 +5,12 @@ import game.Utilities;
 import game.model.BlockType;
 import game.model.Direction;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractWorldMapView implements WorldMapView {
-    protected final Map<Position, TileView> tileViewMap = new HashMap<>();
+    private final Map<Position, TileView> tileViewMap = new HashMap<>();
 
     private Position currentPosition;
 
@@ -17,24 +18,28 @@ public abstract class AbstractWorldMapView implements WorldMapView {
         return currentPosition;
     }
 
-    protected void setCurrentPosition(Position currentPosition) {
+    private void setCurrentPosition(Position currentPosition) {
         this.currentPosition = currentPosition;
     }
 
-    protected abstract TileView newTileView();
+    protected abstract TileView newTileView(Position position);
 
     private TileView getOrInsertTile(Position pos) {
         TileView tile = tileViewMap.get(pos);
         if (tile == null) {
-            tile = newTileView();
+            tile = newTileView(pos);
             tileViewMap.put(pos, tile);
         }
         return tile;
     }
 
+    protected Map<Position, TileView> getTileViewMap() {
+        return Collections.unmodifiableMap(tileViewMap);
+    }
 
     @Override
     public void newMapLoaded(Position startingPosition) {
+        tileViewMap.clear();
         setCurrentPosition(startingPosition);
     }
 

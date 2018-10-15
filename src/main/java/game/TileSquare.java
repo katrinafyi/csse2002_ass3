@@ -1,6 +1,8 @@
 package game;
 
 import game.model.BlockType;
+import game.model.Direction;
+import game.view.TileView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -9,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class TileSquare extends StackPane {
+public class TileSquare extends StackPane implements TileView {
     private final static Map<BlockType, Image> blockImages = new HashMap<>();
     static {
         blockImages.put(BlockType.grass,
@@ -26,11 +28,22 @@ public class TileSquare extends StackPane {
 
     public TileSquare() {
         imageView.setPreserveRatio(true);
-        imageView.fitHeightProperty().bind(this.maxHeightProperty());
+        imageView.fitWidthProperty().bind(this.maxWidthProperty());
         this.getChildren().add(imageView);
     }
 
-    public void setBlockType(BlockType blockType) {
+    @Override
+    public void updateHeight(int height) {
+
+    }
+
+    @Override
+    public void updateExit(Direction direction, boolean hasExit) {
+
+    }
+
+    @Override
+    public void updateTopBlock(BlockType blockType) {
         imageView.setImage(blockImages.get(blockType));
     }
 }

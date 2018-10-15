@@ -11,10 +11,10 @@ import javafx.scene.layout.VBox;
 
 import java.io.FileNotFoundException;
 
-public class BuilderControlsPane extends VBox implements BuilderControlsView {
+public class GameControlsPane extends VBox implements BuilderControlsView {
     private final BlockWorldActions controller;
 
-    public BuilderControlsPane(BlockWorldActions controller) {
+    public GameControlsPane(BlockWorldActions controller) {
         this.controller = controller;
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(10);

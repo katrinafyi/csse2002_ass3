@@ -48,11 +48,12 @@ public class MainApplication extends Application {
 
         GamePresenter presenter = new GamePresenter();
 
-        WorldMapGridPane worldMapView = new WorldMapGridPane();
-        rootGrid.add(worldMapView, 0, 0);
-        GridPane.setValignment(worldMapView, VPos.TOP);
+        GameWorldMapView worldMapView = new GameWorldMapView();
+        GridPane worldMapGrid = worldMapView.getGridPane();
+        rootGrid.add(worldMapGrid, 0, 0);
+        GridPane.setValignment(worldMapGrid, VPos.TOP);
 
-        BuilderControlsPane centrePane = new BuilderControlsPane(presenter);
+        GameControlsPane centrePane = new GameControlsPane(presenter);
         rootGrid.add(centrePane, 1, 0);
         GridPane.setValignment(centrePane, VPos.TOP);
 
@@ -84,7 +85,7 @@ public class MainApplication extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.setMinWidth(622);
-        primaryStage.minHeightProperty().bind(worldMapView.widthProperty().add(80.5));
+        primaryStage.minHeightProperty().bind(worldMapGrid.widthProperty().add(80.5));
 
         scene.setOnKeyPressed(e -> {
             int direction = 0;

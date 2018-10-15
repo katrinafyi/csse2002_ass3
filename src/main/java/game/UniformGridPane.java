@@ -6,7 +6,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
-public abstract class UniformGridPane extends GridPane {
+public class UniformGridPane extends GridPane {
     protected final int COLUMNS;
     protected final int ROWS;
     protected final double GAP;
@@ -27,14 +27,11 @@ public abstract class UniformGridPane extends GridPane {
         this.setHgap(gap);
 
         applyRowAndColumnConstraints();
-        generateGrid();
 
         this.prefHeightProperty().bind(this.widthProperty());
         this.setMaxHeight(Control.USE_PREF_SIZE);
         this.setMinHeight(Control.USE_PREF_SIZE);
     }
-
-    protected abstract Node generateCell(int col, int row);
 
     private void applyRowAndColumnConstraints() {
         for (int i = 0; i < COLUMNS; i++) {
@@ -46,17 +43,6 @@ public abstract class UniformGridPane extends GridPane {
             RowConstraints rowConstraints = new RowConstraints();
             rowConstraints.setPercentHeight(100.0 / ROWS);
             this.getRowConstraints().add(rowConstraints);
-        }
-    }
-
-    private void generateGrid() {
-        for (int i = 0; i < COLUMNS; i++) {
-            for (int j = 0; j < ROWS; j++) {
-                Node cell = generateCell(i, j);
-                if (cell != null) {
-                    this.add(cell, i, j);
-                }
-            }
         }
     }
 }
