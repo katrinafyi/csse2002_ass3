@@ -1,4 +1,4 @@
-package game.presenter;
+package game.controller;
 
 import csse2002.block.world.InvalidBlockException;
 import csse2002.block.world.NoExitException;

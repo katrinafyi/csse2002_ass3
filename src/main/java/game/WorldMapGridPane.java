@@ -59,6 +59,6 @@ public class WorldMapGridPane extends UniformGridPane implements WorldMapView {
         }
         tileSquareMap.get(pos).setBlockType(blockType);
 
-        this.add(tileSquareMap.get(blockType), posToCol(pos), posToRow(pos));
+        this.add(tileSquareMap.get(pos), posToCol(pos), posToRow(pos));
     }
 }

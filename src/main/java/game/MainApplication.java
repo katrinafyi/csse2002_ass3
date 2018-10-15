@@ -2,7 +2,7 @@ package game;
 
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
-import game.presenter.BlockWorldActions;
+import game.controller.BlockWorldActions;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
