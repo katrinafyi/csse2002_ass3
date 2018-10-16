@@ -1,3 +1,3 @@
-package game.controller.events;
+package game.model.events;
 
 public abstract class BaseBlockWorldEvent {}

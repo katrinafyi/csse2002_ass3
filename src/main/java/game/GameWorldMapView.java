@@ -1,15 +1,13 @@
 package game;
 
 import csse2002.block.world.TooLowException;
-import game.controller.EventDispatcher;
-import game.controller.events.BaseBlockWorldEvent;
-import game.controller.events.BlocksChangedEvent;
-import game.controller.events.BuilderMovedEvent;
-import game.controller.events.ErrorEvent;
-import game.controller.events.WorldMapLoadedEvent;
+import game.model.EventDispatcher;
+import game.model.events.BaseBlockWorldEvent;
+import game.model.events.BlocksChangedEvent;
+import game.model.events.BuilderMovedEvent;
+import game.model.events.ErrorEvent;
+import game.model.events.WorldMapLoadedEvent;
 import game.model.BlockType;
-import game.model.Direction;
-import game.view.ErrorView;
 import game.view.TileView;
 import csse2002.block.world.Position;
 import javafx.scene.layout.GridPane;
@@ -31,7 +29,7 @@ public class GameWorldMapView {
         controller.addListener(BuilderMovedEvent.class, this::setPositionHandler);
         controller.addListener(ErrorEvent.class, this::errorHandler);
         controller.addListener(BlocksChangedEvent.class, this::tileBlocksHandler);
-        controller.addListener(BaseBlockWorldEvent.class, e -> {
+        controller.addListener(null, e -> {
             System.out.println(e);
         });
     }

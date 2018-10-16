@@ -1,4 +1,4 @@
-package game.controller;
+package game.model;
 
 import game.Utilities;
 
@@ -26,7 +26,7 @@ public class EventDispatcher<T> {
 
     public void notifyListeners(T event) {
         for (Class<? extends T> eventType : eventListeners.keySet()) {
-            if (Utilities.isInstance(event, eventType)) {
+            if (eventType == null || Utilities.isInstance(event, eventType)) {
                 for (Consumer<T> tConsumer : eventListeners.get(eventType)) {
                     tConsumer.accept(event);
                 }

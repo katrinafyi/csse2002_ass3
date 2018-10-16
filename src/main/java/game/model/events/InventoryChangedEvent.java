@@ -1,4 +1,4 @@
-package game.controller.events;
+package game.model.events;
 
 import csse2002.block.world.Builder;
 import game.model.BlockType;

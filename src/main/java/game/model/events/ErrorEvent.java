@@ -1,4 +1,4 @@
-package game.controller.events;
+package game.model.events;
 
 public class ErrorEvent extends BaseBlockWorldEvent {
     private final String message;
