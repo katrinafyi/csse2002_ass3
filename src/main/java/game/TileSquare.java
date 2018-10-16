@@ -46,4 +46,9 @@ public class TileSquare extends StackPane implements TileView {
     public void setTopBlock(BlockType blockType) {
         imageView.setImage(blockImages.get(blockType));
     }
+
+    @Override
+    public void setTooHighOrLow(boolean tooHighOrLow) {
+
+    }
 }

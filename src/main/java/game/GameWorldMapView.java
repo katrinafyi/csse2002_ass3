@@ -1,21 +1,13 @@
 package game;
 
-import game.controller.BlockWorldActions;
-import game.model.BlockType;
 import game.model.Direction;
 import game.view.AbstractWorldMapView;
+import game.view.ErrorView;
 import game.view.TileView;
-import game.view.WorldMapView;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import csse2002.block.world.Position;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class GameWorldMapView extends AbstractWorldMapView {
+public class GameWorldMapView extends AbstractWorldMapView implements ErrorView {
 
     private final UniformGridPane gridPane;
 
@@ -58,5 +50,10 @@ public class GameWorldMapView extends AbstractWorldMapView {
     private int posToCol(Position pos) {
         System.out.println(pos);
         return pos.getX()-getCurrentPosition().getY()+4;
+    }
+
+    @Override
+    public void showErrorMessage(String errorMessage) {
+        System.out.println("Error handled in view: " + errorMessage);
     }
 }

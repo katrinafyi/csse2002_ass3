@@ -2,7 +2,7 @@ package game;
 
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
-import game.controller.BlockWorldActions;
+import game.controller.BlockWorldController;
 import game.model.Direction;
 import game.view.BuilderControlsView;
 import javafx.geometry.Pos;
@@ -12,9 +12,9 @@ import javafx.scene.layout.VBox;
 import java.io.FileNotFoundException;
 
 public class GameControlsPane extends VBox implements BuilderControlsView {
-    private final BlockWorldActions controller;
+    private final BlockWorldController controller;
 
-    public GameControlsPane(BlockWorldActions controller) {
+    public GameControlsPane(BlockWorldController controller) {
         this.controller = controller;
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(10);

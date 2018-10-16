@@ -10,10 +10,12 @@ import csse2002.block.world.TooLowException;
 import csse2002.block.world.WorldMap;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
-import game.controller.BlockWorldActions;
+import game.controller.BlockWorldController;
+import game.controller.ErrorController;
 import game.model.BlockType;
 import game.model.Direction;
 import game.view.BuilderControlsView;
+import game.view.ErrorView;
 import game.view.InventoryView;
 import game.view.WorldMapView;
 
@@ -30,7 +32,7 @@ import java.util.Set;
 
 // This serves the purpose of a presenter as well as dispatching events,
 // because assignment 2's implementation does not do so.
-public class GameAdapter implements BlockWorldActions {
+public class GameAdapter implements BlockWorldController, ErrorController {
 
     private WorldMap worldMap;
     private final Map<Position, Tile> positionTileMap = new HashMap<>();
@@ -39,17 +41,22 @@ public class GameAdapter implements BlockWorldActions {
     private WorldMapView worldMapView;
     private BuilderControlsView builderControlsView;
     private InventoryView inventoryView;
+    private ErrorView errorView;
 
-    public void setWorldMapView(WorldMapView worldMapView) {
+    public void attackWorldMapView(WorldMapView worldMapView) {
         this.worldMapView = worldMapView;
     }
 
-    public void setBuilderControlsView(BuilderControlsView builderControlsView) {
+    public void attachControlsView(BuilderControlsView builderControlsView) {
         this.builderControlsView = builderControlsView;
     }
 
-    public void setInventoryView(InventoryView inventoryView) {
+    public void attachInventoryView(InventoryView inventoryView) {
         this.inventoryView = inventoryView;
+    }
+
+    public void attachErrorView(ErrorView errorView) {
+        this.errorView = errorView;
     }
 
     @Override
@@ -244,6 +251,10 @@ public class GameAdapter implements BlockWorldActions {
         throw new NoSuchElementException(
                 "No block of type "+blockType.name()+" in worldMap.getBuilder()'s inventory.");
     }
-
     //endregion
+
+    @Override
+    public void handleError(String errorMessage) {
+
+    }
 }

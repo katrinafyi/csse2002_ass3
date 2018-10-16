@@ -2,7 +2,7 @@ package game;
 
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
-import game.controller.BlockWorldActions;
+import game.controller.BlockWorldController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -29,7 +29,7 @@ public class MainApplication extends Application {
 
     private Stage primaryStage;
 
-    private BlockWorldActions worldInteraction;
+    private BlockWorldController worldInteraction;
 
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -57,13 +57,13 @@ public class MainApplication extends Application {
         rootGrid.add(centrePane, 1, 0);
         GridPane.setValignment(centrePane, VPos.TOP);
 
-        InventoryPane rightPane = new InventoryPane();
+        GameInventoryPane rightPane = new GameInventoryPane();
         rootGrid.add(rightPane, 2, 0);
         GridPane.setValignment(rightPane, VPos.TOP);
 
-        presenter.setWorldMapView(worldMapView);
-        presenter.setBuilderControlsView(centrePane);
-        presenter.setInventoryView(rightPane);
+        presenter.attackWorldMapView(worldMapView);
+        presenter.attachControlsView(centrePane);
+        presenter.attachInventoryView(rightPane);
 
         centrePane.setMaxWidth(Double.MAX_VALUE);
 

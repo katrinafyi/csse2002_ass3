@@ -12,7 +12,7 @@ import game.model.Direction;
 import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 
-public interface BlockWorldActions {
+public interface BlockWorldController {
     void loadWorldMapFile(String filePath)
             throws WorldMapInconsistentException, WorldMapFormatException,
             FileNotFoundException;

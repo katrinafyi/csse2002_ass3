@@ -8,8 +8,8 @@ import javafx.scene.layout.VBox;
 
 import java.util.Map;
 
-public class InventoryPane extends VBox implements InventoryView {
-    public InventoryPane() {
+public class GameInventoryPane extends VBox implements InventoryView {
+    public GameInventoryPane() {
         this.getChildren().add(new Label("Inventory"));
     }
 
