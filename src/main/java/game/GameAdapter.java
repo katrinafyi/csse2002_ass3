@@ -15,7 +15,10 @@ import game.controller.ErrorController;
 import game.controller.EventDispatcher;
 import game.controller.events.BaseBlockWorldEvent;
 import game.controller.events.BlocksChangedEvent;
+import game.controller.events.BuilderMovedEvent;
 import game.controller.events.ExitsChangedEvent;
+import game.controller.events.InventoryChangedEvent;
+import game.controller.events.WorldMapLoadedEvent;
 import game.model.BlockType;
 import game.model.Direction;
 
@@ -54,9 +57,8 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
 
         currentPosition = worldMap.getStartPosition();
         // Inform WorldMap of new builder and tiles.
-        worldMapView.newMapLoaded(currentPosition);
+        notifyListeners(new WorldMapLoadedEvent(currentPosition, positionTileMap));
         for (Position position : positionTileMap.keySet()) {
-            notifyTopBlock(position);
             notifyBlocksChanged(position);
             notifyTileExits(position);
         }
@@ -107,7 +109,7 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
     //region notify* methods for WorldMapView
     private void notifyBlocksChanged(Position position) {
         Tile tile = positionTileMap.get(position);
-        notifyListeners(new BlocksChangedEvent(tile));
+        notifyListeners(new BlocksChangedEvent(position, tile));
     }
 
     /**
@@ -120,54 +122,37 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
 
     private void notifyTileExits(Position position) {
         Tile tile = positionTileMap.get(position);
-        notifyListeners(new ExitsChangedEvent(tile));
+        notifyListeners(new ExitsChangedEvent(position, tile));
     }
 
     private void notifyBuilderMove(Direction dir) {
-        worldMapView.moveBuilder(dir, currentPosition);
+        notifyListeners(
+                new BuilderMovedEvent(worldMap.getBuilder(), currentPosition, dir));
     }
     //endregion
 
     //region notify* for BuilderControlsView and InventoryView
     private void notifyCanMoveBuilder() {
-        for (Direction dir : Direction.values()) {
-            Tile adjTile = worldMap.getBuilder().getCurrentTile()
-                    .getExits().get(dir.name());
-
-            builderControlsView.updateCanMoveBuilder(
-                    dir,
-                    adjTile != null && worldMap.getBuilder().canEnter(adjTile)
-            );
-        }
+        notifyBlocksChanged(currentPosition);
     }
 
     private void notifyCanDig() {
-        boolean canDig = false;
-        try {
-            canDig = worldMap.getBuilder().getCurrentTile().getTopBlock().isDiggable();
-        } catch (TooLowException ignored) {} // No blocks. Can't dig.
-        builderControlsView.updateCanDig(canDig);
+        notifyCanMoveBuilder();
     }
 
     private void notifyInventory() {
-        inventoryView.updateInventory(countInventoryBlocks());
+        notifyListeners(
+                new InventoryChangedEvent(worldMap.getBuilder(), countInventoryBlocks()));
     }
     //endregion
 
     /**
      * Notifies all relevant observers when the blocks on the tile at this
      * position changes.
+     * @deprecated
      * @param position Position of tile.
      */
     private void tileBlocksChanged(Position position) {
-        if (position.equals(currentPosition)) {
-            // If a block is added or removed, the height will change
-            // which will change these.
-            notifyCanDig();
-            notifyCanMoveBuilder();
-        }
-
-        notifyTopBlock(position);
         notifyBlocksChanged(position);
     }
 
