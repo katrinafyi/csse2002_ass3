@@ -1,10 +1,14 @@
 package game;
 
+import javafx.animation.PauseTransition;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.util.Duration;
+
+import javax.rmi.CORBA.Util;
 
 public class UniformGridPane extends GridPane {
     protected final int COLUMNS;
@@ -29,8 +33,8 @@ public class UniformGridPane extends GridPane {
         applyRowAndColumnConstraints();
 
         this.prefHeightProperty().bind(this.widthProperty());
-        this.setMaxHeight(Control.USE_PREF_SIZE);
         this.setMinHeight(Control.USE_PREF_SIZE);
+        this.setMaxHeight(Control.USE_PREF_SIZE);
     }
 
     private void applyRowAndColumnConstraints() {

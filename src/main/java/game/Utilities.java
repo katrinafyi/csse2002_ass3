@@ -1,6 +1,9 @@
 package game;
 
 import csse2002.block.world.Position;
+import javafx.animation.PauseTransition;
+import javafx.beans.property.ReadOnlyProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.layout.Region;
 
 public class Utilities {
@@ -23,5 +26,15 @@ public class Utilities {
 
     public static boolean isInstance(Object object, Class<?> superclass) {
         return superclass.isAssignableFrom(object.getClass());
+    }
+
+    public static <T> void delayBinding(PauseTransition pause,
+                                        ReadOnlyProperty<T> property,
+                                        ChangeListener<T> listener) {
+        System.out.println(pause);
+        property.addListener((prop, oldValue, newValue) -> {
+            pause.setOnFinished(e -> listener.changed(prop, oldValue, newValue));
+            pause.playFromStart();
+        });
     }
 }

@@ -3,12 +3,14 @@ package game;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 import game.controller.BlockWorldController;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
+import javafx.scene.control.Control;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -21,6 +23,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 
@@ -53,6 +56,8 @@ public class MainApplication extends Application {
         rootGrid.add(worldMapGrid, 0, 0);
         GridPane.setValignment(worldMapGrid, VPos.TOP);
 
+
+
         GameControlsPane centrePane = new GameControlsPane(presenter, presenter);
         rootGrid.add(centrePane, 1, 0);
         GridPane.setValignment(centrePane, VPos.TOP);
@@ -78,8 +83,17 @@ public class MainApplication extends Application {
         row0.setPercentHeight(100);
         rootGrid.getRowConstraints().add(row0);
 
-        Scene scene = new Scene(container, 800, 600, true, SceneAntialiasing.BALANCED);
+        Scene scene = new Scene(container);
         primaryStage.setScene(scene);
+
+        Utilities.delayBinding(new PauseTransition(Duration.seconds(0.2)),
+                scene.widthProperty(), (a, b, c) -> {
+                    System.out.println(a);
+                    worldMapGrid.setPrefWidth(((double)c)-300);
+        });
+
+        worldMapGrid.setMinWidth(Control.USE_PREF_SIZE);
+        worldMapGrid.setMaxWidth(Control.USE_PREF_SIZE);
 
         primaryStage.setMinWidth(622);
         primaryStage.minHeightProperty().bind(worldMapGrid.widthProperty().add(80.5));

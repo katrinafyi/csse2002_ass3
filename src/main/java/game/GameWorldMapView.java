@@ -12,7 +12,11 @@ import game.model.events.WorldMapLoadedEvent;
 import game.model.BlockType;
 import game.view.TileView;
 import csse2002.block.world.Position;
+import javafx.animation.PauseTransition;
+import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.util.Duration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +36,13 @@ public class GameWorldMapView {
         controller.addListener(ErrorEvent.class, this::errorHandler);
         controller.addListener(BlocksChangedEvent.class, this::tileBlocksHandler);
         controller.addListener(null, this::allHandler);
+
+                this.gridPane.prefWidthProperty().addListener(
+                (a, o, n) -> {
+                    for (Node tile : this.gridPane.getChildren()) {
+                        ((Region) tile).setMaxWidth(((double) n - (gridPane.COLUMNS - 1) * gridPane.GAP) / gridPane.COLUMNS);
+                    }
+                });
     }
 
     private void allHandler(BaseBlockWorldEvent e) {
@@ -79,11 +90,8 @@ public class GameWorldMapView {
 
     private TileSquare newTileSquare() {
         TileSquare tile = new TileSquare();
-        tile.maxWidthProperty().bind(
-                this.gridPane.widthProperty()
-                        .subtract((gridPane.COLUMNS-1)*gridPane.GAP)
-                        .divide(gridPane.COLUMNS)
-        );
+        tile.setMaxWidth(10);
+
         return tile;
     }
 
