@@ -1,8 +1,10 @@
 package game;
 
+import csse2002.block.world.NoExitException;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 import game.controller.BlockWorldController;
+import game.controller.ErrorController;
 import game.model.Direction;
 import game.view.BuilderControlsView;
 import javafx.geometry.Pos;
@@ -13,12 +15,15 @@ import java.io.FileNotFoundException;
 
 public class GameControlsPane extends VBox implements BuilderControlsView {
     private final BlockWorldController controller;
+    private ErrorController errorController;
 
-    public GameControlsPane(BlockWorldController controller) {
+    public GameControlsPane(BlockWorldController controller, ErrorController errorController) {
         this.controller = controller;
+        this.errorController = errorController;
+
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(10);
-        DPadGrid grid = new DPadGrid();
+        DPadGrid grid = new DPadGrid(this::moveBuilderAndCatch);
 
         Button debug = new Button("(Debug)");
         debug.setOnAction((e) -> {
@@ -36,6 +41,14 @@ public class GameControlsPane extends VBox implements BuilderControlsView {
         });
 
         this.getChildren().addAll(grid, new Button("DIG"), debug, b2, b3);
+    }
+
+    private void moveBuilderAndCatch(Direction direction) {
+        try {
+            controller.moveBuilder(direction);
+        } catch (NoExitException e) {
+            errorController.handleError("You can't move that way!");
+        }
     }
     
     @Override

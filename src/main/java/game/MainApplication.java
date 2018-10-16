@@ -53,7 +53,7 @@ public class MainApplication extends Application {
         rootGrid.add(worldMapGrid, 0, 0);
         GridPane.setValignment(worldMapGrid, VPos.TOP);
 
-        GameControlsPane centrePane = new GameControlsPane(presenter);
+        GameControlsPane centrePane = new GameControlsPane(presenter, presenter);
         rootGrid.add(centrePane, 1, 0);
         GridPane.setValignment(centrePane, VPos.TOP);
 
