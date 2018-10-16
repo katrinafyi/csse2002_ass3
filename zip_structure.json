@@ -3,15 +3,17 @@
         "src_path": "src/main/java/game/",
         "dest_path": "src/game/",
         "include": [
-            "*.java"
+            "**.java"
         ],
         "glob": true,
         "clean": false
     },
-    "test": {
-        "src_path": "src/test/java/csse2002/block/world/",
-        "dest_path": "test/csse2002/block/world/",
+    "images": {
+        "src_path": "src/images/",
+        "dest_path": "src/images/",
         "include": [
-        ]
+            "**.png"
+        ],
+        "glob": true
     }
 }

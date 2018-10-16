@@ -20,4 +20,8 @@ public class Utilities {
     public static Position subPos(Position p1, Position p2) {
         return addPos(p1, negPos(p2));
     }
+
+    public static boolean isInstance(Object object, Class<?> superclass) {
+        return superclass.isAssignableFrom(object.getClass());
+    }
 }

@@ -11,12 +11,11 @@ import glob
 
 
 
-def do_zip_assemble(config):
+def do_zip_assemble(config: dict):
     print('Starting artifact build with config:')
     print(json.dumps(config, indent=4))
     
     src_files = config['src'] # type: dict
-    test_files = config['test']
 
     print('Copying to temp directory...')
     shutil.copytree('.', './__temp')
@@ -46,7 +45,8 @@ def do_zip_assemble(config):
 
     zf = zipfile.ZipFile('./../'+sys.argv[1], 'w')
 
-    for file_structure in (src_files, test_files):
+    for key, file_structure in config.items():
+        print('  Handling config key:', key)
         for f in file_structure['include']:
             if not file_structure.get('glob', False):
                 print('    Adding', file_structure['src_path']+f)
