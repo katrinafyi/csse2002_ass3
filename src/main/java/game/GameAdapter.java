@@ -15,6 +15,7 @@ import game.controller.ErrorController;
 import game.controller.EventDispatcher;
 import game.controller.events.BaseBlockWorldEvent;
 import game.controller.events.BlocksChangedEvent;
+import game.controller.events.ExitsChangedEvent;
 import game.model.BlockType;
 import game.model.Direction;
 
@@ -56,7 +57,7 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
         worldMapView.newMapLoaded(currentPosition);
         for (Position position : positionTileMap.keySet()) {
             notifyTopBlock(position);
-            notifyTileHeight(position);
+            notifyBlocksChanged(position);
             notifyTileExits(position);
         }
 
@@ -104,34 +105,22 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
     //endregion
 
     //region notify* methods for WorldMapView
-    private void notifyTileHeight(Position position) {
-        int height = positionTileMap.get(position).getBlocks().size();
-        notifyListeners(new BlocksChangedEvent());
-        worldMapView.setTileHeight(position, height);
+    private void notifyBlocksChanged(Position position) {
+        Tile tile = positionTileMap.get(position);
+        notifyListeners(new BlocksChangedEvent(tile));
     }
 
+    /**
+     * @deprecated
+     * @param position
+     */
     private void notifyTopBlock(Position position) {
-        Tile tile = positionTileMap.get(position);
-        int height = tile.getBlocks().size();
-
-        BlockType topType;
-        try {
-            topType = height != 0 ? BlockType.fromBlock(tile.getTopBlock()) : null;
-        } catch (TooLowException e) {
-            throw new AssertionError(e);
-        }
-        worldMapView.setTileTopBlock(position, topType);
+        notifyBlocksChanged(position);
     }
 
     private void notifyTileExits(Position position) {
         Tile tile = positionTileMap.get(position);
-        for (Direction direction : Direction.values()) {
-            worldMapView.setTileHasExit(
-                    position,
-                    direction,
-                    tile.getExits().get(direction.name()) != null
-            );
-        }
+        notifyListeners(new ExitsChangedEvent(tile));
     }
 
     private void notifyBuilderMove(Direction dir) {
@@ -179,7 +168,7 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
         }
 
         notifyTopBlock(position);
-        notifyTileHeight(position);
+        notifyBlocksChanged(position);
     }
 
 
