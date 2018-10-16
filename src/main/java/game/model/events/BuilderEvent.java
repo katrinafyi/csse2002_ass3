@@ -2,6 +2,9 @@ package game.model.events;
 
 import csse2002.block.world.Builder;
 
+/**
+ * Superclass for events relating to the builder.
+ */
 public class BuilderEvent extends BaseBlockWorldEvent {
     private final Builder builder;
 

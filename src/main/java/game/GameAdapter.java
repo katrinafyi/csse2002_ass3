@@ -193,11 +193,15 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
 
     @Override
     public void dropBlock(BlockType blockType)
-            throws NoSuchElementException, TooHighException, InvalidBlockException {
+            throws NoSuchElementException, TooHighException {
         List<Block> inventory = worldMap.getBuilder().getInventory();
         for (int i = 0; i < inventory.size(); i++) {
             if (blockType.blockClass.isAssignableFrom(inventory.get(i).getClass())) {
-                worldMap.getBuilder().dropFromInventory(i);
+                try {
+                    worldMap.getBuilder().dropFromInventory(i);
+                } catch (InvalidBlockException e) {
+                    throw new AssertionError(e);
+                }
 
                 tileBlocksChanged(currentPosition);
                 return;

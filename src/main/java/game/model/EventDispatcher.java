@@ -10,25 +10,27 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 public class EventDispatcher<T> {
-    private final Map<Class<? extends T>, Set<Consumer<T>>> eventListeners = new HashMap<>();
+    private final Map<Class<? extends T>, Set<Consumer<? extends T>>> eventListeners = new HashMap<>();
 
-    private Set<Consumer<T>> getOrInsert(Class<? extends T> eventType) {
+    private Set<Consumer<? extends T>> getOrInsert(Class<? extends T> eventType) {
         return eventListeners.computeIfAbsent(eventType, k -> new HashSet<>());
     }
 
-    public void addListener(Class<? extends T> eventType, Consumer<T> listener) {
+    public <U extends T> void addListener(Class<U> eventType, Consumer<U> listener) {
         getOrInsert(eventType).add(listener);
     }
 
-    public void removeListener(Class<? extends T> eventType, Consumer<T> listener) {
+    public <U extends T> void removeListener(Class<U> eventType, Consumer<U> listener) {
         getOrInsert(eventType).remove(listener);
     }
 
-    public void notifyListeners(T event) {
+    public <U extends T> void notifyListeners(U event) {
         for (Class<? extends T> eventType : eventListeners.keySet()) {
+            // The use of generics here is... not great :/
             if (eventType == null || Utilities.isInstance(event, eventType)) {
-                for (Consumer<T> tConsumer : eventListeners.get(eventType)) {
-                    tConsumer.accept(event);
+                for (Consumer<? extends T> listener : eventListeners.get(eventType)) {
+                    // Because we check
+                    ((Consumer<U>)listener).accept(event);
                 }
             }
         }
