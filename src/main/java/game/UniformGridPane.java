@@ -31,10 +31,6 @@ public class UniformGridPane extends GridPane {
         this.setHgap(gap);
 
         applyRowAndColumnConstraints();
-
-        this.prefHeightProperty().bind(this.widthProperty());
-        this.setMinHeight(Control.USE_PREF_SIZE);
-        this.setMaxHeight(Control.USE_PREF_SIZE);
     }
 
     private void applyRowAndColumnConstraints() {

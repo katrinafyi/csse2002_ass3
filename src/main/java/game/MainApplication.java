@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.Control;
@@ -18,6 +19,7 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
@@ -52,11 +54,21 @@ public class MainApplication extends Application {
         GameAdapter presenter = new GameAdapter();
 
         GameWorldMapView worldMapView = new GameWorldMapView(presenter);
+
+        Pane worldMapContainer = new VBox();
+        worldMapContainer.setStyle("-fx-background-color: yellow;");
         GridPane worldMapGrid = worldMapView.getGridPane();
-        rootGrid.add(worldMapGrid, 0, 0);
-        GridPane.setValignment(worldMapGrid, VPos.TOP);
+        Utilities.setMaxWidthHeight(worldMapContainer);
+        worldMapContainer.getChildren().add(worldMapGrid);
+
+        rootGrid.add(worldMapContainer, 0, 0);
 
 
+        Utilities.delayBinding(new PauseTransition(Duration.seconds(0.2)),
+                worldMapContainer.widthProperty(), (a, b, c) -> {
+                    worldMapGrid.setPrefWidth((double)c);
+                    worldMapGrid.setPrefHeight((double)c);
+                });
 
         GameControlsPane centrePane = new GameControlsPane(presenter, presenter);
         rootGrid.add(centrePane, 1, 0);
@@ -86,11 +98,6 @@ public class MainApplication extends Application {
         Scene scene = new Scene(container);
         primaryStage.setScene(scene);
 
-        Utilities.delayBinding(new PauseTransition(Duration.seconds(0.2)),
-                scene.widthProperty(), (a, b, c) -> {
-                    System.out.println(a);
-                    worldMapGrid.setPrefWidth(((double)c)-300);
-        });
 
         worldMapGrid.setMinWidth(Control.USE_PREF_SIZE);
         worldMapGrid.setMaxWidth(Control.USE_PREF_SIZE);
