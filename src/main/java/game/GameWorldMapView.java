@@ -14,6 +14,7 @@ import game.view.TileView;
 import csse2002.block.world.Position;
 import javafx.animation.PauseTransition;
 import javafx.scene.Node;
+import javafx.scene.control.Control;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
@@ -36,6 +37,10 @@ public class GameWorldMapView {
         controller.addListener(ErrorEvent.class, this::errorHandler);
         controller.addListener(BlocksChangedEvent.class, this::tileBlocksHandler);
         controller.addListener(null, this::allHandler);
+
+        this.gridPane.setMaxWidth(Control.USE_PREF_SIZE);
+
+        this.gridPane.setMaxHeight(Control.USE_PREF_SIZE);
 
                 this.gridPane.prefWidthProperty().addListener(
                 (a, o, n) -> {

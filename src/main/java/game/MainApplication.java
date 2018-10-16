@@ -1,12 +1,15 @@
 package game;
 
+import com.sun.webkit.network.Util;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 import game.controller.BlockWorldController;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -45,30 +48,29 @@ public class MainApplication extends Application {
         GridPane rootGrid = new GridPane();
         rootGrid.setPadding(new Insets(10));
         rootGrid.setHgap(20);
+        rootGrid.setStyle("-fx-background-color: purple;");
 
         // Container for menu and main content.
         VBox container = new VBox();
+        container.setStyle("-fx-background-color: green;");
         MenuBar menuBar = constructMenuBar();
         container.getChildren().addAll(menuBar, rootGrid);
+        VBox.setVgrow(rootGrid, Priority.ALWAYS);
 
         GameAdapter presenter = new GameAdapter();
 
         GameWorldMapView worldMapView = new GameWorldMapView(presenter);
 
-        Pane worldMapContainer = new VBox();
+        VBox worldMapContainer = new VBox();
         worldMapContainer.setStyle("-fx-background-color: yellow;");
         GridPane worldMapGrid = worldMapView.getGridPane();
+        worldMapGrid.setStyle("-fx-border-color: black;");
         Utilities.setMaxWidthHeight(worldMapContainer);
         worldMapContainer.getChildren().add(worldMapGrid);
+        worldMapContainer.setAlignment(Pos.TOP_CENTER);
 
         rootGrid.add(worldMapContainer, 0, 0);
 
-
-        Utilities.delayBinding(new PauseTransition(Duration.seconds(0.2)),
-                worldMapContainer.widthProperty(), (a, b, c) -> {
-                    worldMapGrid.setPrefWidth((double)c);
-                    worldMapGrid.setPrefHeight((double)c);
-                });
 
         GameControlsPane centrePane = new GameControlsPane(presenter, presenter);
         rootGrid.add(centrePane, 1, 0);
@@ -98,33 +100,28 @@ public class MainApplication extends Application {
         Scene scene = new Scene(container);
         primaryStage.setScene(scene);
 
+        ChangeListener<Number> setWidth = (a, b, c) -> {
+            double size = Math.min(worldMapContainer.getWidth(), worldMapContainer.getHeight());
+            size = Math.min(size, scene.getWidth()-360);
+            size = Math.min(size, scene.getHeight()-45);
+            System.out.println(size);
+            worldMapGrid.setPrefWidth(size);
+            worldMapGrid.setPrefHeight(size);
+        };
 
-        worldMapGrid.setMinWidth(Control.USE_PREF_SIZE);
-        worldMapGrid.setMaxWidth(Control.USE_PREF_SIZE);
+        Utilities.delayBinding(new PauseTransition(new Duration(200)),
+                worldMapContainer.widthProperty(), setWidth);
+        Utilities.delayBinding(new PauseTransition(new Duration(200)),
+                worldMapContainer.heightProperty(), setWidth);
 
-        primaryStage.setMinWidth(622);
-        primaryStage.minHeightProperty().bind(worldMapGrid.widthProperty().add(80.5));
 
         scene.setOnKeyPressed(e -> {
-            int direction = 0;
-            if (e.getCode() == KeyCode.RIGHT) {
-                direction = -1;
-            } else if (e.getCode() == KeyCode.LEFT) {
-                direction = +1;
+            if (e.getCode() == KeyCode.DELETE) {
+                System.out.println(worldMapContainer);
+                System.out.println(scene);
+                System.out.println(primaryStage);
+
             }
-
-            if (direction != 0) {
-            }
-
-            int up = 0;
-            if (e.getCode() == KeyCode.UP)
-                up = 1;
-            else if (e.getCode() == KeyCode.DOWN)
-                up = -1;
-
-            if (up != 0) {
-            }
-
         });
 
         primaryStage.setHeight(580.5);
@@ -160,7 +157,8 @@ public class MainApplication extends Application {
                 new MenuItem("Save map"),
                 new MenuItem("Save map as"),
                 new SeparatorMenuItem(),
-                new MenuItem("Exit")
+                new MenuItem("Exit"),
+                new MenuItem("DEBUG")
         );
         menuBar.getMenus().add(fileMenu);
         return menuBar;

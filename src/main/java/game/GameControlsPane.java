@@ -40,7 +40,7 @@ public class GameControlsPane extends VBox implements BuilderControlsView {
             }
         });
 
-        this.getChildren().addAll(grid, new Button("DIG"), debug, b2, b3);
+        this.getChildren().addAll(grid, new Button("⛏️"), debug, b2, b3);
     }
 
     private void moveBuilderAndCatch(Direction direction) {

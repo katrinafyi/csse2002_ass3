@@ -30,6 +30,7 @@ public class UniformGridPane extends GridPane {
         this.setVgap(gap);
         this.setHgap(gap);
 
+
         applyRowAndColumnConstraints();
     }
 
