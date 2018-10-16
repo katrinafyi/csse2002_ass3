@@ -27,6 +27,7 @@ public class TileSquare extends StackPane implements TileView {
     private final ImageView imageView = new ImageView();
 
     public TileSquare() {
+        this.setStyle("-fx-background-color: black;");
         imageView.setPreserveRatio(true);
         imageView.fitWidthProperty().bind(this.maxWidthProperty());
         this.getChildren().add(imageView);

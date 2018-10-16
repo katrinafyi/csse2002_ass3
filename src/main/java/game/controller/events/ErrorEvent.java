@@ -4,7 +4,6 @@ public class ErrorEvent extends BaseBlockWorldEvent {
     private final String message;
 
     public ErrorEvent(String message) {
-
         this.message = message;
     }
 

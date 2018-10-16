@@ -48,7 +48,7 @@ public class MainApplication extends Application {
 
         GameAdapter presenter = new GameAdapter();
 
-        GameWorldMapView worldMapView = new GameWorldMapView();
+        GameWorldMapView worldMapView = new GameWorldMapView(presenter);
         GridPane worldMapGrid = worldMapView.getGridPane();
         rootGrid.add(worldMapGrid, 0, 0);
         GridPane.setValignment(worldMapGrid, VPos.TOP);
@@ -61,9 +61,6 @@ public class MainApplication extends Application {
         rootGrid.add(rightPane, 2, 0);
         GridPane.setValignment(rightPane, VPos.TOP);
 
-        presenter.attackWorldMapView(worldMapView);
-        presenter.attachControlsView(centrePane);
-        presenter.attachInventoryView(rightPane);
 
         centrePane.setMaxWidth(Double.MAX_VALUE);
 

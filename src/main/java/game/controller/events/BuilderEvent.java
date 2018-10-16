@@ -6,6 +6,7 @@ public class BuilderEvent extends BaseBlockWorldEvent {
     private final Builder builder;
 
     public BuilderEvent(Builder builder) {
+
         this.builder = builder;
     }
 

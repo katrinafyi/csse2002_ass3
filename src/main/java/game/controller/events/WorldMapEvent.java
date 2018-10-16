@@ -1,16 +1,17 @@
 package game.controller.events;
 
-import csse2002.block.world.WorldMap;
+import csse2002.block.world.Position;
 
 public class WorldMapEvent extends BaseBlockWorldEvent {
-    private final WorldMap worldMap;
+    private final Position position;
 
-    public WorldMapEvent(WorldMap worldMap) {
+    public WorldMapEvent(Position position) {
 
-        this.worldMap = worldMap;
+        this.position = position;
     }
 
-    public WorldMap getWorldMap() {
-        return worldMap;
+    public Position getPosition() {
+        return position;
     }
 }
+
