@@ -91,8 +91,8 @@ public class MainApplication extends Application {
         ColumnConstraints col2 = new ColumnConstraints();
         col2.setPrefWidth(150);
         col2.setMinWidth(150);
-
         rootGrid.getColumnConstraints().addAll(col0, col1, col2);
+
         RowConstraints row0 = new RowConstraints();
         row0.setPercentHeight(100);
         rootGrid.getRowConstraints().add(row0);
@@ -104,6 +104,7 @@ public class MainApplication extends Application {
             double size = Math.min(worldMapContainer.getWidth(), worldMapContainer.getHeight());
             size = Math.min(size, scene.getWidth()-360);
             size = Math.min(size, scene.getHeight()-45);
+            size = Math.max(size, 1);
             System.out.println(size);
             worldMapGrid.setPrefWidth(size);
             worldMapGrid.setPrefHeight(size);

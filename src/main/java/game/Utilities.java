@@ -28,6 +28,11 @@ public class Utilities {
         return superclass.isAssignableFrom(object.getClass());
     }
 
+    public static String capitalise(String s) {
+        // From https://stackoverflow.com/a/5725949
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
+
     public static <T> void delayBinding(PauseTransition pause,
                                         ReadOnlyProperty<T> property,
                                         ChangeListener<T> listener) {

@@ -40,7 +40,11 @@ public class GameControlsPane extends VBox implements BuilderControlsView {
             }
         });
 
-        this.getChildren().addAll(grid, new Button("⛏️"), debug, b2, b3);
+        this.getChildren().addAll(grid, new Button("⛏") {
+            {
+                this.setStyle("-fx-font-size: 40; -fx-font-weight: bold;");
+            }
+        }, debug, b2, b3);
     }
 
     private void moveBuilderAndCatch(Direction direction) {
