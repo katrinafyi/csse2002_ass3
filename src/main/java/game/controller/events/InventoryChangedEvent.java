@@ -5,11 +5,11 @@ import game.model.BlockType;
 
 import java.util.Map;
 
-public class InventoryChangedEventBase extends BuilderEventBase {
+public class InventoryChangedEvent extends BuilderEvent {
     private final Map<BlockType, Integer> blocksCount;
 
-    public InventoryChangedEventBase(Builder builder,
-                                     Map<BlockType, Integer> blocksCount) {
+    public InventoryChangedEvent(Builder builder,
+                                 Map<BlockType, Integer> blocksCount) {
         super(builder);
         this.blocksCount = blocksCount;
     }

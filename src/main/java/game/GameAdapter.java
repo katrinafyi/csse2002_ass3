@@ -12,12 +12,11 @@ import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 import game.controller.BlockWorldController;
 import game.controller.ErrorController;
+import game.controller.EventDispatcher;
+import game.controller.events.BaseBlockWorldEvent;
+import game.controller.events.BlocksChangedEvent;
 import game.model.BlockType;
 import game.model.Direction;
-import game.view.BuilderControlsView;
-import game.view.ErrorView;
-import game.view.InventoryView;
-import game.view.WorldMapView;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -32,32 +31,13 @@ import java.util.Set;
 
 // This serves the purpose of a presenter as well as dispatching events,
 // because assignment 2's implementation does not do so.
-public class GameAdapter implements BlockWorldController, ErrorController {
+public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
+        implements BlockWorldController, ErrorController {
 
     private WorldMap worldMap;
     private final Map<Position, Tile> positionTileMap = new HashMap<>();
     private Position currentPosition;
 
-    private WorldMapView worldMapView;
-    private BuilderControlsView builderControlsView;
-    private InventoryView inventoryView;
-    private ErrorView errorView;
-
-    public void attackWorldMapView(WorldMapView worldMapView) {
-        this.worldMapView = worldMapView;
-    }
-
-    public void attachControlsView(BuilderControlsView builderControlsView) {
-        this.builderControlsView = builderControlsView;
-    }
-
-    public void attachInventoryView(InventoryView inventoryView) {
-        this.inventoryView = inventoryView;
-    }
-
-    public void attachErrorView(ErrorView errorView) {
-        this.errorView = errorView;
-    }
 
     @Override
     public void loadWorldMapFile(String filePath)
@@ -126,6 +106,7 @@ public class GameAdapter implements BlockWorldController, ErrorController {
     //region notify* methods for WorldMapView
     private void notifyTileHeight(Position position) {
         int height = positionTileMap.get(position).getBlocks().size();
+        notifyListeners(new BlocksChangedEvent());
         worldMapView.setTileHeight(position, height);
     }
 
