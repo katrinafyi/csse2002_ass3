@@ -15,13 +15,13 @@ public class TileSquare extends StackPane implements TileView {
     private final static Map<BlockType, Image> blockImages = new HashMap<>();
     static {
         blockImages.put(BlockType.grass,
-                new Image(TileSquare.class.getResourceAsStream("/grass_top2.png")));
+                new Image("file:src/images/grass_top2.png"));
         blockImages.put(BlockType.soil,
-                new Image(TileSquare.class.getResourceAsStream("/dirt.png")));
+                new Image("file:src/images/dirt.png"));
         blockImages.put(BlockType.stone,
-                new Image(TileSquare.class.getResourceAsStream("/stone.png")));
+                new Image("file:src/images/stone.png"));
         blockImages.put(BlockType.wood,
-                new Image(TileSquare.class.getResourceAsStream("/oak_planks.png")));
+                new Image("file:src/images/oak_planks.png"));
     }
 
     private final ImageView imageView = new ImageView();
