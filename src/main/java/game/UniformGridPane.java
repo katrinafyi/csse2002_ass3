@@ -1,6 +1,7 @@
 package game;
 
 import javafx.animation.PauseTransition;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.layout.ColumnConstraints;
@@ -31,10 +32,12 @@ public class UniformGridPane extends GridPane {
         HALF_COLS = (columns-1)/2;
         HALF_ROWS = (ROWS-1)/2;
         GAP = gap;
+
         Utilities.setMaxWidthHeight(this);
 
         this.setVgap(gap);
         this.setHgap(gap);
+        this.setAlignment(Pos.CENTER);
 
 
         applyRowAndColumnConstraints();

@@ -1,11 +1,12 @@
 package game;
 
-import game.controller.BlockWorldController;
 import game.model.Direction;
-import javafx.scene.Node;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.util.Pair;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,28 +29,50 @@ public class DPadGrid extends UniformGridPane {
 
     private static final ButtonSpec[] buttonSpecs = new ButtonSpec[4];
     static {
-        buttonSpecs[0] = new ButtonSpec("↑", 1, 0, Direction.north);
-        buttonSpecs[1] = new ButtonSpec("→", 2, 1, Direction.east);
-        buttonSpecs[2] = new ButtonSpec("↓", 1, 2, Direction.south);
-        buttonSpecs[3] = new ButtonSpec("←", 0, 1, Direction.west);
+        buttonSpecs[0] = new ButtonSpec("up.png", 1, 0, Direction.north);
+        buttonSpecs[1] = new ButtonSpec("right.png", 2, 1, Direction.east);
+        buttonSpecs[2] = new ButtonSpec("down.png", 1, 2, Direction.south);
+        buttonSpecs[3] = new ButtonSpec("left.png", 0, 1, Direction.west);
     }
+    private static final String ICON_PATH = "file:src/images/";
 
+    private ImageView centreImage;
     private final Map<Direction, Button> buttons = new HashMap<>();
 
-    public DPadGrid(Consumer<Direction> moveBuilder) {
+    public DPadGrid(Consumer<Direction> onClick) {
         super(3, 3);
         fixHeightToWidth();
 
         for (ButtonSpec buttonSpec : buttonSpecs) {
-            Button button = new Button(buttonSpec.label);
-            button.setOnAction(e -> {
-                moveBuilder.accept(buttonSpec.direction);
-            });
-            Utilities.setMaxWidthHeight(button);
+            Button button = makeButton(buttonSpec);
+            button.setOnAction(e -> onClick.accept(buttonSpec.direction));
             buttons.put(buttonSpec.direction, button);
-            button.setDisable(true);
+
             this.add(button, buttonSpec.col, buttonSpec.row);
         }
+    }
+
+    public ImageView getCentreImage() {
+        return centreImage;
+    }
+
+    public void setCentreImage(String url) {
+        Image image = SpriteLoader.getGlobalLoader().loadImage(url);
+        centreImage = new ImageView(image);
+        centreImage.setPreserveRatio(true);
+        centreImage.setFitWidth(40);
+        centreImage.setOpacity(0.5);
+        add(centreImage, 1, 1);
+        GridPane.setHalignment(centreImage, HPos.CENTER);
+        GridPane.setValignment(centreImage, VPos.CENTER);
+    }
+
+    private Button makeButton(ButtonSpec buttonSpec) {
+        Button button = new IconButton(ICON_PATH + buttonSpec.label);
+        button.setDisable(true);
+        button.prefHeightProperty().bind(button.widthProperty());
+
+        return button;
     }
 
     public Button getButton(Direction direction) {

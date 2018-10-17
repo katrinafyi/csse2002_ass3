@@ -4,6 +4,10 @@ import csse2002.block.world.Position;
 import javafx.animation.PauseTransition;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
 public class Utilities {
@@ -42,4 +46,5 @@ public class Utilities {
             pause.playFromStart();
         });
     }
+
 }

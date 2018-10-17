@@ -3,6 +3,7 @@ package game;
 import csse2002.block.world.InvalidBlockException;
 import csse2002.block.world.NoExitException;
 import csse2002.block.world.Tile;
+import csse2002.block.world.TooHighException;
 import csse2002.block.world.TooLowException;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
@@ -25,7 +26,9 @@ public class GameControlsPane extends VBox {
     private final BlockWorldController controller;
     private ErrorController errorController;
 
-    private final DPadGrid dPad;
+    private final DPadGrid builderDPad;
+    private final DPadGrid blockDPad;
+    private final IconButton digButton;
 
     public GameControlsPane(EventDispatcher<BaseBlockWorldEvent> model,
                             BlockWorldController controller,
@@ -37,19 +40,22 @@ public class GameControlsPane extends VBox {
         model.addListener(BuilderMovedEvent.class, e -> {
             this.updateBuilderCanMove(e.getTile());
         });
-        model.addListener(WorldMapLoadedEvent.class, e -> {
-            this.updateBuilderCanMove(e.getTileMap().get(e.getPosition()));
-        });
+        model.addListener(WorldMapLoadedEvent.class,
+                this::worldMapLoadedListener);
 
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(10);
-        dPad = new DPadGrid(this::moveBuilderAndCatch);
 
-        Button debug = new Button("(Debug)");
-        debug.setOnAction((e) -> {
-        });
+        builderDPad = new DPadGrid(this::moveBuilder);
+        builderDPad.setCentreImage("file:src/images/steve_shadow.png");
 
-        Button b2 = new Button("(Size to scene)");
+        blockDPad = new DPadGrid(this::moveBlock);
+        blockDPad.setCentreImage("file:src/images/iron_shovel_shadow.png");
+
+        digButton = new IconButton("file:src/images/iron_pickaxe.png");
+        digButton.setDisable(true);
+        digButton.maxWidthProperty().bind(digButton.heightProperty());
+        digButton.setOnAction(e -> this.digBlock());
 
         Button b3 = new Button("(Load map)");
         b3.setOnAction(e -> {
@@ -60,35 +66,50 @@ public class GameControlsPane extends VBox {
             }
         });
 
-        this.getChildren().addAll(dPad, new Button("⛏") {
-            {
-                this.setStyle("-fx-font-size: 40; -fx-font-weight: bold;");
-                setOnAction(e -> {
-                    try {
-                        controller.dig();
-                    } catch (InvalidBlockException e1) {
-                        e1.printStackTrace();
-                    } catch (TooLowException e1) {
-                        e1.printStackTrace();
-                    }
-                });
-            }
-        }, debug, b2, b3);
+        this.getChildren().addAll(builderDPad, blockDPad, digButton, b3);
+    }
+
+    private void worldMapLoadedListener(WorldMapLoadedEvent event) {
+        this.updateBuilderCanMove(event.getTileMap().get(event.getPosition()));
+
+        // Enable all buttons.
+        builderDPad.getCentreImage().setOpacity(1);
+        blockDPad.getCentreImage().setOpacity(1);
+        digButton.setDisable(false);
     }
 
     private void updateBuilderCanMove(Tile tile) {
         Map<String, Tile> exits = tile.getExits();
         for (Direction dir : Direction.values()) {
-            dPad.getButton(dir).setDisable(!exits.containsKey(dir.name()));
+            boolean hasExit = exits.containsKey(dir.name());
+
+            builderDPad.getButton(dir).setDisable(!hasExit);
+            blockDPad.getButton(dir).setDisable(!hasExit);
         }
     }
 
 
-    private void moveBuilderAndCatch(Direction direction) {
+    private void moveBuilder(Direction direction) {
         try {
             controller.moveBuilder(direction);
         } catch (NoExitException e) {
             errorController.handleError("You can't move that way!");
+        }
+    }
+
+    private void moveBlock(Direction direction) {
+        try {
+            controller.moveBlock(direction);
+        } catch (NoExitException | InvalidBlockException | TooHighException e) {
+            errorController.handleError("You can't move this block there!");
+        }
+    }
+
+    private void digBlock() {
+        try {
+            controller.dig();
+        } catch (InvalidBlockException | TooLowException e) {
+            errorController.handleError("You can't dig there!");
         }
     }
 }
