@@ -2,6 +2,7 @@ package game;
 
 import csse2002.block.world.TooHighException;
 import game.controller.BlockWorldController;
+import game.controller.ErrorController;
 import game.model.BlockType;
 import game.model.EventDispatcher;
 import game.model.events.BaseBlockWorldEvent;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class GameInventoryPane extends VBox {
     private final static List<BlockType> carryableBlocks = new ArrayList<>();
@@ -29,14 +31,17 @@ public class GameInventoryPane extends VBox {
     private final GridPane grid = new GridPane();
     private final EventDispatcher<BaseBlockWorldEvent> model;
     private final BlockWorldController controller;
+    private final ErrorController errorController;
 
     private final Map<BlockType, Label> countLabels = new HashMap<>();
     private final Map<BlockType, Button> blockButtons = new HashMap<>();
 
     public GameInventoryPane(EventDispatcher<BaseBlockWorldEvent> model,
-                             BlockWorldController controller) {
+                             BlockWorldController controller,
+                             ErrorController errorController) {
         this.model = model;
         this.controller = controller;
+        this.errorController = errorController;
 
         this.setId("inventory");
         grid.setId("inventory_grid");
@@ -58,7 +63,7 @@ public class GameInventoryPane extends VBox {
             }
             int n = blockCount.getValue();
             countLabels.get(block).setText("×"+n);
-            blockButtons.get(block).setDisable(n <= 0);
+            blockButtons.get(block).setDisable(false);
         }
     }
 
@@ -66,7 +71,11 @@ public class GameInventoryPane extends VBox {
         try {
             controller.placeBlock(blockToPlace);
         } catch (TooHighException e) {
-            e.printStackTrace();
+            errorController.handleError(
+                    "You can't place "+blockToPlace.name()+" up here!");
+        } catch (NoSuchElementException e) {
+            errorController.handleError(
+                    "You have no more "+blockToPlace.name()+"!");
         }
     }
 

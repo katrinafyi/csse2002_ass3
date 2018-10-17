@@ -28,6 +28,7 @@ public class GameWorldMapView extends UniformGridPane {
 
     private final List<TileSquare> visibleTileSquares = new ArrayList<>();
 
+    private Map<Position, Tile> allTiles;
     private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
     private Position currentPosition;
 
@@ -115,7 +116,7 @@ public class GameWorldMapView extends UniformGridPane {
                 Position pos = new Position(
                         currentPosition.getX()+c-this.HALF_COLS,
                         currentPosition.getY()+r-this.HALF_ROWS);
-                TileSquare tile = tileSquareMap.get(pos);
+                TileSquare tile = getOrMakeSquare(pos);
                 if (tile == null) {
                     continue;
                 }
@@ -127,21 +128,30 @@ public class GameWorldMapView extends UniformGridPane {
         add(errorLabel, 2, 3, 5, 1);
     }
 
+    private TileSquare getOrMakeSquare(Position pos) {
+        if (!allTiles.containsKey(pos)) {
+            return null;
+        }
+        TileSquare square = tileSquareMap.get(pos);
+        if (square == null) {
+            square = newTileSquare();
+            Map<String, Tile> exits = allTiles.get(pos).getExits();
+
+            for (Direction direction : Direction.values()) {
+                square.setHasExit(direction, exits.containsKey(direction.name()));
+            }
+            tileSquareMap.put(pos, square);
+        }
+        return square;
+    }
+
     private void worldMapLoadedHandler(WorldMapLoadedEvent event) {
         resetInternalState();
         System.out.println("map loaded v2");
         currentPosition = event.getPosition();
 
-        for (Map.Entry<Position, Tile> pair : event.getTileMap().entrySet()) {
-            Position position = pair.getKey();
-            Map<String, Tile> exits = pair.getValue().getExits();
-            TileSquare tileSq = newTileSquare();
+        allTiles = event.getTileMap();
 
-            for (Direction direction : Direction.values()) {
-                tileSq.setHasExit(direction, exits.containsKey(direction.name()));
-            }
-            tileSquareMap.put(position, tileSq);
-        }
         drawTilesToGrid();
         setCellWidths(this.prefWidthProperty(), 0, this.getWidth());
     }
@@ -161,7 +171,6 @@ public class GameWorldMapView extends UniformGridPane {
     }
 
     public void showErrorMessage(ErrorEvent event) {
-        System.out.println(event);
         errorLabel.showAndFade(event.getMessage());
     }
 }
