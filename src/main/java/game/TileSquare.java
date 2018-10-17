@@ -31,10 +31,10 @@ public class TileSquare extends StackPane implements TileView {
         this.setAlignment(Pos.CENTER);
         this.setStyle("-fx-background-color: black;");
 
-        blockImage = squareImageView();
+        blockImage = ratioImageView();
         blockImage.fitWidthProperty().bind(this.maxWidthProperty());
 
-        heightImage = squareImageView();
+        heightImage = ratioImageView();
         heightImage.fitWidthProperty().bind(this.maxWidthProperty().divide(5));
         StackPane.setAlignment(heightImage, Pos.TOP_LEFT);
         StackPane.setMargin(heightImage, new Insets(5));
@@ -42,7 +42,7 @@ public class TileSquare extends StackPane implements TileView {
         this.getChildren().addAll(blockImage, heightImage);
     }
 
-    private static ImageView squareImageView() {
+    private static ImageView ratioImageView() {
         ImageView imageView = new ImageView();
         imageView.setPreserveRatio(true);
         return imageView;
@@ -57,7 +57,7 @@ public class TileSquare extends StackPane implements TileView {
     @Override
     public void setBuilderTile(boolean isBuilderTile) {
         if (isBuilderTile && steveImage == null) {
-            steveImage = squareImageView();
+            steveImage = ratioImageView();
             loadAndSetImage(steveImage, "file:src/images/steve_shadow.png");
             steveImage.fitWidthProperty().bind(this.maxWidthProperty().multiply(0.8));
             this.getChildren().add(steveImage);
