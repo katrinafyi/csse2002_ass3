@@ -2,6 +2,7 @@ package game;
 
 import csse2002.block.world.Tile;
 import csse2002.block.world.TooLowException;
+import game.model.Direction;
 import game.model.EventDispatcher;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BlocksChangedEvent;
@@ -92,8 +93,8 @@ public class GameWorldMapView {
             for (int r = 0; r < gridPane.ROWS; r++) {
                 // Position index of the current cell.
                 Position pos = new Position(
-                        currentPosition.getX()+c-gridPane.COLUMNS/2,
-                        currentPosition.getY()+r-gridPane.ROWS/2);
+                        currentPosition.getX()+c-gridPane.HALF_COLS,
+                        currentPosition.getY()+r-gridPane.HALF_ROWS);
                 TileSquare tile = tileSquareMap.get(pos);
                 if (tile == null) {
                     continue;
@@ -106,28 +107,21 @@ public class GameWorldMapView {
     }
 
     private void drawTilesToGrid() {
-        int HALF_COLS = (gridPane.COLUMNS-1)/2;
-        int HALF_ROWS = (gridPane.ROWS-1)/2;
         for (int c = 0; c < gridPane.COLUMNS; c++) {
             for (int r = 0; r < gridPane.ROWS; r++) {
                 // Position index of the current cell.
                 Position pos = new Position(
-                        currentPosition.getX()+c-HALF_COLS,
-                        currentPosition.getY()+r-HALF_ROWS);
+                        currentPosition.getX()+c-gridPane.HALF_COLS,
+                        currentPosition.getY()+r-gridPane.HALF_ROWS);
                 TileSquare tile = tileSquareMap.get(pos);
                 if (tile == null) {
                     continue;
                 }
-                tile.setBuilderTile(r == HALF_ROWS && c == HALF_COLS);
+                tile.setBuilderTile(r == gridPane.HALF_ROWS && c == gridPane.HALF_COLS);
                 gridPane.add(tile, c, r);
             }
         }
 
-    }
-
-    private boolean onGrid(int col, int row) {
-        return (0 <= col && col < gridPane.COLUMNS)
-                && (0 <= row && row < gridPane.ROWS);
     }
 
     private void worldMapLoadedHandler(WorldMapLoadedEvent event) {
@@ -137,15 +131,17 @@ public class GameWorldMapView {
         this.gridPane.getChildren().clear();
         currentPosition = event.getPosition();
 
-        for (Position position : event.getTileMap().keySet()) {
-            TileSquare tile = newTileSquare();
-            if (position.equals(event.getPosition())) {
-                tile.setBuilderTile(true);
-            }
+        for (Map.Entry<Position, Tile> pair : event.getTileMap().entrySet()) {
+            Position position = pair.getKey();
+            Map<String, Tile> exits = pair.getValue().getExits();
+            TileSquare tileSq = newTileSquare();
 
-            tileSquareMap.put(position, tile);
-            this.gridPane.add(tile, posToCol(position), posToRow(position));
+            for (Direction direction : Direction.values()) {
+                tileSq.setHasExit(direction, exits.containsKey(direction.name()));
+            }
+            tileSquareMap.put(position, tileSq);
         }
+        drawTilesToGrid();
     }
 
     private TileSquare newTileSquare() {

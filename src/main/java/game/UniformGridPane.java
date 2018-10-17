@@ -13,6 +13,10 @@ import javax.rmi.CORBA.Util;
 public class UniformGridPane extends GridPane {
     protected final int COLUMNS;
     protected final int ROWS;
+
+    protected final int HALF_COLS;
+    protected final int HALF_ROWS;
+
     protected final double GAP;
 
     public UniformGridPane(int columns, int rows) {
@@ -24,6 +28,8 @@ public class UniformGridPane extends GridPane {
         super();
         COLUMNS = columns;
         ROWS = rows;
+        HALF_COLS = (columns-1)/2;
+        HALF_ROWS = (ROWS-1)/2;
         GAP = gap;
         Utilities.setMaxWidthHeight(this);
 

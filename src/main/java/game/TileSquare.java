@@ -25,11 +25,15 @@ public class TileSquare extends StackPane implements TileView {
 
     private final ImageView blockImage;
     private final ImageView heightImage;
+    private final ExitsOverlay exitsOverlay;
     private ImageView steveImage;
 
     public TileSquare() {
         this.setAlignment(Pos.CENTER);
         this.setStyle("-fx-background-color: black;");
+
+        exitsOverlay = new ExitsOverlay();
+        exitsOverlay.prefWidthProperty().bind(this.maxWidthProperty());
 
         blockImage = ratioImageView();
         blockImage.fitWidthProperty().bind(this.maxWidthProperty());
@@ -39,7 +43,7 @@ public class TileSquare extends StackPane implements TileView {
         StackPane.setAlignment(heightImage, Pos.TOP_LEFT);
         StackPane.setMargin(heightImage, new Insets(5));
 
-        this.getChildren().addAll(blockImage, heightImage);
+        this.getChildren().addAll(blockImage, heightImage, exitsOverlay);
     }
 
     private static ImageView ratioImageView() {
@@ -76,7 +80,7 @@ public class TileSquare extends StackPane implements TileView {
 
     @Override
     public void setHasExit(Direction direction, boolean hasExit) {
-
+        exitsOverlay.setHasExit(direction, hasExit);
     }
 
     @Override
