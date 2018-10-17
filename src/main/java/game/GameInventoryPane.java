@@ -31,16 +31,28 @@ public class GameInventoryPane extends VBox implements InventoryView {
         button.setPadding(new Insets(3));
         button.prefHeightProperty().bind(button.widthProperty());
         this.grid.add(button, 0, row);
-        this.grid.add(new Label(Utilities.capitalise(blockType.name())), 1, row);
-        this.grid.add(new Label("×20"), 2, row);
+        this.grid.add(createBlockLabel(blockType), 1, row);
+        this.grid.add(createCountLabel(), 2, row);
+    }
+
+    private static Label createBlockLabel(BlockType blockType) {
+        Label label = new Label(Utilities.capitalise(blockType.name()));
+        label.setStyle("-fx-font-size: 20;");
+        return label;
+    }
+
+    private static Label createCountLabel() {
+        Label label = new Label("×20");
+        label.setStyle("-fx-font-size: 20;");
+        return label;
     }
 
     private void setGridLayout() {
         grid.setHgap(10);
 
         ColumnConstraints col0 = new ColumnConstraints(30);
-        ColumnConstraints col1 = new ColumnConstraints(80);
-        ColumnConstraints col2 = new ColumnConstraints(30);
+        ColumnConstraints col1 = new ColumnConstraints(60);
+        ColumnConstraints col2 = new ColumnConstraints(50);
         col2.setHalignment(HPos.RIGHT);
 
         grid.getColumnConstraints().addAll(col0, col1, col2);

@@ -48,7 +48,7 @@ public class MainApplication extends Application {
         GridPane rootGrid = new GridPane();
         rootGrid.setPadding(new Insets(10));
         rootGrid.setHgap(20);
-        rootGrid.setStyle("-fx-background-color: purple;");
+//        rootGrid.setStyle("-fx-background-color: purple;");
 
         // Container for menu and main content.
         VBox container = new VBox();
