@@ -63,7 +63,6 @@ public class GameInventoryPane extends VBox {
             }
             int n = blockCount.getValue();
             countLabels.get(block).setText("×"+n);
-            blockButtons.get(block).setDisable(false);
         }
     }
 

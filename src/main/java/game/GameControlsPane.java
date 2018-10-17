@@ -60,7 +60,7 @@ public class GameControlsPane extends VBox {
         Button b3 = new Button("(Load map)");
         b3.setOnAction(e -> {
             try {
-                controller.loadWorldMapFile("largemap.txt");
+                controller.loadWorldMapFile("validTestCase2.txt");
             } catch (WorldMapInconsistentException | WorldMapFormatException | FileNotFoundException e1) {
                 System.out.println(e1);
             }
