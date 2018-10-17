@@ -137,6 +137,7 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
     public void dig() throws InvalidBlockException, TooLowException {
         worldMap.getBuilder().digOnCurrentTile();
         fireBlocksChanged(currentPosition);
+        fireInventoryChanged();
     }
 
     @Override
