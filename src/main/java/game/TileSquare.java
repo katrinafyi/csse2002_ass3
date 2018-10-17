@@ -33,7 +33,7 @@ public class TileSquare extends StackPane implements TileView {
         blockImage.fitWidthProperty().bind(this.maxWidthProperty());
 
         heightImage = squareImageView();
-        heightImage.fitWidthProperty().bind(this.maxWidthProperty().divide(4));
+        heightImage.fitWidthProperty().bind(this.maxWidthProperty().divide(5));
         StackPane.setAlignment(heightImage, Pos.TOP_LEFT);
         StackPane.setMargin(heightImage, new Insets(5));
 
@@ -54,8 +54,8 @@ public class TileSquare extends StackPane implements TileView {
     public void setBuilderTile(boolean isBuilderTile) {
         if (isBuilderTile && steveImage == null) {
             steveImage = squareImageView();
-            loadAndSetImage(steveImage, "file:src/images/steve.png");
-            steveImage.fitWidthProperty().bind(this.maxWidthProperty().divide(2));
+            loadAndSetImage(steveImage, "file:src/images/steve_shadow.png");
+            steveImage.fitWidthProperty().bind(this.maxWidthProperty().multiply(0.8));
             this.getChildren().add(steveImage);
         }
     }
