@@ -3,6 +3,7 @@ package game;
 import game.model.BlockType;
 import game.model.Direction;
 import game.view.TileView;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -22,27 +23,47 @@ public class TileSquare extends StackPane implements TileView {
 
     private final ImageView blockImage;
     private final ImageView heightImage;
+    private ImageView steveImage;
 
     public TileSquare() {
         this.setAlignment(Pos.CENTER);
         this.setStyle("-fx-background-color: black;");
 
-        blockImage = new ImageView();
-        blockImage.setPreserveRatio(true);
+        blockImage = squareImageView();
         blockImage.fitWidthProperty().bind(this.maxWidthProperty());
-        heightImage = new ImageView();
-        heightImage.setPreserveRatio(true);
-        heightImage.fitWidthProperty().bind(this.maxWidthProperty().divide(4));
 
+        heightImage = squareImageView();
+        heightImage.fitWidthProperty().bind(this.maxWidthProperty().divide(4));
+        StackPane.setAlignment(heightImage, Pos.TOP_LEFT);
+        StackPane.setMargin(heightImage, new Insets(5));
 
         this.getChildren().addAll(blockImage, heightImage);
     }
 
+    private static ImageView squareImageView() {
+        ImageView imageView = new ImageView();
+        imageView.setPreserveRatio(true);
+        return imageView;
+    }
+
+    private static void loadAndSetImage(ImageView imageView, String url) {
+        imageView.setImage(SpriteLoader.getGlobalLoader().loadImage(url));
+    }
+
+    @Override
+    public void setBuilderTile(boolean isBuilderTile) {
+        if (isBuilderTile && steveImage == null) {
+            steveImage = squareImageView();
+            loadAndSetImage(steveImage, "file:src/images/steve.png");
+            steveImage.fitWidthProperty().bind(this.maxWidthProperty().divide(2));
+            this.getChildren().add(steveImage);
+        }
+    }
 
     @Override
     public void setHeight(int height) {
         String path = "file:src/images/"+height+".png";
-        heightImage.setImage(SpriteLoader.getGlobalLoader().loadImage(path));
+        loadAndSetImage(heightImage, path);
     }
 
     @Override
@@ -53,7 +74,7 @@ public class TileSquare extends StackPane implements TileView {
     @Override
     public void setTopBlock(BlockType blockType) {
         String path = blockImages.get(blockType);
-        blockImage.setImage(SpriteLoader.getGlobalLoader().loadImage(path));
+        loadAndSetImage(blockImage, path);
     }
 
     @Override

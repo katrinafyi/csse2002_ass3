@@ -78,8 +78,7 @@ public class GameWorldMapView {
         currentPosition = event.getNewPosition();
     }
 
-    private void worldMapLoadedHandler(BaseBlockWorldEvent e) {
-        WorldMapLoadedEvent event = (WorldMapLoadedEvent) e;
+    private void worldMapLoadedHandler(WorldMapLoadedEvent event) {
 
         System.out.println("map loaded v2");
         tileSquareMap.clear();
@@ -88,6 +87,10 @@ public class GameWorldMapView {
 
         for (Position position : event.getTileMap().keySet()) {
             TileSquare tile = newTileSquare();
+            if (position.equals(event.getPosition())) {
+                tile.setBuilderTile(true);
+            }
+
             tileSquareMap.put(position, tile);
             this.gridPane.add(tile, posToCol(position), posToRow(position));
         }
