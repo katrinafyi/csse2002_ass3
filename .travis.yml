@@ -1,25 +1,25 @@
 language: java
 env:
-  - VERSION_TAG=${TRAVIS_TAG}+${TRAVIS_BUILD_NUMBER} NO_SUBMIT=DO_NOT_SUBMIT_THIS_FILE SUBMISSION_ZIP=csse2002_ass2_${VERSION_TAG}_submission.zip PIT_ZIP=csse2002_ass2_${VERSION_TAG}_report_${NO_SUBMIT}.zip
+  - VERSION_TAG=${TRAVIS_TAG}+${TRAVIS_BUILD_NUMBER} NO_SUBMIT=DO_NOT_SUBMIT_THIS_FILE SUBMISSION_ZIP=csse2002_ass3_${VERSION_TAG}_submission.zip PIT_ZIP=csse2002_ass3_${VERSION_TAG}_report_${NO_SUBMIT}.zip
 install:
  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 before_script:
 # - javac CheckZipAssignment2.java
 script:
  - mvn test
-# - /usr/bin/env python3 ./assemble_zip.py ${SUBMISSION_ZIP}  && java CheckZipAssignment2 ${SUBMISSION_ZIP}
+ - /usr/bin/env python3 ./assemble_zip.py ${SUBMISSION_ZIP} # && java CheckZipAssignment2 ${SUBMISSION_ZIP}
 #before_deploy:
 # - mvn jacoco:prepare-agent test jacoco:report
 # - mvn org.pitest:pitest-maven:mutationCoverage -q -B
 # - zip -r ${PIT_ZIP} ./target/pit-reports/* ./target/site/jacoco/*
-#deploy:
-#  provider: releases
-#  api_key:
-#    secure: "Eb/78qjIOcL70n7HMALXejDzsLSb61Ze4OGvJ7np91ZbCbEDWzfFt22mGz5BJDgzUD+Ok0FWuzS4L7GluhTS5X0mTWmOkCzdRdeB0+l+wocDJNklHdMTor742a1qEzA1g6GIttp5eq9nQBogas9aiPxNzKTsAFoCfG2bmOeLt2IhI14MXiHAZkAS/E7PFH/uU7nCL0apIOThpk2gRjByY5VCkbzWYQvmNE3X/QExLsTCj257e6sqzJxlSA0qpMHrD8wyYG768sIOEXrO/uCP6G9yJDMxin/1H5gOoJ68Zk3QghyLmTjSP8ricjgToVd3AQ8opGytOkgxQ4PYo013asaekFLbJfwagYGr8ZBM6hrmBsz69S2rGEXaW2+pB9BGQGVaHzWhGDYor2J5YbM6J3GT8Ncyzqb0JXGDWpfgu5sr6jHTzC57u+4tDvjEC9v5lrL6YLXf1A1c4pHSa+gJ/Jvk7OsG0WsaHvlYD8jgvGQR5LBdkZXwbTPRI0MtBXZiacIkgJm+akAjHVW3dR/WibYD7JadvJwNMDTOKexHXWse0GWtsKP2TdnKcQ8Nw8tILMtdBW1z3j6h/zJGFs4ouZDdFeXNVCU3SKS/hQi8qUO75Vt9Bb2KL2Vqob1lGI/1g+IisAqJ6fE7Y+dSkgvG7Cn9BXme2GGbVuxe3Iw1yUk="
-#  file_glob: true
-#  file:
-#   - ${SUBMISSION_ZIP}
+deploy:
+  provider: releases
+  api_key:
+    secure: "ZBJ9DYTUX19X4i28Pgr5DocqXofnxB+N0ge61SbMfXU7bIdhz9VMVho8nLwQhy1CGCWSOou2PwgiEnI3vTQ/RzKdmuUBKeG7DsiI2kqG9XfM4wL1T4Rw3SfB6aXsoppJI+mvB9wf+8KO6dbAhGSwMpShFhQiagvXVqCOtY1EVuW6zc+R+tn1iVQC+1wQILPs0B1s3YEy+ZoqvR6/JtDupbZhOFtcUuy/klaf27uWfyc7ViMOkez4P8VsbxmqG3QRJSqKMzbIvDQK683WI9NRMapcjyp3u/8rr2QgGwwMg65IWl5VQQeXJ7RuPtFHxhdrJs4x25RpUQDVDVUyIFbHlST6iHsBVmzb0V+FQua1r+w69wTrqonnjXdILqC0L2QQjyQ/OYNeBlhxxMKHZ4TSODT9VXM6MHMF3SWdIcX1oFb28uDpAx6xgm8r/bE81Gl4PRjJDzLBmRTxKZ2B+aTm/TUDhCJV0PV6h5kP8WW48Kzj/ZSv3prg0yHPWxRPVzPzxegkWSGeb4EfHezpuQ5pPSZE2LGwTxm6ny1BZfAjx1WiXD5AsX6Kf+E6ESVgWwDDrjMdLvOAAmfcFLhQYpF2L4JMIhp1T9GBbTRNZHoP+UMfwztOCOp39hDVlANiLLQMYUSZr61b2mQVPhIuDBwqEA3Wb3jvpXail78nzCbH2W8="
+  file_glob: true
+  file:
+   - ${SUBMISSION_ZIP}
 #   - ${PIT_ZIP}
-#  skip_cleanup: true
-#  on:
-#    tags: true
+  skip_cleanup: true
+  on:
+    tags: true

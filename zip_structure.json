@@ -1,16 +1,16 @@
 {
     "src": {
-        "src_path": "src/main/java/game/",
-        "dest_path": "src/game/",
+        "src_path": "src/main/java/game",
+        "dest_path": "src/game",
         "include": [
-            "**.java"
+            "**/*.java"
         ],
         "glob": true,
         "clean": false
     },
     "images": {
-        "src_path": "src/images/",
-        "dest_path": "src/images/",
+        "src_path": "src/images",
+        "dest_path": "src/images",
         "include": [
             "**.png"
         ],
