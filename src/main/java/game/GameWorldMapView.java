@@ -57,8 +57,10 @@ public class GameWorldMapView {
     private void tileBlocksHandler(BlocksChangedEvent event) {
         try {
             TileView tile = tileSquareMap.get(event.getPosition());
-            tile.setTopBlock(BlockType.fromBlock(event.getTile().getTopBlock()));
-            tile.setHeight(event.getTile().getBlocks().size());
+            int height = event.getTile().getBlocks().size();
+            tile.setHeight(height);
+            tile.setTopBlock(height == 0
+                    ? null : BlockType.fromBlock(event.getTile().getTopBlock()));
         } catch (TooLowException e1) {
             e1.printStackTrace();
         }

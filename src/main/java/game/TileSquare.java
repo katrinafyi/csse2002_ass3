@@ -5,6 +5,7 @@ import game.model.Direction;
 import game.view.TileView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 public class TileSquare extends StackPane implements TileView {
     private final static Map<BlockType, String> blockImages = new HashMap<>();
     static {
+        blockImages.put(null, "file:src/images/bedrock.png");
         blockImages.put(BlockType.grass, ("file:src/images/grass_top2.png"));
         blockImages.put(BlockType.soil, ("file:src/images/dirt.png"));
         blockImages.put(BlockType.stone, ("file:src/images/stone.png"));
@@ -47,7 +49,9 @@ public class TileSquare extends StackPane implements TileView {
     }
 
     private static void loadAndSetImage(ImageView imageView, String url) {
-        imageView.setImage(SpriteLoader.getGlobalLoader().loadImage(url));
+        Image image = url == null
+                ? null : SpriteLoader.getGlobalLoader().loadImage(url);
+        imageView.setImage(image);
     }
 
     @Override
@@ -62,6 +66,7 @@ public class TileSquare extends StackPane implements TileView {
 
     @Override
     public void setHeight(int height) {
+        System.out.println(height);
         String path = "file:src/images/"+height+".png";
         loadAndSetImage(heightImage, path);
     }

@@ -1,7 +1,9 @@
 package game;
 
+import csse2002.block.world.InvalidBlockException;
 import csse2002.block.world.NoExitException;
 import csse2002.block.world.Tile;
+import csse2002.block.world.TooLowException;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 import game.controller.BlockWorldController;
@@ -63,6 +65,15 @@ public class GameControlsPane extends VBox {
         this.getChildren().addAll(dPad, new Button("⛏") {
             {
                 this.setStyle("-fx-font-size: 40; -fx-font-weight: bold;");
+                setOnAction(e -> {
+                    try {
+                        controller.dig();
+                    } catch (InvalidBlockException e1) {
+                        e1.printStackTrace();
+                    } catch (TooLowException e1) {
+                        e1.printStackTrace();
+                    }
+                });
             }
         }, debug, b2, b3);
     }
