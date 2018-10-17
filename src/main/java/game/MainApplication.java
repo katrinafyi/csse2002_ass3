@@ -126,7 +126,6 @@ public class MainApplication extends Application {
         });
 
 
-        scene.getStylesheets().add("file:src/images/style.css");
         primaryStage.setHeight(580.5);
         primaryStage.show();
     }
