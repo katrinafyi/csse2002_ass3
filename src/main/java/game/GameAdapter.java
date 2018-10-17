@@ -192,13 +192,14 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
     }
 
     @Override
-    public void dropBlock(BlockType blockType)
+    public void placeBlock(BlockType blockType)
             throws NoSuchElementException, TooHighException {
         List<Block> inventory = worldMap.getBuilder().getInventory();
         for (int i = 0; i < inventory.size(); i++) {
             if (blockType.blockClass.isAssignableFrom(inventory.get(i).getClass())) {
                 try {
                     worldMap.getBuilder().dropFromInventory(i);
+                    notifyInventory();
                 } catch (InvalidBlockException e) {
                     throw new AssertionError(e);
                 }

@@ -1,5 +1,7 @@
 package game;
 
+import csse2002.block.world.TooHighException;
+import game.controller.BlockWorldController;
 import game.model.BlockType;
 import game.model.EventDispatcher;
 import game.model.events.BaseBlockWorldEvent;
@@ -27,12 +29,15 @@ public class GameInventoryPane extends VBox {
 
     private final GridPane grid = new GridPane();
     private final EventDispatcher<BaseBlockWorldEvent> model;
+    private final BlockWorldController controller;
 
     private final Map<BlockType, Label> countLabels = new HashMap<>();
     private final Map<BlockType, Button> blockButtons = new HashMap<>();
 
-    public GameInventoryPane(EventDispatcher<BaseBlockWorldEvent> model) {
+    public GameInventoryPane(EventDispatcher<BaseBlockWorldEvent> model,
+                             BlockWorldController controller) {
         this.model = model;
+        this.controller = controller;
 
         this.setId("inventory");
         grid.setId("inventory_grid");
@@ -44,7 +49,6 @@ public class GameInventoryPane extends VBox {
         this.getChildren().addAll(new Label("Inventory"), grid);
 
         generateAllBlockRows();
-
     }
 
     private void updateInventory(InventoryChangedEvent event) {
@@ -56,6 +60,14 @@ public class GameInventoryPane extends VBox {
             int n = blockCount.getValue();
             countLabels.get(block).setText("×"+n);
             blockButtons.get(block).setDisable(n <= 0);
+        }
+    }
+
+    private void handlePlaceBlock(BlockType blockToPlace) {
+        try {
+            controller.placeBlock(blockToPlace);
+        } catch (TooHighException e) {
+            e.printStackTrace();
         }
     }
 
@@ -73,6 +85,7 @@ public class GameInventoryPane extends VBox {
         tile.setTopBlock(blockType);
         tile.setMaxWidth(40);
 
+        button.setOnAction(e -> handlePlaceBlock(blockType));
         button.setDisable(true);
         button.setGraphic(tile);
         button.setPadding(new Insets(3));

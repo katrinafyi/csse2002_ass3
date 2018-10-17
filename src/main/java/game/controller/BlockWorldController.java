@@ -59,6 +59,6 @@ public interface BlockWorldController {
      * @throws NoSuchElementException No blocks of the given type held.
      * @throws TooHighException Tile already contains max blocks.
      */
-    void dropBlock(BlockType blockType)
+    void placeBlock(BlockType blockType)
                     throws NoSuchElementException, TooHighException;
 }
