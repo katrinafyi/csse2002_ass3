@@ -10,7 +10,7 @@ import glob
 import time
 
 def do_zip_assemble(config: dict):
-    TEMP_FOLDER = './__temp_'+str(int(time.time_ns()))
+    TEMP_FOLDER = './__temp_'+str(int(time.time()*1000))
 
     print('Starting artifact build with config:')
     print(json.dumps(config, indent=4))
