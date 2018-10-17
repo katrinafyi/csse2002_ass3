@@ -76,7 +76,7 @@ public class MainApplication extends Application {
         rootGrid.add(centrePane, 1, 0);
         GridPane.setValignment(centrePane, VPos.TOP);
 
-        GameInventoryPane rightPane = new GameInventoryPane();
+        GameInventoryPane rightPane = new GameInventoryPane(presenter);
         rootGrid.add(rightPane, 2, 0);
         GridPane.setValignment(rightPane, VPos.TOP);
 
@@ -125,6 +125,8 @@ public class MainApplication extends Application {
             }
         });
 
+
+        scene.getStylesheets().add("file:src/images/style.css");
         primaryStage.setHeight(580.5);
         primaryStage.show();
     }

@@ -1,7 +1,9 @@
 package game;
 
 import game.model.BlockType;
-import game.view.InventoryView;
+import game.model.EventDispatcher;
+import game.model.events.BaseBlockWorldEvent;
+import game.model.events.InventoryChangedEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -10,23 +12,53 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-public class GameInventoryPane extends VBox implements InventoryView {
+public class GameInventoryPane extends VBox {
     private final GridPane grid = new GridPane();
+    private final EventDispatcher<BaseBlockWorldEvent> model;
 
-    public GameInventoryPane() {
-        setGridLayout();
+    private final static List<BlockType> carryableBlocks = new ArrayList<>();
+    static {
+        carryableBlocks.add(BlockType.grass);
+        carryableBlocks.add(BlockType.soil);
+        carryableBlocks.add(BlockType.wood);
+    }
+
+    public GameInventoryPane(EventDispatcher<BaseBlockWorldEvent> model) {
+        this.model = model;
+
+        this.setId("inventory");
+        grid.setId("inventory_grid");
+
+        model.addListener(InventoryChangedEvent.class, this::updateInventory);
+
+        applyGridLayout();
 
         this.getChildren().addAll(new Label("Inventory"), grid);
-        generateBlockRow(0, BlockType.grass);
+
+        generateAllBlockRows();
+
+    }
+
+    private void updateInventory(InventoryChangedEvent event) {
+
+    }
+
+    private void generateAllBlockRows() {
+        int i = 0;
+        for (BlockType blockType : carryableBlocks) {
+            generateBlockRow(i, blockType);
+            i++;
+        }
     }
 
     private void generateBlockRow(int row, BlockType blockType) {
         Button button = new Button();
         TileSquare tile = new TileSquare();
         tile.setTopBlock(blockType);
-        tile.setMaxWidth(30);
+        tile.setMaxWidth(40);
         button.setGraphic(tile);
         button.setPadding(new Insets(3));
         button.prefHeightProperty().bind(button.widthProperty());
@@ -37,7 +69,7 @@ public class GameInventoryPane extends VBox implements InventoryView {
 
     private static Label createBlockLabel(BlockType blockType) {
         Label label = new Label(Utilities.capitalise(blockType.name()));
-        label.setStyle("-fx-font-size: 20;");
+        label.getStyleClass().add("block_type");
         return label;
     }
 
@@ -47,19 +79,15 @@ public class GameInventoryPane extends VBox implements InventoryView {
         return label;
     }
 
-    private void setGridLayout() {
+    private void applyGridLayout() {
         grid.setHgap(10);
+        grid.setVgap(5);
 
-        ColumnConstraints col0 = new ColumnConstraints(30);
+        ColumnConstraints col0 = new ColumnConstraints(40);
         ColumnConstraints col1 = new ColumnConstraints(60);
-        ColumnConstraints col2 = new ColumnConstraints(50);
+        ColumnConstraints col2 = new ColumnConstraints(40);
         col2.setHalignment(HPos.RIGHT);
 
         grid.getColumnConstraints().addAll(col0, col1, col2);
-    }
-
-    @Override
-    public void updateInventory(Map<BlockType, Integer> blocksCount) {
-
     }
 }
