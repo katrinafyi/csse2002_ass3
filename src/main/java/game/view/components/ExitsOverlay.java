@@ -1,5 +1,6 @@
-package game;
+package game.view.components;
 
+import game.view.SpriteLoader;
 import game.model.Direction;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

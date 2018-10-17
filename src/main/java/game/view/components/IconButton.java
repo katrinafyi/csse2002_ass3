@@ -1,5 +1,7 @@
-package game;
+package game.view.components;
 
+import game.view.SpriteLoader;
+import game.Utilities;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;

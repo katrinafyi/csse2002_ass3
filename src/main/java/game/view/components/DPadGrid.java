@@ -1,5 +1,7 @@
-package game;
+package game.view.components;
 
+import game.view.SpriteLoader;
+import game.view.UniformGridPane;
 import game.model.Direction;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;

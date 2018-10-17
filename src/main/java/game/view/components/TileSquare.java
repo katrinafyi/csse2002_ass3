@@ -1,8 +1,10 @@
-package game;
+package game.view.components;
 
 import game.model.BlockType;
 import game.model.Direction;
+import game.view.SpriteLoader;
 import game.view.TileView;
+import game.view.components.ExitsOverlay;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;

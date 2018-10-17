@@ -1,6 +1,8 @@
-package game;
+package game.view;
 
 import csse2002.block.world.TooHighException;
+import game.view.components.TileSquare;
+import game.Utilities;
 import game.controller.BlockWorldController;
 import game.controller.ErrorController;
 import game.model.BlockType;

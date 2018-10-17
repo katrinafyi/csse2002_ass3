@@ -1,8 +1,9 @@
-package game;
+package game.view;
 
 import csse2002.block.world.Position;
 import csse2002.block.world.Tile;
 import csse2002.block.world.TooLowException;
+import game.view.components.TileSquare;
 import game.model.BlockType;
 import game.model.Direction;
 import game.model.EventDispatcher;
@@ -11,7 +12,7 @@ import game.model.events.BlocksChangedEvent;
 import game.model.events.BuilderMovedEvent;
 import game.model.events.ErrorEvent;
 import game.model.events.WorldMapLoadedEvent;
-import game.view.TileView;
+import game.view.components.FadingLabel;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;

@@ -1,5 +1,6 @@
-package game;
+package game.view;
 
+import game.Utilities;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Node;

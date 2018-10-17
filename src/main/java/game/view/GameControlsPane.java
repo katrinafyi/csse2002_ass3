@@ -1,4 +1,4 @@
-package game;
+package game.view;
 
 import csse2002.block.world.InvalidBlockException;
 import csse2002.block.world.NoExitException;
@@ -7,6 +7,7 @@ import csse2002.block.world.TooHighException;
 import csse2002.block.world.TooLowException;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
+import game.view.components.IconButton;
 import game.controller.BlockWorldController;
 import game.controller.ErrorController;
 import game.model.Direction;
@@ -14,6 +15,7 @@ import game.model.EventDispatcher;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BuilderMovedEvent;
 import game.model.events.WorldMapLoadedEvent;
+import game.view.components.DPadGrid;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;

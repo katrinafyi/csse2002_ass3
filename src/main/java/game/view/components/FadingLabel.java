@@ -1,4 +1,4 @@
-package game;
+package game.view.components;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
