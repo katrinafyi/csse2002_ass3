@@ -16,7 +16,6 @@ import game.model.EventDispatcher;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BlocksChangedEvent;
 import game.model.events.BuilderMovedEvent;
-import game.model.events.ExitsChangedEvent;
 import game.model.events.InventoryChangedEvent;
 import game.model.events.WorldMapLoadedEvent;
 import game.model.BlockType;
@@ -57,16 +56,10 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
 
         currentPosition = worldMap.getStartPosition();
         // Inform WorldMap of new builder and tiles.
-        notifyListeners(new WorldMapLoadedEvent(currentPosition, positionTileMap));
         for (Position position : positionTileMap.keySet()) {
-            notifyBlocksChanged(position);
-            notifyTileExits(position);
+            fireBlocksChanged(position);
         }
-
-        // Update other UI components with state.
-        notifyCanDig();
-        notifyCanMoveBuilder();
-        notifyInventory();
+        fireInventoryChanged();
     }
 
     //region count inventory and generate pos-tile map.
@@ -104,58 +97,27 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
             }
         }
     }
-    //endregion
 
-    //region notify* methods for WorldMapView
-    private void notifyBlocksChanged(Position position) {
+    private void fireMapLoaded() {
+        notifyListeners(new WorldMapLoadedEvent(currentPosition, positionTileMap));
+    }
+
+    private void fireBlocksChanged(Position position) {
         Tile tile = positionTileMap.get(position);
         notifyListeners(new BlocksChangedEvent(position, tile));
     }
 
-    /**
-     * @deprecated
-     * @param position
-     */
-    private void notifyTopBlock(Position position) {
-        notifyBlocksChanged(position);
-    }
-
-    private void notifyTileExits(Position position) {
-        Tile tile = positionTileMap.get(position);
-        notifyListeners(new ExitsChangedEvent(position, tile));
-    }
-
-    private void notifyBuilderMove(Direction dir) {
+    private void fireBuilderMoved(Direction dir) {
         notifyListeners(
-                new BuilderMovedEvent(worldMap.getBuilder(), currentPosition, dir));
-    }
-    //endregion
-
-    //region notify* for BuilderControlsView and InventoryView
-    private void notifyCanMoveBuilder() {
-        notifyBlocksChanged(currentPosition);
+                new BuilderMovedEvent(
+                        worldMap.getBuilder(), currentPosition,
+                        positionTileMap.get(currentPosition), dir));
     }
 
-    private void notifyCanDig() {
-        notifyCanMoveBuilder();
-    }
-
-    private void notifyInventory() {
+    private void fireInventoryChanged() {
         notifyListeners(
                 new InventoryChangedEvent(worldMap.getBuilder(), countInventoryBlocks()));
     }
-    //endregion
-
-    /**
-     * Notifies all relevant observers when the blocks on the tile at this
-     * position changes.
-     * @deprecated
-     * @param position Position of tile.
-     */
-    private void tileBlocksChanged(Position position) {
-        notifyBlocksChanged(position);
-    }
-
 
     //region  ### Implemented world interaction functions ###
     @Override
@@ -167,16 +129,13 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
         currentPosition = Utilities.addPos(currentPosition,
                 direction.asPosition());
 
-        notifyBuilderMove(direction);
-        notifyCanMoveBuilder();
-        notifyCanDig();
+        fireBuilderMoved(direction);
     }
 
     @Override
     public void dig() throws InvalidBlockException, TooLowException {
         worldMap.getBuilder().digOnCurrentTile();
-
-        tileBlocksChanged(currentPosition);
+        fireBlocksChanged(currentPosition);
     }
 
     @Override
@@ -187,8 +146,10 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
         // Update the current tile and the tile we moved the block to.
         Position adjacent = Utilities.addPos(currentPosition, direction.asPosition());
 
-        tileBlocksChanged(currentPosition);
-        tileBlocksChanged(adjacent);
+        fireBlocksChanged(currentPosition);
+        fireBlocksChanged(adjacent);
+
+        currentPosition = adjacent;
     }
 
     @Override
@@ -199,12 +160,11 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
             if (blockType.blockClass.isAssignableFrom(inventory.get(i).getClass())) {
                 try {
                     worldMap.getBuilder().dropFromInventory(i);
-                    notifyInventory();
                 } catch (InvalidBlockException e) {
                     throw new AssertionError(e);
                 }
-
-                tileBlocksChanged(currentPosition);
+                fireInventoryChanged();
+                fireBlocksChanged(currentPosition);
                 return;
             }
         }
@@ -215,6 +175,6 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
 
     @Override
     public void handleError(String errorMessage) {
-
+        System.out.println("GameAdapter handleError: " + errorMessage);
     }
 }

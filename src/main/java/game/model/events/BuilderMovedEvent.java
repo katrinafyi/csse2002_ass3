@@ -2,15 +2,19 @@ package game.model.events;
 
 import csse2002.block.world.Builder;
 import csse2002.block.world.Position;
+import csse2002.block.world.Tile;
 import game.model.Direction;
 
 public class BuilderMovedEvent extends BuilderEvent {
     private final Position newPosition;
+    private final Tile tile;
     private final Direction direction;
 
-    public BuilderMovedEvent(Builder builder, Position newPosition, Direction direction) {
+    public BuilderMovedEvent(Builder builder, Position newPosition, Tile tile,
+                             Direction direction) {
         super(builder);
         this.newPosition = newPosition;
+        this.tile = tile;
         this.direction = direction;
     }
 
@@ -20,5 +24,9 @@ public class BuilderMovedEvent extends BuilderEvent {
 
     public Position getNewPosition() {
         return newPosition;
+    }
+
+    public Tile getTile() {
+        return tile;
     }
 }
