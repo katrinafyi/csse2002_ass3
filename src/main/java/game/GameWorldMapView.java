@@ -1,7 +1,9 @@
 package game;
 
+import csse2002.block.world.Position;
 import csse2002.block.world.Tile;
 import csse2002.block.world.TooLowException;
+import game.model.BlockType;
 import game.model.Direction;
 import game.model.EventDispatcher;
 import game.model.events.BaseBlockWorldEvent;
@@ -9,20 +11,19 @@ import game.model.events.BlocksChangedEvent;
 import game.model.events.BuilderMovedEvent;
 import game.model.events.ErrorEvent;
 import game.model.events.WorldMapLoadedEvent;
-import game.model.BlockType;
 import game.view.TileView;
-import csse2002.block.world.Position;
-import javafx.scene.Node;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Control;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class GameWorldMapView {
+
+    private final List<TileSquare> visibleTileSquares = new ArrayList<>();
 
     private final UniformGridPane gridPane;
     private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
@@ -42,12 +43,16 @@ public class GameWorldMapView {
 
         this.gridPane.setMaxHeight(Control.USE_PREF_SIZE);
 
-        this.gridPane.prefWidthProperty().addListener(
-        (a, o, n) -> {
-            for (Node tile : this.gridPane.getChildren()) {
-                ((Region) tile).setMaxWidth(((double) n - (gridPane.COLUMNS - 1) * gridPane.GAP) / gridPane.COLUMNS);
-            }
-        });
+        this.gridPane.prefWidthProperty().addListener(this::setCellWidths);
+    }
+
+    private void setCellWidths(ObservableValue<? extends Number> prop,
+                               Number oldValue, Number newValue) {
+        for (TileSquare tile : visibleTileSquares) {
+            tile.setMaxWidth(
+                    ((double)newValue - (gridPane.COLUMNS - 1) * gridPane.GAP)
+                    / gridPane.COLUMNS);
+        }
     }
 
     private void allHandler(BaseBlockWorldEvent e) {
@@ -88,22 +93,8 @@ public class GameWorldMapView {
     }
 
     private void removeTilesFromGrid() {
-        Set<TileSquare> tilesToRemove = new HashSet<>();
-        for (int c = 0; c < gridPane.COLUMNS; c++) {
-            for (int r = 0; r < gridPane.ROWS; r++) {
-                // Position index of the current cell.
-                Position pos = new Position(
-                        currentPosition.getX()+c-gridPane.HALF_COLS,
-                        currentPosition.getY()+r-gridPane.HALF_ROWS);
-                TileSquare tile = tileSquareMap.get(pos);
-                if (tile == null) {
-                    continue;
-                }
-                System.out.println("" + pos + tile);
-                tilesToRemove.add(tile);
-            }
-        }
-        gridPane.getChildren().removeAll(tilesToRemove);
+        gridPane.getChildren().removeAll(visibleTileSquares);
+        visibleTileSquares.clear();
     }
 
     private void drawTilesToGrid() {
@@ -119,6 +110,7 @@ public class GameWorldMapView {
                 }
                 tile.setBuilderTile(r == gridPane.HALF_ROWS && c == gridPane.HALF_COLS);
                 gridPane.add(tile, c, r);
+                visibleTileSquares.add(tile);
             }
         }
 
@@ -142,6 +134,7 @@ public class GameWorldMapView {
             tileSquareMap.put(position, tileSq);
         }
         drawTilesToGrid();
+        setCellWidths(gridPane.prefWidthProperty(), 0, gridPane.getWidth());
     }
 
     private TileSquare newTileSquare() {

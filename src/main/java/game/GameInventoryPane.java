@@ -22,9 +22,8 @@ import java.util.Map;
 public class GameInventoryPane extends VBox {
     private final static List<BlockType> carryableBlocks = new ArrayList<>();
     static {
-        carryableBlocks.add(BlockType.grass);
-        carryableBlocks.add(BlockType.soil);
         carryableBlocks.add(BlockType.wood);
+        carryableBlocks.add(BlockType.soil);
     }
 
     private final GridPane grid = new GridPane();
