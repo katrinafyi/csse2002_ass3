@@ -3,7 +3,6 @@ package game;
 import game.model.BlockType;
 import game.model.Direction;
 import game.view.TileView;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
@@ -12,25 +11,21 @@ import java.util.Map;
 
 
 public class TileSquare extends StackPane implements TileView {
-    private final static Map<BlockType, Image> blockImages = new HashMap<>();
+    private final static Map<BlockType, String> blockImages = new HashMap<>();
     static {
-        blockImages.put(BlockType.grass,
-                new Image("file:src/images/grass_top2.png"));
-        blockImages.put(BlockType.soil,
-                new Image("file:src/images/dirt.png"));
-        blockImages.put(BlockType.stone,
-                new Image("file:src/images/stone.png"));
-        blockImages.put(BlockType.wood,
-                new Image("file:src/images/oak_planks.png"));
+        blockImages.put(BlockType.grass, ("file:src/images/grass_top2.png"));
+        blockImages.put(BlockType.soil, ("file:src/images/dirt.png"));
+        blockImages.put(BlockType.stone, ("file:src/images/stone.png"));
+        blockImages.put(BlockType.wood, ("file:src/images/oak_planks.png"));
     }
 
-    private final ImageView imageView = new ImageView();
+    private final ImageView blockImage = new ImageView();
 
     public TileSquare() {
         this.setStyle("-fx-background-color: black;");
-        imageView.setPreserveRatio(true);
-        imageView.fitWidthProperty().bind(this.maxWidthProperty());
-        this.getChildren().add(imageView);
+        blockImage.setPreserveRatio(true);
+        blockImage.fitWidthProperty().bind(this.maxWidthProperty());
+        this.getChildren().add(blockImage);
     }
 
     @Override
@@ -45,7 +40,8 @@ public class TileSquare extends StackPane implements TileView {
 
     @Override
     public void setTopBlock(BlockType blockType) {
-        imageView.setImage(blockImages.get(blockType));
+        String path = blockImages.get(blockType);
+        blockImage.setImage(SpriteLoader.getGlobalLoader().loadImage(path));
     }
 
     @Override

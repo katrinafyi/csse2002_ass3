@@ -56,6 +56,7 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
 
         currentPosition = worldMap.getStartPosition();
         // Inform WorldMap of new builder and tiles.
+        fireMapLoaded();
         for (Position position : positionTileMap.keySet()) {
             fireBlocksChanged(position);
         }
