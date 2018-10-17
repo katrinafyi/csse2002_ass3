@@ -34,6 +34,10 @@ public class UniformGridPane extends GridPane {
         applyRowAndColumnConstraints();
     }
 
+    public void fixHeightToWidth() {
+        this.prefHeightProperty().bind(this.widthProperty());
+    }
+
     private void applyRowAndColumnConstraints() {
         for (int i = 0; i < COLUMNS; i++) {
             ColumnConstraints columnConstraints = new ColumnConstraints();

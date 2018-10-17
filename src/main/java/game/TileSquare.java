@@ -3,6 +3,7 @@ package game;
 import game.model.BlockType;
 import game.model.Direction;
 import game.view.TileView;
+import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
@@ -19,18 +20,29 @@ public class TileSquare extends StackPane implements TileView {
         blockImages.put(BlockType.wood, ("file:src/images/oak_planks.png"));
     }
 
-    private final ImageView blockImage = new ImageView();
+    private final ImageView blockImage;
+    private final ImageView heightImage;
 
     public TileSquare() {
+        this.setAlignment(Pos.CENTER);
         this.setStyle("-fx-background-color: black;");
+
+        blockImage = new ImageView();
         blockImage.setPreserveRatio(true);
         blockImage.fitWidthProperty().bind(this.maxWidthProperty());
-        this.getChildren().add(blockImage);
+        heightImage = new ImageView();
+        heightImage.setPreserveRatio(true);
+        heightImage.fitWidthProperty().bind(this.maxWidthProperty().divide(4));
+
+
+        this.getChildren().addAll(blockImage, heightImage);
     }
+
 
     @Override
     public void setHeight(int height) {
-
+        String path = "file:src/images/"+height+".png";
+        heightImage.setImage(SpriteLoader.getGlobalLoader().loadImage(path));
     }
 
     @Override

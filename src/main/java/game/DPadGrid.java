@@ -38,6 +38,7 @@ public class DPadGrid extends UniformGridPane {
 
     public DPadGrid(Consumer<Direction> moveBuilder) {
         super(3, 3);
+        fixHeightToWidth();
 
         for (ButtonSpec buttonSpec : buttonSpecs) {
             Button button = new Button(buttonSpec.label);
