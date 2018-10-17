@@ -14,24 +14,22 @@ import game.model.events.WorldMapLoadedEvent;
 import game.view.TileView;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Control;
-import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameWorldMapView {
+public class GameWorldMapView extends UniformGridPane {
 
     private final List<TileSquare> visibleTileSquares = new ArrayList<>();
 
-    private final UniformGridPane gridPane;
     private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
     private Position currentPosition;
 
     public GameWorldMapView(EventDispatcher<BaseBlockWorldEvent> controller) {
-        gridPane = new UniformGridPane(9, 9, 2);
-        gridPane.setPrefWidth(500);
+        super(9, 9, 2);
+        this.setPrefWidth(500);
 
         controller.addListener(WorldMapLoadedEvent.class, this::worldMapLoadedHandler);
         controller.addListener(BuilderMovedEvent.class, this::builderMovedHandler);
@@ -39,19 +37,19 @@ public class GameWorldMapView {
         controller.addListener(BlocksChangedEvent.class, this::blocksChangedHandler);
         controller.addListener(null, this::allHandler);
 
-        this.gridPane.setMaxWidth(Control.USE_PREF_SIZE);
+        this.setMaxWidth(Control.USE_PREF_SIZE);
 
-        this.gridPane.setMaxHeight(Control.USE_PREF_SIZE);
+        this.setMaxHeight(Control.USE_PREF_SIZE);
 
-        this.gridPane.prefWidthProperty().addListener(this::setCellWidths);
+        this.prefWidthProperty().addListener(this::setCellWidths);
     }
 
     private void setCellWidths(ObservableValue<? extends Number> prop,
                                Number oldValue, Number newValue) {
         for (TileSquare tile : visibleTileSquares) {
             tile.setMaxWidth(
-                    ((double)newValue - (gridPane.COLUMNS - 1) * gridPane.GAP)
-                    / gridPane.COLUMNS);
+                    ((double)newValue - (this.COLUMNS - 1) * this.GAP)
+                    / this.COLUMNS);
         }
     }
 
@@ -71,10 +69,6 @@ public class GameWorldMapView {
         }
     }
 
-    public GridPane getGridPane() {
-        return gridPane;
-    }
-
     private void errorHandler(BaseBlockWorldEvent e) {
         ErrorEvent event = (ErrorEvent) e;
         System.out.println(event);
@@ -89,27 +83,30 @@ public class GameWorldMapView {
     }
 
     private void resetInternalState() {
-
+        this.getChildren().clear();
+        removeTilesFromGrid();
+        tileSquareMap.clear();
+        currentPosition = null;
     }
 
     private void removeTilesFromGrid() {
-        gridPane.getChildren().removeAll(visibleTileSquares);
+        this.getChildren().removeAll(visibleTileSquares);
         visibleTileSquares.clear();
     }
 
     private void drawTilesToGrid() {
-        for (int c = 0; c < gridPane.COLUMNS; c++) {
-            for (int r = 0; r < gridPane.ROWS; r++) {
+        for (int c = 0; c < this.COLUMNS; c++) {
+            for (int r = 0; r < this.ROWS; r++) {
                 // Position index of the current cell.
                 Position pos = new Position(
-                        currentPosition.getX()+c-gridPane.HALF_COLS,
-                        currentPosition.getY()+r-gridPane.HALF_ROWS);
+                        currentPosition.getX()+c-this.HALF_COLS,
+                        currentPosition.getY()+r-this.HALF_ROWS);
                 TileSquare tile = tileSquareMap.get(pos);
                 if (tile == null) {
                     continue;
                 }
-                tile.setBuilderTile(r == gridPane.HALF_ROWS && c == gridPane.HALF_COLS);
-                gridPane.add(tile, c, r);
+                tile.setBuilderTile(r == this.HALF_ROWS && c == this.HALF_COLS);
+                this.add(tile, c, r);
                 visibleTileSquares.add(tile);
             }
         }
@@ -117,10 +114,8 @@ public class GameWorldMapView {
     }
 
     private void worldMapLoadedHandler(WorldMapLoadedEvent event) {
-
+        resetInternalState();
         System.out.println("map loaded v2");
-        tileSquareMap.clear();
-        this.gridPane.getChildren().clear();
         currentPosition = event.getPosition();
 
         for (Map.Entry<Position, Tile> pair : event.getTileMap().entrySet()) {
@@ -134,13 +129,12 @@ public class GameWorldMapView {
             tileSquareMap.put(position, tileSq);
         }
         drawTilesToGrid();
-        setCellWidths(gridPane.prefWidthProperty(), 0, gridPane.getWidth());
+        setCellWidths(this.prefWidthProperty(), 0, this.getWidth());
     }
 
     private TileSquare newTileSquare() {
         TileSquare tile = new TileSquare();
         tile.setMaxWidth(10);
-
         return tile;
     }
 

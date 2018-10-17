@@ -63,10 +63,9 @@ public class MainApplication extends Application {
 
         VBox worldMapContainer = new VBox();
         worldMapContainer.setStyle("-fx-background-color: yellow;");
-        GridPane worldMapGrid = worldMapView.getGridPane();
-        worldMapGrid.setStyle("-fx-border-color: black;");
+        worldMapView.setStyle("-fx-border-color: black;");
         Utilities.setMaxWidthHeight(worldMapContainer);
-        worldMapContainer.getChildren().add(worldMapGrid);
+        worldMapContainer.getChildren().add(worldMapView);
         worldMapContainer.setAlignment(Pos.TOP_CENTER);
 
         rootGrid.add(worldMapContainer, 0, 0);
@@ -106,8 +105,8 @@ public class MainApplication extends Application {
             size = Math.min(size, scene.getHeight()-45);
             size = Math.max(size, 1);
             System.out.println(size);
-            worldMapGrid.setPrefWidth(size);
-            worldMapGrid.setPrefHeight(size);
+            worldMapView.setPrefWidth(size);
+            worldMapView.setPrefHeight(size);
         };
 
         Utilities.delayBinding(new PauseTransition(new Duration(200)),

@@ -12,14 +12,12 @@ import game.model.Direction;
 import game.model.EventDispatcher;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BuilderMovedEvent;
-import game.model.events.WorldMapEvent;
 import game.model.events.WorldMapLoadedEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
 import java.io.FileNotFoundException;
-import java.util.Base64;
 import java.util.Map;
 
 public class GameControlsPane extends VBox {
