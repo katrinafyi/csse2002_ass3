@@ -13,7 +13,11 @@ import game.model.events.ErrorEvent;
 import game.model.events.WorldMapLoadedEvent;
 import game.view.TileView;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.scene.control.Control;
+import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,18 +31,32 @@ public class GameWorldMapView extends UniformGridPane {
     private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
     private Position currentPosition;
 
+    private final FadingLabel errorLabel;
+
     public GameWorldMapView(EventDispatcher<BaseBlockWorldEvent> controller) {
         super(9, 9, 2);
         this.setPrefWidth(500);
 
+        errorLabel = new FadingLabel(Duration.seconds(1), Duration.millis(500));
+        errorLabel.setPadding(new Insets(10));
+        errorLabel.setStyle(
+                "-fx-font-size: 15;"
+                + "-fx-font-weight: bold;"
+                +"-fx-text-fill: white;"
+                + "-fx-background-color: #911414;"
+                + "-fx-border-radius: 5;"
+        );
+        errorLabel.setOpacity(0);
+        GridPane.setHalignment(errorLabel, HPos.CENTER);
+
         controller.addListener(WorldMapLoadedEvent.class, this::worldMapLoadedHandler);
         controller.addListener(BuilderMovedEvent.class, this::builderMovedHandler);
-        controller.addListener(ErrorEvent.class, this::errorHandler);
         controller.addListener(BlocksChangedEvent.class, this::blocksChangedHandler);
         controller.addListener(null, this::allHandler);
 
-        this.setMaxWidth(Control.USE_PREF_SIZE);
+        controller.addListener(ErrorEvent.class, this::showErrorMessage);
 
+        this.setMaxWidth(Control.USE_PREF_SIZE);
         this.setMaxHeight(Control.USE_PREF_SIZE);
 
         this.prefWidthProperty().addListener(this::setCellWidths);
@@ -54,7 +72,7 @@ public class GameWorldMapView extends UniformGridPane {
     }
 
     private void allHandler(BaseBlockWorldEvent e) {
-        System.out.println(e);
+        System.out.println("View caught: " + e);
     }
 
     private void blocksChangedHandler(BlocksChangedEvent event) {
@@ -67,11 +85,6 @@ public class GameWorldMapView extends UniformGridPane {
         } catch (TooLowException e1) {
             e1.printStackTrace();
         }
-    }
-
-    private void errorHandler(BaseBlockWorldEvent e) {
-        ErrorEvent event = (ErrorEvent) e;
-        System.out.println(event);
     }
 
     private void builderMovedHandler(BuilderMovedEvent event) {
@@ -90,7 +103,8 @@ public class GameWorldMapView extends UniformGridPane {
     }
 
     private void removeTilesFromGrid() {
-        this.getChildren().removeAll(visibleTileSquares);
+        getChildren().removeAll(visibleTileSquares);
+        getChildren().remove(errorLabel);
         visibleTileSquares.clear();
     }
 
@@ -110,7 +124,7 @@ public class GameWorldMapView extends UniformGridPane {
                 visibleTileSquares.add(tile);
             }
         }
-
+        add(errorLabel, 2, 3, 5, 1);
     }
 
     private void worldMapLoadedHandler(WorldMapLoadedEvent event) {
@@ -144,5 +158,10 @@ public class GameWorldMapView extends UniformGridPane {
 
     private int posToCol(Position pos) {
         return pos.getX()-currentPosition.getY()+4;
+    }
+
+    public void showErrorMessage(ErrorEvent event) {
+        System.out.println(event);
+        errorLabel.showAndFade(event.getMessage());
     }
 }

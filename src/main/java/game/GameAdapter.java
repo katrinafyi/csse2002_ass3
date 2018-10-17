@@ -16,6 +16,7 @@ import game.model.EventDispatcher;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BlocksChangedEvent;
 import game.model.events.BuilderMovedEvent;
+import game.model.events.ErrorEvent;
 import game.model.events.InventoryChangedEvent;
 import game.model.events.WorldMapLoadedEvent;
 import game.model.BlockType;
@@ -177,6 +178,7 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
 
     @Override
     public void handleError(String errorMessage) {
-        System.out.println("GameAdapter handleError: " + errorMessage);
+        System.out.println("Firing error event: " + errorMessage);
+        notifyListeners(new ErrorEvent(errorMessage));
     }
 }

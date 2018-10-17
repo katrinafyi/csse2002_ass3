@@ -93,7 +93,7 @@ public class GameControlsPane extends VBox {
         try {
             controller.moveBuilder(direction);
         } catch (NoExitException e) {
-            errorController.handleError("You can't move that way!");
+            errorController.handleError("It's too high!");
         }
     }
 

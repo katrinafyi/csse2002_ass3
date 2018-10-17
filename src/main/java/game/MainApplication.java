@@ -52,7 +52,6 @@ public class MainApplication extends Application {
 
         // Container for menu and main content.
         VBox container = new VBox();
-        container.setStyle("-fx-background-color: green;");
         MenuBar menuBar = constructMenuBar();
         container.getChildren().addAll(menuBar, rootGrid);
         VBox.setVgrow(rootGrid, Priority.ALWAYS);
