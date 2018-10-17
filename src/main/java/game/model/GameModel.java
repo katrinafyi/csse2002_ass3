@@ -16,8 +16,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-public class GameModel extends EventDispatcher<BaseBlockWorldEvent>
-        implements BlockWorldModel {
+public class GameModel extends BlockWorldModel {
     private WorldMap worldMap;
     private Position currentPosition;
     private final Map<Position, Tile> tileMap = new HashMap<>();
@@ -28,13 +27,9 @@ public class GameModel extends EventDispatcher<BaseBlockWorldEvent>
     }
 
     @Override
-    public Builder getBuilder() {
-        return worldMap.getBuilder();
-    }
-
-    @Override
     public void setWorldMap(WorldMap worldMap) {
         this.worldMap = worldMap;
+        setCurrentPosition(worldMap.getStartPosition());
         computePositionTileMap();
     }
 
@@ -53,20 +48,6 @@ public class GameModel extends EventDispatcher<BaseBlockWorldEvent>
         return Collections.unmodifiableMap(tileMap);
     }
 
-    @Override
-    public Map<BlockType, Integer> getInventoryCount() {
-        Map<BlockType, Integer> countMap = new HashMap<>();
-        for (BlockType type : BlockType.values()) {
-            countMap.put(type, 0);
-        }
-        for (Block block : worldMap.getBuilder().getInventory()) {
-            BlockType type = BlockType.fromBlock(block);
-            countMap.put(type, countMap.get(type) + 1);
-        }
-        return Collections.unmodifiableMap(countMap);
-    }
-
-    @SuppressWarnings("Duplicates")
     private void computePositionTileMap() {
         tileMap.clear();
         Set<Position> seenPositions = new HashSet<>();

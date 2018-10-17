@@ -35,7 +35,7 @@ public class GameWorldMapView extends UniformGridPane {
 
     private final FadingLabel errorLabel;
 
-    public GameWorldMapView(EventDispatcher<BaseBlockWorldEvent> controller) {
+    public GameWorldMapView(EventDispatcher<BaseBlockWorldEvent> model) {
         super(9, 9, 2);
         this.setPrefWidth(500);
 
@@ -51,12 +51,12 @@ public class GameWorldMapView extends UniformGridPane {
         errorLabel.setOpacity(0);
         GridPane.setHalignment(errorLabel, HPos.CENTER);
 
-        controller.addListener(WorldMapLoadedEvent.class, this::worldMapLoadedHandler);
-        controller.addListener(BuilderMovedEvent.class, this::builderMovedHandler);
-        controller.addListener(BlocksChangedEvent.class, this::blocksChangedHandler);
-        controller.addListener(null, this::allHandler);
+        model.addListener(WorldMapLoadedEvent.class, this::worldMapLoadedHandler);
+        model.addListener(BuilderMovedEvent.class, this::builderMovedHandler);
+        model.addListener(BlocksChangedEvent.class, this::blocksChangedHandler);
+        model.addListener(null, this::allHandler);
 
-        controller.addListener(ErrorEvent.class, this::showErrorMessage);
+        model.addListener(ErrorEvent.class, this::showErrorMessage);
 
         this.setMaxWidth(Control.USE_PREF_SIZE);
         this.setMaxHeight(Control.USE_PREF_SIZE);

@@ -3,6 +3,8 @@ package game;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 import game.controller.BlockWorldController;
+import game.controller.GameController;
+import game.model.GameModel;
 import game.view.GameControlsPane;
 import game.view.GameInventoryPane;
 import game.view.GameWorldMapView;
@@ -54,9 +56,11 @@ public class MainApplication extends Application {
         container.getChildren().addAll(menuBar, rootGrid);
         VBox.setVgrow(rootGrid, Priority.ALWAYS);
 
-        GameAdapter presenter = new GameAdapter();
+        GameModel model = new GameModel();
 
-        GameWorldMapView worldMapView = new GameWorldMapView(presenter);
+        GameController presenter = new GameController(model);
+
+        GameWorldMapView worldMapView = new GameWorldMapView(model);
 
         VBox worldMapContainer = new VBox();
         worldMapContainer.setStyle("-fx-background-color: yellow;");
@@ -68,11 +72,11 @@ public class MainApplication extends Application {
         rootGrid.add(worldMapContainer, 0, 0);
 
 
-        GameControlsPane centrePane = new GameControlsPane(presenter, presenter, presenter);
+        GameControlsPane centrePane = new GameControlsPane(model, presenter, presenter);
         rootGrid.add(centrePane, 1, 0);
         GridPane.setValignment(centrePane, VPos.TOP);
 
-        GameInventoryPane rightPane = new GameInventoryPane(presenter, presenter, presenter);
+        GameInventoryPane rightPane = new GameInventoryPane(model, presenter, presenter);
         rootGrid.add(rightPane, 2, 0);
         GridPane.setValignment(rightPane, VPos.TOP);
 
