@@ -146,13 +146,11 @@ public class GameAdapter extends EventDispatcher<BaseBlockWorldEvent>
             throws NoExitException, InvalidBlockException, TooHighException {
         worldMap.getBuilder().getCurrentTile().moveBlock(direction.name());
 
-        // Update the current tile and the tile we moved the block to.
         Position adjacent = Utilities.addPos(currentPosition, direction.asPosition());
 
+        // Update the current tile and the tile we moved the block to.
         fireBlocksChanged(currentPosition);
         fireBlocksChanged(adjacent);
-
-        currentPosition = adjacent;
     }
 
     @Override

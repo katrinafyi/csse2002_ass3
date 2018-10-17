@@ -109,7 +109,7 @@ public class GameControlsPane extends VBox {
         try {
             controller.dig();
         } catch (InvalidBlockException | TooLowException e) {
-            errorController.handleError("You can't dig there!");
+            errorController.handleError("You can't dig that!");
         }
     }
 }
