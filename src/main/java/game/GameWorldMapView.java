@@ -1,5 +1,6 @@
 package game;
 
+import csse2002.block.world.Tile;
 import csse2002.block.world.TooLowException;
 import game.model.EventDispatcher;
 import game.model.events.BaseBlockWorldEvent;
@@ -16,7 +17,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class GameWorldMapView {
 
@@ -74,27 +77,52 @@ public class GameWorldMapView {
     private void builderMovedHandler(BuilderMovedEvent event) {
         Position oldPosition = currentPosition;
 
-        // Change in column index.
-        int dc = event.getDirection().asPosition().getX();
-        // Change in row index.
-        int dr = event.getDirection().asPosition().getY();
+        removeTilesFromGrid();
+        currentPosition = event.getNewPosition();
+        drawTilesToGrid();
+    }
 
+    private void resetInternalState() {
+
+    }
+
+    private void removeTilesFromGrid() {
+        Set<TileSquare> tilesToRemove = new HashSet<>();
         for (int c = 0; c < gridPane.COLUMNS; c++) {
             for (int r = 0; r < gridPane.ROWS; r++) {
                 // Position index of the current cell.
                 Position pos = new Position(
-                        currentPosition.getX()+c,
-                        currentPosition.getY()+r);
+                        currentPosition.getX()+c-gridPane.COLUMNS/2,
+                        currentPosition.getY()+r-gridPane.ROWS/2);
                 TileSquare tile = tileSquareMap.get(pos);
                 if (tile == null) {
                     continue;
                 }
+                System.out.println("" + pos + tile);
+                tilesToRemove.add(tile);
+            }
+        }
+        gridPane.getChildren().removeAll(tilesToRemove);
+    }
 
-
+    private void drawTilesToGrid() {
+        int HALF_COLS = (gridPane.COLUMNS-1)/2;
+        int HALF_ROWS = (gridPane.ROWS-1)/2;
+        for (int c = 0; c < gridPane.COLUMNS; c++) {
+            for (int r = 0; r < gridPane.ROWS; r++) {
+                // Position index of the current cell.
+                Position pos = new Position(
+                        currentPosition.getX()+c-HALF_COLS,
+                        currentPosition.getY()+r-HALF_ROWS);
+                TileSquare tile = tileSquareMap.get(pos);
+                if (tile == null) {
+                    continue;
+                }
+                tile.setBuilderTile(r == HALF_ROWS && c == HALF_COLS);
+                gridPane.add(tile, c, r);
             }
         }
 
-        currentPosition = event.getNewPosition();
     }
 
     private boolean onGrid(int col, int row) {
@@ -132,7 +160,6 @@ public class GameWorldMapView {
     }
 
     private int posToCol(Position pos) {
-        System.out.println(pos);
         return pos.getX()-currentPosition.getY()+4;
     }
 }
