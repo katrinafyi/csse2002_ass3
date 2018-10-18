@@ -40,10 +40,10 @@ public class GameInventoryPane extends VBox {
 
     public GameInventoryPane(EventDispatcher<BaseBlockWorldEvent> model,
                              BlockWorldController controller,
-                             MessageController messageController) {
+                             MessageController messenger) {
         this.model = model;
         this.controller = controller;
-        this.messageController = messageController;
+        this.messageController = messenger;
 
         this.setId("inventory");
         grid.setId("inventory_grid");

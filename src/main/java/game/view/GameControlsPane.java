@@ -34,10 +34,10 @@ public class GameControlsPane extends VBox {
 
     public GameControlsPane(EventDispatcher<BaseBlockWorldEvent> model,
                             BlockWorldController controller,
-                            MessageController messageController) {
+                            MessageController messenger) {
         this.model = model;
         this.controller = controller;
-        this.messageController = messageController;
+        this.messageController = messenger;
 
         model.addListener(BuilderMovedEvent.class, e -> {
             this.updateBuilderCanMove(e.getTile());
