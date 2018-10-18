@@ -7,6 +7,7 @@ import game.controller.GameController;
 import game.model.GameModel;
 import game.view.GameControlsPane;
 import game.view.GameInventoryPane;
+import game.view.GameMenuBar;
 import game.view.GameWorldMapView;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
@@ -36,8 +37,7 @@ import java.io.FileNotFoundException;
 public class MainApplication extends Application {
 
     private Stage primaryStage;
-
-    private BlockWorldController worldInteraction;
+    private GameController controller;
 
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -50,15 +50,14 @@ public class MainApplication extends Application {
         rootGrid.setHgap(20);
 //        rootGrid.setStyle("-fx-background-color: purple;");
 
+        GameModel model = new GameModel();
+        controller = new GameController(model);
+
         // Container for menu and main content.
         VBox container = new VBox();
-        MenuBar menuBar = constructMenuBar();
+        MenuBar menuBar = new GameMenuBar(primaryStage, model, controller);
         container.getChildren().addAll(menuBar, rootGrid);
         VBox.setVgrow(rootGrid, Priority.ALWAYS);
-
-        GameModel model = new GameModel();
-
-        GameController presenter = new GameController(model);
 
         GameWorldMapView worldMapView = new GameWorldMapView(model);
 
@@ -72,11 +71,11 @@ public class MainApplication extends Application {
         rootGrid.add(worldMapContainer, 0, 0);
 
 
-        GameControlsPane centrePane = new GameControlsPane(model, presenter, presenter);
+        GameControlsPane centrePane = new GameControlsPane(model, controller, controller);
         rootGrid.add(centrePane, 1, 0);
         GridPane.setValignment(centrePane, VPos.TOP);
 
-        GameInventoryPane rightPane = new GameInventoryPane(model, presenter, presenter);
+        GameInventoryPane rightPane = new GameInventoryPane(model, controller, controller);
         rootGrid.add(rightPane, 2, 0);
         GridPane.setValignment(rightPane, VPos.TOP);
 
@@ -121,7 +120,6 @@ public class MainApplication extends Application {
                 System.out.println(worldMapContainer);
                 System.out.println(scene);
                 System.out.println(primaryStage);
-
             }
         });
 
@@ -130,39 +128,4 @@ public class MainApplication extends Application {
         primaryStage.show();
     }
 
-    private void openMapAction(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open map");
-        String filePath = fileChooser.showOpenDialog(primaryStage).getPath();
-        try {
-            worldInteraction.loadWorldMapFile(filePath);
-        } catch (WorldMapFormatException | WorldMapInconsistentException e) {
-            showErrorMessage(e.toString());
-        } catch (FileNotFoundException e) {
-            throw new AssertionError(e);
-        }
-    }
-
-    private void showErrorMessage(String message) {
-        System.err.println("ERROR MESSAGE: " + message);
-    }
-
-    private MenuBar constructMenuBar() {
-        MenuBar menuBar = new MenuBar();
-        Menu fileMenu = new Menu("File");
-
-        MenuItem openMap = new MenuItem("Open map");
-        openMap.setOnAction(this::openMapAction);
-
-        fileMenu.getItems().addAll(
-                new MenuItem("Open map"),
-                new MenuItem("Save map"),
-                new MenuItem("Save map as"),
-                new SeparatorMenuItem(),
-                new MenuItem("Exit"),
-                new MenuItem("DEBUG")
-        );
-        menuBar.getMenus().add(fileMenu);
-        return menuBar;
-    }
 }

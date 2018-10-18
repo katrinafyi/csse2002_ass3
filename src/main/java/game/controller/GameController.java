@@ -21,6 +21,7 @@ import game.model.events.InventoryChangedEvent;
 import game.model.events.WorldMapLoadedEvent;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -47,6 +48,11 @@ public class GameController implements BlockWorldController, ErrorController {
             fireBlocksChanged(position);
         }
         fireInventoryChanged();
+    }
+
+    @Override
+    public void saveWorldMapFile(String filePath) throws IOException {
+        model.getWorldMap().saveMap(filePath);
     }
 
     private void fireMapLoaded() {

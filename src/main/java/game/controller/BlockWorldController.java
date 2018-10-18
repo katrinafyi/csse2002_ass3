@@ -10,6 +10,7 @@ import game.model.BlockType;
 import game.model.Direction;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 /**
@@ -27,6 +28,13 @@ public interface BlockWorldController {
     void loadWorldMapFile(String filePath)
             throws WorldMapInconsistentException, WorldMapFormatException,
             FileNotFoundException;
+
+    /**
+     * Save the world map to the given path.
+     * @param filePath File path.
+     * @throws IOException Error while saving map.
+     */
+    void saveWorldMapFile(String filePath) throws IOException;
 
     /**
      * Attempts to move the builder in the direction given.
