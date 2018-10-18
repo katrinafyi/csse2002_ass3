@@ -3,6 +3,7 @@ package game.view;
 import csse2002.block.world.Position;
 import csse2002.block.world.Tile;
 import csse2002.block.world.TooLowException;
+import game.Utilities;
 import game.model.BlockType;
 import game.model.BlockWorldModel;
 import game.model.Direction;
@@ -18,15 +19,20 @@ import game.view.components.TileView;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class GameWorldMapView extends UniformGridPane {
 
@@ -81,11 +87,6 @@ public class GameWorldMapView extends UniformGridPane {
 
     private void setCellWidths(ObservableValue<? extends Number> prop,
                                Number oldValue, Number newValue) {
-        for (TileSquare tile : visibleTileSquares) {
-            tile.setMaxWidth(
-                    ((double)newValue - (this.COLUMNS - 1) * this.GAP)
-                    / this.COLUMNS);
-        }
     }
 
     private int getTileHeight(Position position) {
@@ -202,7 +203,13 @@ public class GameWorldMapView extends UniformGridPane {
                     continue;
                 }
                 tile.setBuilderTile(r == this.HALF_ROWS && c == this.HALF_COLS);
-                this.add(tile, c, r);
+//                this.add(tile, c, r);
+                Random rand = new Random();
+                this.add(new StackPane() {{
+                    Utilities.setMaxWidthHeight(this);
+                    this.setStyle(String.format("-fx-background-color: #%06x",
+                            rand.nextInt(256*256*256)));
+                }}, c, r);
                 visibleTileSquares.add(tile);
             }
         }
@@ -241,7 +248,7 @@ public class GameWorldMapView extends UniformGridPane {
 
     private TileSquare newTileSquare() {
         TileSquare tile = new TileSquare();
-        tile.setMaxWidth(10);
+        tile.setMaxWidth(getWidth()/9);
         return tile;
     }
 
