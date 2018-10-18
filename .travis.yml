@@ -1,19 +1,16 @@
 language: java
-addons:
-  apt:
-    sources:
-    - deadsnakes
-    packages:
-    - python3.5
-env:
-  - VERSION_TAG=${TRAVIS_TAG}+${TRAVIS_BUILD_NUMBER} NO_SUBMIT=DO_NOT_SUBMIT_THIS_FILE SUBMISSION_ZIP=csse2002_ass3_${VERSION_TAG}_submission.zip PIT_ZIP=csse2002_ass3_${VERSION_TAG}_report_${NO_SUBMIT}.zip
+matrix:
+  include:
+    - env: VERSION_TAG=${TRAVIS_TAG}+${TRAVIS_BUILD_NUMBER} NO_SUBMIT=DO_NOT_SUBMIT_THIS_FILE SUBMISSION_ZIP=csse2002_ass3_${VERSION_TAG}_submission.zip PIT_ZIP=csse2002_ass3_${VERSION_TAG}_report_${NO_SUBMIT}.zip
+      python: 3.7
+      dist: xenial
 install:
  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 before_script:
 # - javac CheckZipAssignment2.java
 script:
  - mvn test
- - /usr/bin/env python3.5 ./assemble_zip.py ${SUBMISSION_ZIP} # && java CheckZipAssignment2 ${SUBMISSION_ZIP}
+ - /usr/bin/env python3.7 ./assemble_zip.py ${SUBMISSION_ZIP} # && java CheckZipAssignment2 ${SUBMISSION_ZIP}
 #before_deploy:
 # - mvn jacoco:prepare-agent test jacoco:report
 # - mvn org.pitest:pitest-maven:mutationCoverage -q -B
