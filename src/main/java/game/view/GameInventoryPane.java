@@ -95,7 +95,6 @@ public class GameInventoryPane extends VBox {
         tile.setMaxWidth(40);
 
         button.setOnAction(e -> handlePlaceBlock(blockType));
-        button.setDisable(true);
         button.setGraphic(tile);
         button.setPadding(new Insets(3));
         button.prefHeightProperty().bind(button.widthProperty());

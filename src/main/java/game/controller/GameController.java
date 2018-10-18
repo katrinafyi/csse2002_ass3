@@ -11,29 +11,18 @@ import csse2002.block.world.WorldMap;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 import game.Utilities;
-import game.controller.BlockWorldController;
-import game.controller.ErrorController;
+import game.model.BlockType;
 import game.model.BlockWorldModel;
-import game.model.EventDispatcher;
-import game.model.events.BaseBlockWorldEvent;
+import game.model.Direction;
 import game.model.events.BlocksChangedEvent;
 import game.model.events.BuilderMovedEvent;
 import game.model.events.ErrorEvent;
 import game.model.events.InventoryChangedEvent;
 import game.model.events.WorldMapLoadedEvent;
-import game.model.BlockType;
-import game.model.Direction;
 
-import java.awt.*;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Queue;
-import java.util.Set;
 
 
 // This serves the purpose of a presenter as well as dispatching events,

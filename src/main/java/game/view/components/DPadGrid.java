@@ -63,7 +63,6 @@ public class DPadGrid extends UniformGridPane {
         centreImage = new ImageView(image);
         centreImage.setPreserveRatio(true);
         centreImage.setFitWidth(40);
-        centreImage.setOpacity(0.5);
         add(centreImage, 1, 1);
         GridPane.setHalignment(centreImage, HPos.CENTER);
         GridPane.setValignment(centreImage, VPos.CENTER);
@@ -71,9 +70,7 @@ public class DPadGrid extends UniformGridPane {
 
     private Button makeButton(ButtonSpec buttonSpec) {
         Button button = new IconButton(ICON_PATH + buttonSpec.label);
-        button.setDisable(true);
         button.prefHeightProperty().bind(button.widthProperty());
-
         return button;
     }
 

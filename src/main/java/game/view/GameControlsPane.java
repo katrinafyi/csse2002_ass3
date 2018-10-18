@@ -55,7 +55,6 @@ public class GameControlsPane extends VBox {
         blockDPad.setCentreImage("file:src/images/iron_shovel_shadow.png");
 
         digButton = new IconButton("file:src/images/iron_pickaxe.png");
-        digButton.setDisable(true);
         digButton.maxWidthProperty().bind(digButton.heightProperty());
         digButton.setOnAction(e -> this.digBlock());
 
