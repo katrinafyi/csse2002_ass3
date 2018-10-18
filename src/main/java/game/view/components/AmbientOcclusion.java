@@ -8,9 +8,10 @@ import javafx.scene.layout.StackPane;
 import java.util.HashMap;
 import java.util.Map;
 
-// Implementation based on:
-// https://0fps.net/2013/07/03/ambient-occlusion-for-minecraft-like-worlds/
 public class AmbientOcclusion extends StackPane {
+    // Implementation based on:
+    // https://0fps.net/2013/07/03/ambient-occlusion-for-minecraft-like-worlds/
+
     private static final Map<Direction, Integer> index = new HashMap<>();
     static {
         index.put(Direction.north, 0);
@@ -60,18 +61,19 @@ public class AmbientOcclusion extends StackPane {
         int shift = 2*index.get(direction);
         if (adjacent[shift+1] > 0) {
             // Block is present on the side of this direction.
-            System.out.println(direction + " side");
             setLayerImage(direction, "file:src/images/ao_n_full.png");
         } else if (adjacent[shift] > 0 && !(adjacent[mod(shift-1)] > 0)) {
             // Corner anti-clockwise from this direction is present
-            // and the other side of this corner is not.
-            System.out.println(direction + " corner");
+            // and the other side of that corner is not.
             setLayerImage(direction, "file:src/images/ao_nw_corner.png");
+        } else {
+            setLayerImage(direction, null);
         }
     }
 
     private void setLayerImage(Direction direction, String imageUrl) {
-        layers.get(direction).setImage(
-                SpriteLoader.getGlobalLoader().loadImage(imageUrl));
+        layers.get(direction).setImage(imageUrl == null ? null
+                : SpriteLoader.getGlobalLoader().loadImage(imageUrl));
     }
 }
+

@@ -72,7 +72,7 @@ public class GameControlsPane extends VBox implements ControlsView {
         AmbientOcclusion ao = new AmbientOcclusion();
         ao.setMaxWidth(40);
         ao.setAdjacent(new int[] {
-                0, 0, 0, 0, 1, 0, 0, 1
+                1, 0, 1, 0, 1, 0, 1, 0
         });
 
         this.getChildren().addAll(builderDPad, blockDPad, digButton, ao, b3);
