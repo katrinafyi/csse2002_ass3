@@ -4,8 +4,8 @@ import csse2002.block.world.Position;
 import csse2002.block.world.Tile;
 import csse2002.block.world.TooLowException;
 import game.model.BlockType;
+import game.model.BlockWorldModel;
 import game.model.Direction;
-import game.model.EventDispatcher;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BlocksChangedEvent;
 import game.model.events.BuilderMovedEvent;
@@ -31,15 +31,15 @@ public class GameWorldMapView extends UniformGridPane {
 
     private final List<TileSquare> visibleTileSquares = new ArrayList<>();
 
-    private Map<Position, Tile> allTiles;
     private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
-    private Position currentPosition;
+    private final BlockWorldModel model;
 
     private final FadingLabel successLabel;
     private final FadingLabel errorLabel;
 
-    public GameWorldMapView(EventDispatcher<BaseBlockWorldEvent> model) {
+    public GameWorldMapView(BlockWorldModel model) {
         super(9, 9, 2);
+        this.model = model;
         this.setPrefWidth(500);
 
         errorLabel = new FadingLabel(Duration.seconds(1), Duration.millis(500));
@@ -100,11 +100,10 @@ public class GameWorldMapView extends UniformGridPane {
         }
     }
 
-    private void builderMovedHandler(BuilderMovedEvent event) {
-        Position oldPosition = currentPosition;
 
+
+    private void builderMovedHandler(BuilderMovedEvent event) {
         removeTilesFromGrid();
-        currentPosition = event.getNewPosition();
         drawTilesToGrid();
     }
 
@@ -112,7 +111,6 @@ public class GameWorldMapView extends UniformGridPane {
         this.getChildren().clear();
         removeTilesFromGrid();
         tileSquareMap.clear();
-        currentPosition = null;
     }
 
     private void removeTilesFromGrid() {
@@ -121,12 +119,16 @@ public class GameWorldMapView extends UniformGridPane {
     }
 
     private void drawTilesToGrid() {
+        Position current = model.getCurrentPosition();
+        int curX = current.getX();
+        int curY = current.getY();
+
         for (int c = 0; c < this.COLUMNS; c++) {
             for (int r = 0; r < this.ROWS; r++) {
                 // Position index of the current cell.
                 Position pos = new Position(
-                        currentPosition.getX()+c-this.HALF_COLS,
-                        currentPosition.getY()+r-this.HALF_ROWS);
+                        curX+c-this.HALF_COLS,
+                        curY+r-this.HALF_ROWS);
                 TileSquare tile = getOrMakeSquare(pos);
                 if (tile == null) {
                     continue;
@@ -145,13 +147,13 @@ public class GameWorldMapView extends UniformGridPane {
     }
 
     private TileSquare getOrMakeSquare(Position pos) {
-        if (!allTiles.containsKey(pos)) {
+        if (!model.getTileMap().containsKey(pos)) {
             return null;
         }
         TileSquare square = tileSquareMap.get(pos);
         if (square == null) {
             square = newTileSquare();
-            Map<String, Tile> exits = allTiles.get(pos).getExits();
+            Map<String, Tile> exits = model.getTileMap().get(pos).getExits();
 
             for (Direction direction : Direction.values()) {
                 square.setHasExit(direction, exits.containsKey(direction.name()));
@@ -164,9 +166,6 @@ public class GameWorldMapView extends UniformGridPane {
     private void worldMapLoadedHandler(WorldMapLoadedEvent event) {
         resetInternalState();
         System.out.println("map loaded v2");
-        currentPosition = event.getPosition();
-
-        allTiles = event.getTileMap();
 
         drawTilesToGrid();
         setCellWidths(this.prefWidthProperty(), 0, this.getWidth());
@@ -179,11 +178,11 @@ public class GameWorldMapView extends UniformGridPane {
     }
 
     private int posToRow(Position pos) {
-        return pos.getY()-currentPosition.getY()+4;
+        return pos.getY()-model.getCurrentPosition().getY()+4;
     }
 
     private int posToCol(Position pos) {
-        return pos.getX()-currentPosition.getY()+4;
+        return pos.getX()-model.getCurrentPosition().getY()+4;
     }
 
     public void showErrorMessage(ErrorEvent event) {
