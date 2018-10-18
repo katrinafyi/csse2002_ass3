@@ -1,7 +1,7 @@
 package game.view.components;
 
 import game.model.Direction;
-import game.view.SpriteLoader;
+import game.view.Cache;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
@@ -73,7 +73,7 @@ public class AmbientOcclusion extends StackPane {
 
     private void setLayerImage(Direction direction, String imageUrl) {
         layers.get(direction).setImage(imageUrl == null ? null
-                : SpriteLoader.getGlobalLoader().loadImage(imageUrl));
+                : Cache.getImageCache().get(imageUrl));
     }
 }
 

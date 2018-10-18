@@ -1,6 +1,6 @@
 package game.view.components;
 
-import game.view.SpriteLoader;
+import game.view.Cache;
 import game.model.Direction;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,7 +25,7 @@ public class ExitsOverlay extends StackPane {
     public void setHasExit(Direction direction, boolean hasExit) {
         if (hasExit && !exitsAdded.contains(direction)) {
             exitsAdded.add(direction);
-            Image image = SpriteLoader.getGlobalLoader().loadImage(TRIANGLE_OVERLAY);
+            Image image = Cache.getImageCache().get(TRIANGLE_OVERLAY);
             ImageView imageView = new ImageView(image);
 
             imageView.setRotate(rotation.get(direction));

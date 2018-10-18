@@ -2,7 +2,7 @@ package game.view.components;
 
 import game.model.BlockType;
 import game.model.Direction;
-import game.view.SpriteLoader;
+import game.view.Cache;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -60,7 +60,7 @@ public class TileSquare extends StackPane implements TileView {
 
     private static void loadAndSetImage(ImageView imageView, String url) {
         Image image = url == null
-                ? null : SpriteLoader.getGlobalLoader().loadImage(url);
+                ? null : Cache.getImageCache().get(url);
         imageView.setImage(image);
     }
 

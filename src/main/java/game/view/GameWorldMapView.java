@@ -23,6 +23,7 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class GameWorldMapView extends UniformGridPane {
     private final List<TileSquare> visibleTileSquares = new ArrayList<>();
 
     private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
+    private final Cache<Position, Integer> tileHeights = new Cache<>(this::getTileHeight);
     private final BlockWorldModel model;
 
     private final FadingLabel successLabel;
@@ -39,7 +41,9 @@ public class GameWorldMapView extends UniformGridPane {
 
     public GameWorldMapView(BlockWorldModel model) {
         super(9, 9, 2);
+
         this.model = model;
+
         this.setPrefWidth(500);
 
         errorLabel = new FadingLabel(Duration.seconds(1), Duration.millis(500));
@@ -84,20 +88,83 @@ public class GameWorldMapView extends UniformGridPane {
         }
     }
 
+    private int getTileHeight(Position position) {
+        Tile tile = model.getTileMap().get(position);
+        if (tile == null) {
+            return 0;
+        }
+        return model.getTileMap().get(position).getBlocks().size();
+    }
+
     private void allHandler(BaseBlockWorldEvent event) {
         System.out.println("View caught: " + event);
     }
 
     private void blocksChangedHandler(BlocksChangedEvent event) {
+        Position position = event.getPosition();
+        TileView tile = tileSquareMap.get(position);
+
+        int height = event.getTile().getBlocks().size();
+        tile.setHeight(height);
+
         try {
-            TileView tile = tileSquareMap.get(event.getPosition());
-            int height = event.getTile().getBlocks().size();
-            tile.setHeight(height);
             tile.setTopBlock(height == 0
                     ? null : BlockType.fromBlock(event.getTile().getTopBlock()));
         } catch (TooLowException e) {
             throw new AssertionError(e);
         }
+        tileHeights.put(position, height);
+
+        updateAOAllNeighbours(position);
+    }
+
+    private void updateAOAllNeighbours(Position position) {
+        Position[] neighbours = getAdjacentPositions(position);
+        for (int i = 0; i < 8; i++) {
+            updateAOSingle(neighbours[i]);
+        }
+        System.out.println(Arrays.toString(getAdjacentPositions(model.getCurrentPosition())));
+    }
+
+    private void updateAOSingle(Position position) {
+        TileSquare tileSquare = tileSquareMap.get(position);
+        if (tileSquare == null) {
+            return; // No tile exists here. Nothing to do.
+        }
+
+        int thisHeight = tileHeights.get(position);
+        Position[] adjPositions = getAdjacentPositions(position);
+        int[] adjacent = new int[8];
+
+        for (int i = 0; i < 8; i++) {
+            adjacent[i] = tileHeights.get(adjPositions[i]) - thisHeight;
+        }
+
+        tileSquare.getAmbientOcclusion().setAdjacent(adjacent);
+    }
+
+    private Position[] getAdjacentPositions(Position centre) {
+        Position[] positions = new Position[8];
+
+        int curX = centre.getX()-1;
+        int curY = centre.getY()-1;
+
+        int dx = 1;
+        int dy = 0;
+        int oldDy;
+        for (int i = 0; i < 8; i++) {
+            positions[i] = new Position(curX, curY);
+
+            if (i % 2 == 0 && i != 0) {
+                oldDy = dy;
+                dy = dx;
+                dx = -oldDy;
+            }
+
+            curX += dx;
+            curY += dy;
+        }
+        return positions;
     }
 
 

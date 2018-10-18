@@ -1,6 +1,6 @@
 package game.view.components;
 
-import game.view.SpriteLoader;
+import game.view.Cache;
 import game.Utilities;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -15,7 +15,7 @@ public class IconButton extends Button {
     public IconButton(String imageUrl, double width) {
         Utilities.setMaxWidthHeight(this);
 
-        Image image = SpriteLoader.getGlobalLoader().loadImage(imageUrl);
+        Image image = Cache.getImageCache().get(imageUrl);
         ImageView imageView = new ImageView(image);
         imageView.setPreserveRatio(true);
         imageView.setFitWidth(width);

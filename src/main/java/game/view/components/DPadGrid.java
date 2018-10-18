@@ -1,6 +1,6 @@
 package game.view.components;
 
-import game.view.SpriteLoader;
+import game.view.Cache;
 import game.view.UniformGridPane;
 import game.model.Direction;
 import javafx.geometry.HPos;
@@ -59,7 +59,7 @@ public class DPadGrid extends UniformGridPane {
     }
 
     public void setCentreImage(String url) {
-        Image image = SpriteLoader.getGlobalLoader().loadImage(url);
+        Image image = Cache.getImageCache().get(url);
         centreImage = new ImageView(image);
         centreImage.setPreserveRatio(true);
         centreImage.setFitWidth(40);
