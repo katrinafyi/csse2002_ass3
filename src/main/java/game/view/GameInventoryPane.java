@@ -1,8 +1,6 @@
 package game.view;
 
 import csse2002.block.world.TooHighException;
-import game.view.components.InventoryView;
-import game.view.components.TileSquare;
 import game.Utilities;
 import game.controller.BlockWorldController;
 import game.controller.MessageController;
@@ -10,6 +8,8 @@ import game.model.BlockType;
 import game.model.EventDispatcher;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.InventoryChangedEvent;
+import game.view.components.InventoryView;
+import game.view.components.TileSquare;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;

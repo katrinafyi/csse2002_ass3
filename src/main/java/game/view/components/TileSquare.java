@@ -27,6 +27,7 @@ public class TileSquare extends StackPane implements TileView {
     private final ImageView heightImage;
     private final ExitsOverlay exitsOverlay;
     private ImageView steveImage;
+    private final AmbientOcclusion ambientOcclusion;
 
     public TileSquare() {
         this.setAlignment(Pos.CENTER);
@@ -43,7 +44,12 @@ public class TileSquare extends StackPane implements TileView {
         StackPane.setAlignment(heightImage, Pos.TOP_LEFT);
         StackPane.setMargin(heightImage, new Insets(5));
 
-        this.getChildren().addAll(blockImage, heightImage, exitsOverlay);
+        ambientOcclusion = new AmbientOcclusion();
+        ambientOcclusion.maxWidthProperty().bind(this.maxWidthProperty());
+
+        this.getChildren().addAll(
+                blockImage, heightImage,
+                exitsOverlay, ambientOcclusion);
     }
 
     private static ImageView ratioImageView() {
@@ -88,8 +94,8 @@ public class TileSquare extends StackPane implements TileView {
         loadAndSetImage(blockImage, path);
     }
 
-    @Override
-    public void setTooHighOrLow(boolean tooHighOrLow) {
-
+    public AmbientOcclusion getAmbientOcclusion() {
+        return ambientOcclusion;
     }
+
 }

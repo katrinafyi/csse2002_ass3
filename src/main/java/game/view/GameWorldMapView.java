@@ -84,8 +84,8 @@ public class GameWorldMapView extends UniformGridPane {
         }
     }
 
-    private void allHandler(BaseBlockWorldEvent e) {
-        System.out.println("View caught: " + e);
+    private void allHandler(BaseBlockWorldEvent event) {
+        System.out.println("View caught: " + event);
     }
 
     private void blocksChangedHandler(BlocksChangedEvent event) {
@@ -95,8 +95,8 @@ public class GameWorldMapView extends UniformGridPane {
             tile.setHeight(height);
             tile.setTopBlock(height == 0
                     ? null : BlockType.fromBlock(event.getTile().getTopBlock()));
-        } catch (TooLowException e1) {
-            e1.printStackTrace();
+        } catch (TooLowException e) {
+            throw new AssertionError(e);
         }
     }
 
