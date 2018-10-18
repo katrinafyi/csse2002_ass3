@@ -78,6 +78,9 @@ public class GameMenuBar extends MenuBar {
 
     private void openMapAction(ActionEvent event) {
         currentFile = newFileChooser("Open").showOpenDialog(mainStage);
+        if (currentFile == null) {
+            return; // Dialog closed without choosing a file.
+        }
         try {
             controller.loadWorldMapFile(currentFile.getAbsolutePath());
             messageController.handleMessage("World map loaded!");
