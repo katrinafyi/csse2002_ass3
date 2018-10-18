@@ -1,4 +1,10 @@
 language: java
+addons:
+  apt:
+    sources:
+    - deadsnakes
+    packages:
+    - python3.5
 env:
   - VERSION_TAG=${TRAVIS_TAG}+${TRAVIS_BUILD_NUMBER} NO_SUBMIT=DO_NOT_SUBMIT_THIS_FILE SUBMISSION_ZIP=csse2002_ass3_${VERSION_TAG}_submission.zip PIT_ZIP=csse2002_ass3_${VERSION_TAG}_report_${NO_SUBMIT}.zip
 install:
