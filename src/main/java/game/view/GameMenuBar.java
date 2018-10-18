@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 public class GameMenuBar extends MenuBar {
 
@@ -72,6 +73,9 @@ public class GameMenuBar extends MenuBar {
         if (currentFile != null) {
             chooser.setInitialDirectory(currentFile.getParentFile());
             chooser.setInitialFileName(currentFile.getName());
+        } else {
+            // Start in the current working directory.
+            chooser.setInitialDirectory(Paths.get("").toAbsolutePath().toFile());
         }
         return chooser;
     }
