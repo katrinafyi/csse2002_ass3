@@ -55,7 +55,8 @@ public class MainApplication extends Application {
 
         // Container for menu and main content.
         VBox container = new VBox();
-        MenuBar menuBar = new GameMenuBar(primaryStage, model, controller);
+        MenuBar menuBar = new GameMenuBar(primaryStage, model,
+                controller, controller);
         container.getChildren().addAll(menuBar, rootGrid);
         VBox.setVgrow(rootGrid, Priority.ALWAYS);
 

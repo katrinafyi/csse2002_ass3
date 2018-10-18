@@ -3,6 +3,7 @@ package game.view;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 import game.controller.BlockWorldController;
+import game.controller.MessageController;
 import game.model.BlockWorldModel;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.WorldMapLoadedEvent;
@@ -25,15 +26,18 @@ public class GameMenuBar extends MenuBar {
 
     private final Stage mainStage;
     private final BlockWorldController controller;
+    private final MessageController messageController;
     private File currentFile;
 
     private MenuItem saveMap;
     private MenuItem saveMapAs;
 
     public GameMenuBar(Stage mainStage, BlockWorldModel model,
-                       BlockWorldController controller) {
+                       BlockWorldController controller,
+                       MessageController messageController) {
         this.mainStage = mainStage;
         this.controller = controller;
+        this.messageController = messageController;
 
         model.addListener(WorldMapLoadedEvent.class, this::enableSaveButtons);
 
@@ -76,6 +80,7 @@ public class GameMenuBar extends MenuBar {
         currentFile = newFileChooser("Open").showOpenDialog(mainStage);
         try {
             controller.loadWorldMapFile(currentFile.getAbsolutePath());
+            messageController.handleMessage("World map loaded!");
         } catch (WorldMapInconsistentException e) {
             showErrorAlert("Error loading map: World map inconsistent.");
         } catch (WorldMapFormatException e) {
@@ -100,6 +105,7 @@ public class GameMenuBar extends MenuBar {
     private void saveCurrentMap() {
         try {
             controller.saveWorldMapFile(currentFile.getAbsolutePath());
+            messageController.handleMessage("World map saved!");
         } catch (Exception e) {
             showErrorAlert("Error saving map: "+e);
         }

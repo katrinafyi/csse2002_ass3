@@ -10,6 +10,7 @@ import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BlocksChangedEvent;
 import game.model.events.BuilderMovedEvent;
 import game.model.events.ErrorEvent;
+import game.model.events.MessageEvent;
 import game.model.events.WorldMapLoadedEvent;
 import game.view.components.FadingLabel;
 import game.view.components.TileSquare;
@@ -51,6 +52,7 @@ public class GameWorldMapView extends UniformGridPane {
         model.addListener(null, this::allHandler);
 
         model.addListener(ErrorEvent.class, this::showErrorMessage);
+        model.addListener(MessageEvent.class, this::showNormalMessage);
 
         this.setMaxWidth(Control.USE_PREF_SIZE);
         this.setMaxHeight(Control.USE_PREF_SIZE);
@@ -179,5 +181,9 @@ public class GameWorldMapView extends UniformGridPane {
 
     public void showErrorMessage(ErrorEvent event) {
         errorLabel.showAndFade(event.getMessage());
+    }
+
+    private void showNormalMessage(MessageEvent event) {
+        successLabel.showAndFade(event.getMessage());
     }
 }
