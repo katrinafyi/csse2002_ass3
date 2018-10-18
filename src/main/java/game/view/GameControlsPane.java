@@ -9,7 +9,7 @@ import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 import game.view.components.IconButton;
 import game.controller.BlockWorldController;
-import game.controller.ErrorController;
+import game.controller.MessageController;
 import game.model.Direction;
 import game.model.EventDispatcher;
 import game.model.events.BaseBlockWorldEvent;
@@ -26,7 +26,7 @@ import java.util.Map;
 public class GameControlsPane extends VBox {
     private final EventDispatcher<BaseBlockWorldEvent> model;
     private final BlockWorldController controller;
-    private ErrorController errorController;
+    private MessageController messageController;
 
     private final DPadGrid builderDPad;
     private final DPadGrid blockDPad;
@@ -34,10 +34,10 @@ public class GameControlsPane extends VBox {
 
     public GameControlsPane(EventDispatcher<BaseBlockWorldEvent> model,
                             BlockWorldController controller,
-                            ErrorController errorController) {
+                            MessageController messageController) {
         this.model = model;
         this.controller = controller;
-        this.errorController = errorController;
+        this.messageController = messageController;
 
         model.addListener(BuilderMovedEvent.class, e -> {
             this.updateBuilderCanMove(e.getTile());
@@ -94,7 +94,7 @@ public class GameControlsPane extends VBox {
         try {
             controller.moveBuilder(direction);
         } catch (NoExitException e) {
-            errorController.handleError("It's too high!");
+            messageController.handleError("It's too high!");
         }
     }
 
@@ -102,7 +102,7 @@ public class GameControlsPane extends VBox {
         try {
             controller.moveBlock(direction);
         } catch (NoExitException | InvalidBlockException | TooHighException e) {
-            errorController.handleError("You can't move this block there!");
+            messageController.handleError("You can't move this block there!");
         }
     }
 
@@ -110,7 +110,7 @@ public class GameControlsPane extends VBox {
         try {
             controller.dig();
         } catch (InvalidBlockException | TooLowException e) {
-            errorController.handleError("You can't dig that!");
+            messageController.handleError("You can't dig that!");
         }
     }
 }

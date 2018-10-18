@@ -18,6 +18,7 @@ import game.model.events.BlocksChangedEvent;
 import game.model.events.BuilderMovedEvent;
 import game.model.events.ErrorEvent;
 import game.model.events.InventoryChangedEvent;
+import game.model.events.MessageEvent;
 import game.model.events.WorldMapLoadedEvent;
 
 import java.io.FileNotFoundException;
@@ -28,7 +29,7 @@ import java.util.NoSuchElementException;
 
 // This serves the purpose of a presenter as well as dispatching events,
 // because assignment 2's implementation does not do so.
-public class GameController implements BlockWorldController, ErrorController {
+public class GameController implements BlockWorldController, MessageController {
 
     private final BlockWorldModel model;
 
@@ -135,5 +136,10 @@ public class GameController implements BlockWorldController, ErrorController {
     public void handleError(String errorMessage) {
         System.out.println("Firing error event: " + errorMessage);
         model.notifyListeners(new ErrorEvent(errorMessage));
+    }
+
+    @Override
+    public void handleMessage(String message) {
+        model.notifyListeners(new MessageEvent(message));
     }
 }

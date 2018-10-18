@@ -4,7 +4,7 @@ import csse2002.block.world.TooHighException;
 import game.view.components.TileSquare;
 import game.Utilities;
 import game.controller.BlockWorldController;
-import game.controller.ErrorController;
+import game.controller.MessageController;
 import game.model.BlockType;
 import game.model.EventDispatcher;
 import game.model.events.BaseBlockWorldEvent;
@@ -33,17 +33,17 @@ public class GameInventoryPane extends VBox {
     private final GridPane grid = new GridPane();
     private final EventDispatcher<BaseBlockWorldEvent> model;
     private final BlockWorldController controller;
-    private final ErrorController errorController;
+    private final MessageController messageController;
 
     private final Map<BlockType, Label> countLabels = new HashMap<>();
     private final Map<BlockType, Button> blockButtons = new HashMap<>();
 
     public GameInventoryPane(EventDispatcher<BaseBlockWorldEvent> model,
                              BlockWorldController controller,
-                             ErrorController errorController) {
+                             MessageController messageController) {
         this.model = model;
         this.controller = controller;
-        this.errorController = errorController;
+        this.messageController = messageController;
 
         this.setId("inventory");
         grid.setId("inventory_grid");
@@ -72,10 +72,10 @@ public class GameInventoryPane extends VBox {
         try {
             controller.placeBlock(blockToPlace);
         } catch (TooHighException e) {
-            errorController.handleError(
+            messageController.handleError(
                     "You can't place "+blockToPlace.name()+" up here!");
         } catch (NoSuchElementException e) {
-            errorController.handleError(
+            messageController.handleError(
                     "You have no more "+blockToPlace.name()+"!");
         }
     }
