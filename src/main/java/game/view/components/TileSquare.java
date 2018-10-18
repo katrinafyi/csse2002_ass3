@@ -31,7 +31,6 @@ public class TileSquare extends StackPane implements TileView {
 
     public TileSquare() {
         this.setAlignment(Pos.CENTER);
-        this.setStyle("-fx-background-color: black;");
 
         exitsOverlay = new ExitsOverlay();
         exitsOverlay.prefWidthProperty().bind(this.maxWidthProperty());
