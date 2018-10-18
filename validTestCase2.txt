@@ -1,10 +1,10 @@
 2
 2
 Sample BuilderName
-soil,soil,wood,wood
+soil,soil,wood
 
 total:11
-0 soil,soil
+0 soil,soil,wood
 1 soil,soil,grass
 2 soil,soil,grass,wood
 3 soil,soil,grass

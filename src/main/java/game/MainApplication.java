@@ -134,7 +134,7 @@ public class MainApplication extends Application {
                 centrePane.getMoveBuilderButton(Direction.west));
         // Move block.
         buttonBindings.put(KeyCode.UP,
-                centrePane.getMoveBuilderButton(Direction.north));
+                centrePane.getMoveBlockButton(Direction.north));
         buttonBindings.put(KeyCode.RIGHT,
                 centrePane.getMoveBlockButton(Direction.east));
         buttonBindings.put(KeyCode.DOWN,

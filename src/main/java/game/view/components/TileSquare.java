@@ -73,7 +73,6 @@ public class TileSquare extends StackPane implements TileView {
 
     @Override
     public void setHeight(int height) {
-        System.out.println(height);
         String path = "file:src/images/"+height+".png";
         loadAndSetImage(heightImage, path);
     }
