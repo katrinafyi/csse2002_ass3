@@ -33,6 +33,7 @@ public class GameWorldMapView extends UniformGridPane {
     private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
     private Position currentPosition;
 
+    private final FadingLabel successLabel;
     private final FadingLabel errorLabel;
 
     public GameWorldMapView(EventDispatcher<BaseBlockWorldEvent> model) {
@@ -40,16 +41,9 @@ public class GameWorldMapView extends UniformGridPane {
         this.setPrefWidth(500);
 
         errorLabel = new FadingLabel(Duration.seconds(1), Duration.millis(500));
-        errorLabel.setPadding(new Insets(10));
-        errorLabel.setStyle(
-                "-fx-font-size: 15;"
-                + "-fx-font-weight: bold;"
-                +"-fx-text-fill: white;"
-                + "-fx-background-color: #911414;"
-                + "-fx-border-radius: 5;"
-        );
-        errorLabel.setOpacity(0);
-        GridPane.setHalignment(errorLabel, HPos.CENTER);
+        setMessageLabelStyle(errorLabel, "#911414");
+        successLabel = new FadingLabel(Duration.seconds(1), Duration.millis(500));
+        setMessageLabelStyle(successLabel, "#167708");
 
         model.addListener(WorldMapLoadedEvent.class, this::worldMapLoadedHandler);
         model.addListener(BuilderMovedEvent.class, this::builderMovedHandler);
@@ -62,6 +56,18 @@ public class GameWorldMapView extends UniformGridPane {
         this.setMaxHeight(Control.USE_PREF_SIZE);
 
         this.prefWidthProperty().addListener(this::setCellWidths);
+    }
+
+    private static void setMessageLabelStyle(FadingLabel label, String colour) {
+        label.setPadding(new Insets(10));
+        label.setStyle(
+                "-fx-font-size: 15;"
+                + "-fx-font-weight: bold;"
+                +"-fx-text-fill: white;"
+                + "-fx-background-color: "+colour+";"
+                + "-fx-border-radius: 5;"
+        );
+        GridPane.setHalignment(label, HPos.CENTER);
     }
 
     private void setCellWidths(ObservableValue<? extends Number> prop,
@@ -105,8 +111,7 @@ public class GameWorldMapView extends UniformGridPane {
     }
 
     private void removeTilesFromGrid() {
-        getChildren().removeAll(visibleTileSquares);
-        getChildren().remove(errorLabel);
+        getChildren().clear();
         visibleTileSquares.clear();
     }
 
@@ -127,6 +132,7 @@ public class GameWorldMapView extends UniformGridPane {
             }
         }
         add(errorLabel, 2, 3, 5, 1);
+        add(successLabel, 2, 3, 5, 1);
     }
 
     private TileSquare getOrMakeSquare(Position pos) {

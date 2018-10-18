@@ -12,6 +12,8 @@ public class FadingLabel extends Label {
     private final FadeTransition fadeTransition;
 
     public FadingLabel(Duration visible, Duration fade) {
+        setOpacity(0);
+
         pauseTransition = new PauseTransition(visible);
         pauseTransition.setOnFinished(this::beginFade);
 
