@@ -119,6 +119,7 @@ public class GameWorldMapView extends UniformGridPane {
     }
 
     private void updateAOAllNeighbours(Position position) {
+        updateAOSingle(position);
         Position[] neighbours = getAdjacentPositions(position);
         for (int i = 0; i < 8; i++) {
             updateAOSingle(neighbours[i]);
