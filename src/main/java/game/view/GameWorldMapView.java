@@ -58,6 +58,8 @@ public class GameWorldMapView extends UniformGridPane {
         this.setMaxHeight(Control.USE_PREF_SIZE);
 
         this.prefWidthProperty().addListener(this::setCellWidths);
+
+        drawMessageLabels();
     }
 
     private static void setMessageLabelStyle(FadingLabel label, String colour) {
@@ -133,8 +135,12 @@ public class GameWorldMapView extends UniformGridPane {
                 visibleTileSquares.add(tile);
             }
         }
-        add(errorLabel, 2, 3, 5, 1);
-        add(successLabel, 2, 3, 5, 1);
+        drawMessageLabels();
+    }
+
+    private void drawMessageLabels() {
+        add(errorLabel, 1, 3, 7, 1);
+        add(successLabel, 1, 3, 7, 1);
     }
 
     private TileSquare getOrMakeSquare(Position pos) {

@@ -8,8 +8,6 @@ import game.model.BlockWorldModel;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.WorldMapLoadedEvent;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -19,7 +17,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.file.Paths;
 
 public class GameMenuBar extends MenuBar {
@@ -27,7 +24,7 @@ public class GameMenuBar extends MenuBar {
 
     private final Stage mainStage;
     private final BlockWorldController controller;
-    private final MessageController messageController;
+    private final MessageController messenger;
     private File currentFile;
 
     private MenuItem saveMap;
@@ -35,10 +32,10 @@ public class GameMenuBar extends MenuBar {
 
     public GameMenuBar(Stage mainStage, BlockWorldModel model,
                        BlockWorldController controller,
-                       MessageController messageController) {
+                       MessageController messenger) {
         this.mainStage = mainStage;
         this.controller = controller;
-        this.messageController = messageController;
+        this.messenger = messenger;
 
         model.addListener(WorldMapLoadedEvent.class, this::enableSaveButtons);
 
@@ -87,13 +84,13 @@ public class GameMenuBar extends MenuBar {
         }
         try {
             controller.loadWorldMapFile(currentFile.getAbsolutePath());
-            messageController.handleMessage("World map loaded!");
+            messenger.handleMessage("World map loaded!");
         } catch (WorldMapInconsistentException e) {
-            showErrorAlert("Error loading map: World map inconsistent.");
+            messenger.handleError("Error loading map: World map inconsistent.");
         } catch (WorldMapFormatException e) {
-            showErrorAlert("Error loading map: Invalid world map format.");
+            messenger.handleError("Error loading map: Invalid world map format.");
         } catch (FileNotFoundException e) {
-            showErrorAlert("Error loading map: File not found.");
+            messenger.handleError("Error loading map: File not found.");
         }
     }
 
@@ -112,19 +109,13 @@ public class GameMenuBar extends MenuBar {
     private void saveCurrentMap() {
         try {
             controller.saveWorldMapFile(currentFile.getAbsolutePath());
-            messageController.handleMessage("World map saved!");
+            messenger.handleMessage("World map saved!");
         } catch (Exception e) {
-            showErrorAlert("Error saving map: "+e);
+            messenger.handleError("Error saving map: "+e);
         }
     }
 
     private void exitAction(ActionEvent event) {
         mainStage.close();
     }
-
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
-        alert.showAndWait();
-    }
-
 }

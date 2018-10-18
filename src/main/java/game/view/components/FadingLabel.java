@@ -4,6 +4,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 public class FadingLabel extends Label {
@@ -12,6 +13,9 @@ public class FadingLabel extends Label {
     private final FadeTransition fadeTransition;
 
     public FadingLabel(Duration visible, Duration fade) {
+        setWrapText(true);
+        setTextAlignment(TextAlignment.LEFT);
+
         setOpacity(0);
 
         pauseTransition = new PauseTransition(visible);
