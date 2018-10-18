@@ -14,6 +14,7 @@ import game.model.events.MessageEvent;
 import game.model.events.WorldMapLoadedEvent;
 import game.view.components.FadingLabel;
 import game.view.components.TileSquare;
+import game.view.components.TileView;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;

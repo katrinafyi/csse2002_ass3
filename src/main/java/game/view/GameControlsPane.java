@@ -7,6 +7,7 @@ import csse2002.block.world.TooHighException;
 import csse2002.block.world.TooLowException;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
+import game.view.components.ControlsView;
 import game.view.components.IconButton;
 import game.controller.BlockWorldController;
 import game.controller.MessageController;
@@ -23,7 +24,7 @@ import javafx.scene.layout.VBox;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
-public class GameControlsPane extends VBox {
+public class GameControlsPane extends VBox implements ControlsView {
     private final EventDispatcher<BaseBlockWorldEvent> model;
     private final BlockWorldController controller;
     private MessageController messageController;
@@ -112,5 +113,20 @@ public class GameControlsPane extends VBox {
         } catch (InvalidBlockException | TooLowException e) {
             messageController.handleError("You can't dig that!");
         }
+    }
+
+    @Override
+    public Button getMoveBuilderButton(Direction direction) {
+        return builderDPad.getButton(direction);
+    }
+
+    @Override
+    public Button getMoveBlockButton(Direction direction) {
+        return blockDPad.getButton(direction);
+    }
+
+    @Override
+    public Button getDigButton() {
+        return digButton;
     }
 }

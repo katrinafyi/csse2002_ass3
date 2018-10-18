@@ -4,6 +4,8 @@ import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 import game.controller.BlockWorldController;
 import game.controller.GameController;
+import game.model.BlockType;
+import game.model.Direction;
 import game.model.GameModel;
 import game.view.GameControlsPane;
 import game.view.GameInventoryPane;
@@ -17,6 +19,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -30,8 +33,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.util.Pair;
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
 
 public class MainApplication extends Application {
@@ -115,12 +122,40 @@ public class MainApplication extends Application {
         Utilities.delayBinding(new PauseTransition(new Duration(200)),
                 worldMapContainer.heightProperty(), setWidth);
 
+        Map<KeyCode, Button> buttonBindings = new HashMap<>();
+        // Move builder buttons.
+        buttonBindings.put(KeyCode.W,
+                centrePane.getMoveBuilderButton(Direction.north));
+        buttonBindings.put(KeyCode.D,
+                centrePane.getMoveBuilderButton(Direction.east));
+        buttonBindings.put(KeyCode.S,
+                centrePane.getMoveBuilderButton(Direction.south));
+        buttonBindings.put(KeyCode.A,
+                centrePane.getMoveBuilderButton(Direction.west));
+        // Move block.
+        buttonBindings.put(KeyCode.UP,
+                centrePane.getMoveBuilderButton(Direction.north));
+        buttonBindings.put(KeyCode.RIGHT,
+                centrePane.getMoveBlockButton(Direction.east));
+        buttonBindings.put(KeyCode.DOWN,
+                centrePane.getMoveBlockButton(Direction.south));
+        buttonBindings.put(KeyCode.LEFT,
+                centrePane.getMoveBlockButton(Direction.west));
+        // Dig button.
+        buttonBindings.put(KeyCode.Q, centrePane.getDigButton());
+        // Place blocks.
+        buttonBindings.put(KeyCode.DIGIT1, rightPane.getButton(BlockType.wood));
+        buttonBindings.put(KeyCode.DIGIT2, rightPane.getButton(BlockType.soil));
 
         scene.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.DELETE) {
                 System.out.println(worldMapContainer);
                 System.out.println(scene);
                 System.out.println(primaryStage);
+            }
+            Button actionButton = buttonBindings.get(e.getCode());
+            if (actionButton != null) {
+                actionButton.fire();
             }
         });
 

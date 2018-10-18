@@ -1,6 +1,7 @@
 package game.view;
 
 import csse2002.block.world.TooHighException;
+import game.view.components.InventoryView;
 import game.view.components.TileSquare;
 import game.Utilities;
 import game.controller.BlockWorldController;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-public class GameInventoryPane extends VBox {
+public class GameInventoryPane extends VBox implements InventoryView {
     private final static List<BlockType> carryableBlocks = new ArrayList<>();
     static {
         carryableBlocks.add(BlockType.wood);
@@ -132,5 +133,10 @@ public class GameInventoryPane extends VBox {
         col2.setHalignment(HPos.RIGHT);
 
         grid.getColumnConstraints().addAll(col0, col1, col2);
+    }
+
+    @Override
+    public Button getButton(BlockType blockType) {
+        return blockButtons.get(blockType);
     }
 }

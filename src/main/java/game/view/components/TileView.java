@@ -1,4 +1,4 @@
-package game.view;
+package game.view.components;
 
 import game.model.BlockType;
 import game.model.Direction;
