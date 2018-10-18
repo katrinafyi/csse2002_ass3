@@ -40,7 +40,7 @@ public class GameWorldMapView extends UniformGridPane {
     private final FadingLabel errorLabel;
 
     public GameWorldMapView(BlockWorldModel model) {
-        super(9, 9, 2);
+        super(9, 9, 0);
 
         this.model = model;
 
