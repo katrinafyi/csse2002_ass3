@@ -1,1 +1,0 @@
-mvn install:install-file   -Dfile=csse2002_block_world.jar   -DgroupId=csse2002.block.world   -DartifactId=world   -Dversion=1.0   -Dpackaging=jar   -DgeneratePom=true
