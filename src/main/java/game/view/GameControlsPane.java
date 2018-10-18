@@ -7,6 +7,7 @@ import csse2002.block.world.TooHighException;
 import csse2002.block.world.TooLowException;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
+import game.view.components.AmbientOcclusion;
 import game.view.components.ControlsView;
 import game.view.components.IconButton;
 import game.controller.BlockWorldController;
@@ -68,7 +69,13 @@ public class GameControlsPane extends VBox implements ControlsView {
             }
         });
 
-        this.getChildren().addAll(builderDPad, blockDPad, digButton, b3);
+        AmbientOcclusion ao = new AmbientOcclusion();
+        ao.setMaxWidth(40);
+        ao.setAdjacent(new int[] {
+                0, 0, 0, 0, 1, 0, 0, 1
+        });
+
+        this.getChildren().addAll(builderDPad, blockDPad, digButton, ao, b3);
     }
 
     private void worldMapLoadedListener(WorldMapLoadedEvent event) {
