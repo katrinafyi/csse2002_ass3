@@ -25,6 +25,10 @@ public abstract class BlockWorldModel extends EventDispatcher<BaseBlockWorldEven
 
     public abstract void setCurrentPosition(Position currentPosition);
 
+    public Tile getAdjacentTile(Tile tile, Direction direction) {
+        return tile.getExits().get(direction.name());
+    }
+
     public abstract Map<Position, Tile> getTileMap();
 
     public Map<BlockType, Integer> getInventoryCount() {
