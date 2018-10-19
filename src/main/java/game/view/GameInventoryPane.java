@@ -112,13 +112,13 @@ public class GameInventoryPane extends VBox implements InventoryView {
     private static Label createBlockLabel(BlockType blockType) {
         Label label = new Label(Utilities.capitalise(blockType.name()));
         label.getStyleClass().add("block_type");
-        label.setStyle("-fx-font-size: 18;");
+        label.setStyle("-fx-font-size: 15;");
         return label;
     }
 
     private static Label createCountLabel() {
         Label label = new Label("–");
-        label.setStyle("-fx-font-size: 18;");
+        label.setStyle("-fx-font-size: 15;");
         return label;
     }
 
@@ -127,8 +127,8 @@ public class GameInventoryPane extends VBox implements InventoryView {
         grid.setVgap(5);
 
         ColumnConstraints col0 = new ColumnConstraints(40);
-        ColumnConstraints col1 = new ColumnConstraints(50);
-        ColumnConstraints col2 = new ColumnConstraints(30);
+        ColumnConstraints col1 = new ColumnConstraints(43);
+        ColumnConstraints col2 = new ColumnConstraints(37);
         col2.setHalignment(HPos.RIGHT);
 
         grid.getColumnConstraints().addAll(col0, col1, col2);
