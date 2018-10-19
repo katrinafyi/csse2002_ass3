@@ -169,6 +169,15 @@ public class MainApplication extends Application {
         if (actionButton != null) {
             actionButton.fire();
         }
+
+        switch (keyEvent.getCode()) {
+            case Z:
+                worldMapView.setHeightsVisible(!worldMapView.isHeightsVisible());
+                break;
+            case X:
+                worldMapView.setExitsVisible(!worldMapView.isExitsVisible());
+                break;
+        }
     }
 
     private void setKeyBindings() {

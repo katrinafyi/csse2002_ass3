@@ -42,6 +42,9 @@ public class GameWorldMapView extends UniformGridPane {
     private final FadingLabel successLabel;
     private final FadingLabel errorLabel;
 
+    private boolean exitsVisible = true;
+    private boolean heightsVisible = true;
+
     public GameWorldMapView(BlockWorldModel model) {
         super(9, 9, 0);
         this.model = model;
@@ -70,6 +73,32 @@ public class GameWorldMapView extends UniformGridPane {
 
         drawMessageLabels();
     }
+
+    public boolean isExitsVisible() {
+        return exitsVisible;
+    }
+
+    public void setExitsVisible(boolean exitsVisible) {
+        this.exitsVisible = exitsVisible;
+        updateVisibilities();
+    }
+
+    public boolean isHeightsVisible() {
+        return heightsVisible;
+    }
+
+    public void setHeightsVisible(boolean heightsVisible) {
+        this.heightsVisible = heightsVisible;
+        updateVisibilities();
+    }
+
+    private void updateVisibilities() {
+        for (TileSquare square : tileSquareMap.values()) {
+            square.setExitVisibility(exitsVisible);
+            square.setHeightVisibility(heightsVisible);
+        }
+    }
+
 
     private static void setMessageLabelStyle(FadingLabel label, String colour) {
         label.setPadding(new Insets(10));
@@ -246,6 +275,9 @@ public class GameWorldMapView extends UniformGridPane {
             }
 
             tileSquareMap.put(pos, square);
+
+            square.setExitVisibility(exitsVisible);
+            square.setHeightVisibility(heightsVisible);
 
             updateTileBlocks(pos); // Updates height and top block.
             updateAOSingle(pos);

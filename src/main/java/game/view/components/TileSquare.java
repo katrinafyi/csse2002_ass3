@@ -98,6 +98,11 @@ public class TileSquare extends StackPane implements TileView {
         exitsOverlay.setVisible(visible);
     }
 
+    @Override
+    public void setHeightVisibility(boolean visible) {
+        heightImage.setVisible(visible);
+    }
+
     public AmbientOcclusion getAmbientOcclusion() {
         return ambientOcclusion;
     }

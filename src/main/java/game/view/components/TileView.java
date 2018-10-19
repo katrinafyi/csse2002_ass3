@@ -9,4 +9,5 @@ public interface TileView {
     void setHasExit(Direction direction, boolean hasExit);
     void setTopBlock(BlockType blockType);
     void setExitVisibility(boolean visible);
+    void setHeightVisibility(boolean visible);
 }
