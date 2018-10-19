@@ -10,7 +10,10 @@ import game.view.GameMenuBar;
 import game.view.GameWorldMapView;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
+import javafx.beans.Observable;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -34,7 +37,6 @@ import javafx.util.Duration;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
 import java.util.function.Consumer;
 
 
@@ -116,9 +118,9 @@ public class MainApplication extends Application {
         primaryStage.setScene(scene);
 
 
-        Utilities.delayBinding(new PauseTransition(new Duration(200)),
+        Utilities.<Number>delayBinding(new PauseTransition(new Duration(200)),
                 primaryStage.widthProperty(), this::setWorldMapViewDimensions);
-        Utilities.delayBinding(new PauseTransition(new Duration(200)),
+        Utilities.<Number>delayBinding(new PauseTransition(new Duration(200)),
                 primaryStage.heightProperty(), this::setWorldMapViewDimensions);
 
         setKeyBindings();
@@ -132,7 +134,8 @@ public class MainApplication extends Application {
         primaryStage.setMinHeight(controlsPane.getHeight() + verticalExtra + 20);
     }
 
-    private void setWorldMapViewDimensions(ObservableValue<Number> observable,
+
+    private void setWorldMapViewDimensions(ObservableValue<? extends Number> observable,
                                            Number oldValue, Number newValue) {
         int cols = worldMapView.COLUMNS;
         double size = Math.min(worldMapContainer.getWidth(),

@@ -38,9 +38,9 @@ public class Utilities {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 
-    public static <T, U extends T> void delayBinding(PauseTransition pause,
-                                        ObservableValue<U> property,
-                                        ChangeListener<T> listener) {
+    public static <T> void delayBinding(PauseTransition pause,
+                                        ObservableValue<T> property,
+                                        ChangeListener<? super T> listener) {
         System.out.println(pause);
         property.addListener((prop, oldValue, newValue) -> {
             pause.setOnFinished(e -> listener.changed(prop, oldValue, newValue));
