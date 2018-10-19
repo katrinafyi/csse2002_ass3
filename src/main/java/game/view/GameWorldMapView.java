@@ -42,8 +42,8 @@ public class GameWorldMapView extends UniformGridPane {
     private final FadingLabel successLabel;
     private final FadingLabel errorLabel;
 
-    private boolean exitsVisible = true;
-    private boolean heightsVisible = true;
+    private boolean exitsVisible = false;
+    private boolean heightsVisible = false;
 
     public GameWorldMapView(BlockWorldModel model) {
         super(9, 9, 0);
