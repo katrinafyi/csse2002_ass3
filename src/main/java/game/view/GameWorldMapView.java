@@ -69,8 +69,6 @@ public class GameWorldMapView extends UniformGridPane {
         this.setMinWidth(Control.USE_PREF_SIZE);
         this.setMaxWidth(Control.USE_PREF_SIZE);
 
-        this.prefWidthProperty().addListener(this::setCellWidths);
-
         drawMessageLabels();
     }
 
@@ -110,14 +108,6 @@ public class GameWorldMapView extends UniformGridPane {
                 + "-fx-border-radius: 5;"
         );
         GridPane.setHalignment(label, HPos.CENTER);
-    }
-
-    private void setCellWidths(ObservableValue<? extends Number> prop,
-                               Number oldValue, Number newValue) {
-        System.out.println(prop);
-        for (TileSquare square : visibleTileSquares) {
-            square.setMaxWidth((double)newValue/9.0);
-        }
     }
 
     private int getTileHeight(Position position) {
@@ -290,12 +280,11 @@ public class GameWorldMapView extends UniformGridPane {
         System.out.println("map loaded v2");
 
         drawTilesToGrid();
-        setCellWidths(this.prefWidthProperty(), 0, this.getWidth());
     }
 
     private TileSquare newTileSquare() {
         TileSquare tile = new TileSquare();
-        tile.setMaxWidth(getWidth()/9);
+        tile.maxWidthProperty().bind(widthProperty().divide(COLUMNS));
         return tile;
     }
 
