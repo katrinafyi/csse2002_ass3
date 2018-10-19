@@ -11,6 +11,6 @@ public class BlocksChangedEvent extends TileEvent {
      * @param position Position of changed tile.
      */
     public BlocksChangedEvent(Position position) {
-        super(position, tile);
+        super(position);
     }
 }
