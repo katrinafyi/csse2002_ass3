@@ -2,7 +2,6 @@ package game.view;
 
 import csse2002.block.world.InvalidBlockException;
 import csse2002.block.world.NoExitException;
-import csse2002.block.world.Position;
 import csse2002.block.world.Tile;
 import csse2002.block.world.TooHighException;
 import csse2002.block.world.TooLowException;
@@ -14,7 +13,6 @@ import game.model.BlockWorldModel;
 import game.model.Direction;
 import game.model.events.BuilderMovedEvent;
 import game.model.events.WorldMapLoadedEvent;
-import game.view.components.AmbientOcclusion;
 import game.view.components.ControlsView;
 import game.view.components.DPadGrid;
 import game.view.components.IconButton;
