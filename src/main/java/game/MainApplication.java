@@ -10,7 +10,9 @@ import game.view.GameMenuBar;
 import game.view.GameWorldMapView;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -18,8 +20,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
@@ -30,6 +34,7 @@ import javafx.util.Duration;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 import java.util.function.Consumer;
 
 
@@ -41,11 +46,13 @@ public class MainApplication extends Application {
     
     private GameMenuBar menuBar;
     private GameWorldMapView worldMapView;
+    private VBox worldMapContainer;
     private GameControlsPane controlsPane;
     private GameInventoryPane inventoryPane;
+
+    private Scene scene;
     
     private final Map<KeyCode, Button> keyBindings = new HashMap<>();
-    
 
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -70,7 +77,7 @@ public class MainApplication extends Application {
 
         worldMapView = new GameWorldMapView(model);
 
-        VBox worldMapContainer = new VBox();
+        worldMapContainer = new VBox();
         worldMapContainer.setStyle("-fx-background-color: yellow;");
         worldMapView.setStyle("-fx-border-color: black;");
         Utilities.setMaxWidthHeight(worldMapContainer);
@@ -105,49 +112,54 @@ public class MainApplication extends Application {
         row0.setPercentHeight(100);
         rootGrid.getRowConstraints().add(row0);
 
-        Scene scene = new Scene(container);
+        scene = new Scene(container);
         primaryStage.setScene(scene);
 
-        ChangeListener<Number> setWidth = (a, b, c) -> {
-            int cols = worldMapView.COLUMNS;
-            double size = Math.min(worldMapContainer.getWidth(), worldMapContainer.getHeight());
-            size = Math.min(size, scene.getWidth()-360);
-            size = Math.min(size, scene.getHeight()-45);
-            size = Math.max(size, cols);
-            // Round down to nearest multiple of number of columns for
-            // seamless edges.
-            size = cols*Math.floor(size/cols);
-            System.out.println(size);
-            worldMapView.setPrefWidth(size);
-            worldMapView.setPrefHeight(size);
-        };
 
         Utilities.delayBinding(new PauseTransition(new Duration(200)),
-                primaryStage.widthProperty(), setWidth);
+                primaryStage.widthProperty(), this::setWorldMapViewDimensions);
         Utilities.delayBinding(new PauseTransition(new Duration(200)),
-                primaryStage.heightProperty(), setWidth);
+                primaryStage.heightProperty(), this::setWorldMapViewDimensions);
 
         setKeyBindings();
 
+        scene.setOnKeyPressed(this::keyPressHandler);
 
-        scene.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.DELETE) {
-                debugPrintSize(worldMapContainer);
-                debugPrintSize(scene);
-                debugPrintSize(primaryStage);
-            }
-            Button actionButton = keyBindings.get(e.getCode());
-            if (actionButton != null) {
-                actionButton.fire();
-            }
-        });
-
-        primaryStage.setMinHeight(400);
         primaryStage.setHeight(580.5);
         primaryStage.show();
 
         double verticalExtra = primaryStage.getHeight() - scene.getHeight();
         primaryStage.setMinHeight(controlsPane.getHeight() + verticalExtra + 20);
+    }
+
+    private void setWorldMapViewDimensions(ObservableValue<Number> observable,
+                                           Number oldValue, Number newValue) {
+        int cols = worldMapView.COLUMNS;
+        double size = Math.min(worldMapContainer.getWidth(),
+                worldMapContainer.getHeight());
+        size = Math.min(size, scene.getWidth()-360);
+        size = Math.min(size, scene.getHeight()-45);
+        size = Math.max(size, cols);
+        // Round down to nearest multiple of number of columns for
+        // seamless edges.
+        size = cols*Math.floor(size/cols);
+
+        worldMapView.setPrefWidth(size);
+        worldMapView.setPrefHeight(size);
+    }
+
+    private void keyPressHandler(KeyEvent keyEvent) {
+        // Debug layout.
+        if (keyEvent.getCode() == KeyCode.DELETE) {
+            debugPrintSize(worldMapView);
+            debugPrintSize(scene);
+            debugPrintSize(primaryStage);
+        }
+        // Get and click the equivalent button.
+        Button actionButton = keyBindings.get(keyEvent.getCode());
+        if (actionButton != null) {
+            actionButton.fire();
+        }
     }
 
     private void setKeyBindings() {

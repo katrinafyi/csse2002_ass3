@@ -4,6 +4,7 @@ import csse2002.block.world.Position;
 import javafx.animation.PauseTransition;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -37,8 +38,8 @@ public class Utilities {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 
-    public static <T> void delayBinding(PauseTransition pause,
-                                        ReadOnlyProperty<T> property,
+    public static <T, U extends T> void delayBinding(PauseTransition pause,
+                                        ObservableValue<U> property,
                                         ChangeListener<T> listener) {
         System.out.println(pause);
         property.addListener((prop, oldValue, newValue) -> {

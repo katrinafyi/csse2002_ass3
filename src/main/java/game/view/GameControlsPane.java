@@ -11,6 +11,7 @@ import game.controller.BlockWorldController;
 import game.controller.MessageController;
 import game.model.BlockWorldModel;
 import game.model.Direction;
+import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BuilderMovedEvent;
 import game.model.events.WorldMapLoadedEvent;
 import game.view.components.ControlsView;
@@ -39,11 +40,8 @@ public class GameControlsPane extends VBox implements ControlsView {
         this.controller = controller;
         this.messageController = messenger;
 
-        model.addListener(BuilderMovedEvent.class, e -> {
-            this.updateBuilderCanMove();
-        });
-        model.addListener(WorldMapLoadedEvent.class,
-                this::worldMapLoadedListener);
+        model.addListener(BuilderMovedEvent.class, this::updateBuilderCanMove);
+        model.addListener(WorldMapLoadedEvent.class, this::updateBuilderCanMove);
 
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(10);
@@ -70,16 +68,7 @@ public class GameControlsPane extends VBox implements ControlsView {
         this.getChildren().addAll(builderDPad, blockDPad, digButton,  b3);
     }
 
-    private void worldMapLoadedListener(WorldMapLoadedEvent event) {
-        this.updateBuilderCanMove();
-
-        // Enable all buttons.
-        builderDPad.getCentreImage().setOpacity(1);
-        blockDPad.getCentreImage().setOpacity(1);
-        digButton.setDisable(false);
-    }
-
-    private void updateBuilderCanMove() {
+    private void updateBuilderCanMove(BaseBlockWorldEvent event) {
         Map<String, Tile> exits = model.getBuilder().getCurrentTile().getExits();
         for (Direction dir : Direction.values()) {
             boolean hasExit = exits.containsKey(dir.name());
