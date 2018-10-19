@@ -1,0 +1,30 @@
+0
+0
+Sample BuilderName
+soil,soil,wood
+
+total:11
+0 soil,soil,wood
+1 soil,soil,grass
+2 soil,soil,grass,wood
+3 soil,soil,grass
+4 soil,soil
+5 soil,soil,grass
+6 soil,soil,grass,wood
+7 soil,soil,grass
+8 soil,grass,grass,stone,stone
+9 soil,soil,grass,wood
+10 soil,soil,grass
+
+exits
+0 east:2,north:1,south:3,west:4
+1 east:5,south:0
+2 east:6,north:5,south:7,west:0
+3 east:7,north:0,west:8
+4 east:0,south:8
+5 south:2,west:1
+6 east:9,south:10,west:2
+7 east:10,north:2,west:3
+8 east:3,north:4
+9 west:6
+10 north:6,west:7
