@@ -23,6 +23,7 @@ import game.model.events.WorldMapLoadedEvent;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -45,9 +46,6 @@ public class GameController implements BlockWorldController, MessageController {
 
         // Inform WorldMap of new builder and tiles.
         fireMapLoaded();
-        for (Position position : model.getTileMap().keySet()) {
-            fireBlocksChanged(position);
-        }
         fireInventoryChanged();
     }
 
@@ -58,11 +56,11 @@ public class GameController implements BlockWorldController, MessageController {
 
     private void fireMapLoaded() {
         model.notifyListeners(
-                new WorldMapLoadedEvent(model.getCurrentPosition(), model.getTileMap()));
+                new WorldMapLoadedEvent(model.getCurrentPosition(), new HashMap<>()));
     }
 
     private void fireBlocksChanged(Position position) {
-        Tile tile = model.getTileMap().get(position);
+        Tile tile = model.getTile(position);
         model.notifyListeners(new BlocksChangedEvent(position, tile));
     }
 
@@ -70,7 +68,7 @@ public class GameController implements BlockWorldController, MessageController {
         model.notifyListeners(
                 new BuilderMovedEvent(
                         model.getBuilder(), model.getCurrentPosition(),
-                        model.getTileMap().get(model.getCurrentPosition()), dir));
+                        model.getTile(model.getCurrentPosition()), dir));
     }
 
     private void fireInventoryChanged() {

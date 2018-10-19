@@ -7,6 +7,7 @@ import csse2002.block.world.TooHighException;
 import csse2002.block.world.TooLowException;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
+import game.model.BlockWorldModel;
 import game.view.components.AmbientOcclusion;
 import game.view.components.ControlsView;
 import game.view.components.IconButton;
@@ -26,7 +27,7 @@ import java.io.FileNotFoundException;
 import java.util.Map;
 
 public class GameControlsPane extends VBox implements ControlsView {
-    private final EventDispatcher<BaseBlockWorldEvent> model;
+    private final BlockWorldModel model;
     private final BlockWorldController controller;
     private MessageController messageController;
 
@@ -34,7 +35,7 @@ public class GameControlsPane extends VBox implements ControlsView {
     private final DPadGrid blockDPad;
     private final IconButton digButton;
 
-    public GameControlsPane(EventDispatcher<BaseBlockWorldEvent> model,
+    public GameControlsPane(BlockWorldModel model,
                             BlockWorldController controller,
                             MessageController messenger) {
         this.model = model;
@@ -79,7 +80,7 @@ public class GameControlsPane extends VBox implements ControlsView {
     }
 
     private void worldMapLoadedListener(WorldMapLoadedEvent event) {
-        this.updateBuilderCanMove(event.getTileMap().get(event.getPosition()));
+        this.updateBuilderCanMove(model.getTile(event.getPosition()));
 
         // Enable all buttons.
         builderDPad.getCentreImage().setOpacity(1);

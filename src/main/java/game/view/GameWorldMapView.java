@@ -36,7 +36,7 @@ public class GameWorldMapView extends UniformGridPane {
     private final List<TileSquare> visibleTileSquares = new ArrayList<>();
 
     private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
-    private final Cache<Position, Integer> tileHeights = new Cache<>(this::getTileHeight);
+    private final Cache<Position, Integer> tileHeights = new Cache<>(this::getTileHeight); // TODO: CLEAR THIS WHEN REQUIERD.
     private final BlockWorldModel model;
 
     private final FadingLabel successLabel;
@@ -87,11 +87,11 @@ public class GameWorldMapView extends UniformGridPane {
     }
 
     private int getTileHeight(Position position) {
-        Tile tile = model.getTileMap().get(position);
+        Tile tile = model.getTile(position);
         if (tile == null) {
             return 0;
         }
-        return model.getTileMap().get(position).getBlocks().size();
+        return model.getTile(position).getBlocks().size();
     }
 
     private void allHandler(BaseBlockWorldEvent event) {
@@ -200,13 +200,13 @@ public class GameWorldMapView extends UniformGridPane {
                     continue;
                 }
                 tile.setBuilderTile(r == this.HALF_ROWS && c == this.HALF_COLS);
-//                this.add(tile, c, r);
-                Random rand = new Random();
-                this.add(new StackPane() {{
-                    Utilities.setMaxWidthHeight(this);
-                    this.setStyle(String.format("-fx-background-color: #%06x",
-                            rand.nextInt(256*256*256)));
-                }}, c, r);
+                this.add(tile, c, r);
+//                Random rand = new Random();
+//                this.add(new StackPane() {{
+//                    Utilities.setMaxWidthHeight(this);
+//                    this.setStyle(String.format("-fx-background-color: #%06x",
+//                            rand.nextInt(256*256*256)));
+//                }}, c, r);
                 visibleTileSquares.add(tile);
             }
         }
@@ -219,13 +219,14 @@ public class GameWorldMapView extends UniformGridPane {
     }
 
     private TileSquare getOrMakeSquare(Position pos) {
-        if (!model.getTileMap().containsKey(pos)) {
+        Tile tile = model.getTile(pos);
+        if (tile == null) {
             return null;
         }
         TileSquare square = tileSquareMap.get(pos);
         if (square == null) {
             square = newTileSquare();
-            Map<String, Tile> exits = model.getTileMap().get(pos).getExits();
+            Map<String, Tile> exits = tile.getExits();
 
             for (Direction direction : Direction.values()) {
                 square.setHasExit(direction, exits.containsKey(direction.name()));

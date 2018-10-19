@@ -15,23 +15,25 @@ import java.util.Map;
 public abstract class BlockWorldModel extends EventDispatcher<BaseBlockWorldEvent> {
     public abstract WorldMap getWorldMap();
 
-    public Builder getBuilder() {
+    public abstract void setWorldMap(WorldMap worldMap);
+
+    public final Builder getBuilder() {
         return getWorldMap().getBuilder();
     }
 
-    public abstract void setWorldMap(WorldMap worldMap);
+    public final Tile getTile(Position position) {
+        return getWorldMap().getTile(position);
+    }
 
     public abstract Position getCurrentPosition();
 
     public abstract void setCurrentPosition(Position currentPosition);
 
-    public Tile getAdjacentTile(Tile tile, Direction direction) {
+    public final Tile getAdjacentTile(Tile tile, Direction direction) {
         return tile.getExits().get(direction.name());
     }
 
-    public abstract Map<Position, Tile> getTileMap();
-
-    public Map<BlockType, Integer> getInventoryCount() {
+    public final Map<BlockType, Integer> getInventoryCount() {
         Map<BlockType, Integer> countMap = new HashMap<>();
         for (BlockType type : BlockType.values()) {
             countMap.put(type, 0);
