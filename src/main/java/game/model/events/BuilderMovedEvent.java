@@ -6,15 +6,11 @@ import csse2002.block.world.Tile;
 import game.model.Direction;
 
 public class BuilderMovedEvent extends BuilderEvent {
-    private final Position newPosition;
-    private final Tile tile;
     private final Direction direction;
+    private final Position oldPosition;
 
-    public BuilderMovedEvent(Builder builder, Position newPosition, Tile tile,
-                             Direction direction) {
-        super(builder);
-        this.newPosition = newPosition;
-        this.tile = tile;
+    public BuilderMovedEvent(Direction direction, Position oldPosition) {
+        this.oldPosition = oldPosition;
         this.direction = direction;
     }
 
@@ -22,11 +18,7 @@ public class BuilderMovedEvent extends BuilderEvent {
         return direction;
     }
 
-    public Position getNewPosition() {
-        return newPosition;
-    }
-
-    public Tile getTile() {
-        return tile;
+    public Position getOldPosition() {
+        return oldPosition;
     }
 }

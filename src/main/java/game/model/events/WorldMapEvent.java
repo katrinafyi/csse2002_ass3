@@ -1,17 +1,4 @@
 package game.model.events;
 
-import csse2002.block.world.Position;
-
-public abstract class WorldMapEvent extends BaseBlockWorldEvent {
-    private final Position position;
-
-    public WorldMapEvent(Position position) {
-
-        this.position = position;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-}
+public abstract class WorldMapEvent extends BaseBlockWorldEvent {}
 
