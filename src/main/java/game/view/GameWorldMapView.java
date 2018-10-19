@@ -100,20 +100,26 @@ public class GameWorldMapView extends UniformGridPane {
 
     private void blocksChangedHandler(BlocksChangedEvent event) {
         Position position = event.getPosition();
-        TileView tile = tileSquareMap.get(position);
 
-        int height = event.getTile().getBlocks().size();
-        tile.setHeight(height);
+        updateTileBlocks(position);
+        updateAOAllNeighbours(position);
+    }
+
+    private void updateTileBlocks(Position position) {
+        Tile tile = model.getTile(position);
+        TileSquare tileSquare = tileSquareMap.get(position);
+        assert tileSquare != null;
+
+        int height = tile.getBlocks().size();
+        tileSquare.setHeight(height);
 
         try {
-            tile.setTopBlock(height == 0
-                    ? null : BlockType.fromBlock(event.getTile().getTopBlock()));
+            tileSquare.setTopBlock(height == 0
+                    ? null : BlockType.fromBlock(tile.getTopBlock()));
         } catch (TooLowException e) {
             throw new AssertionError(e);
         }
         tileHeights.put(position, height);
-
-        updateAOAllNeighbours(position);
     }
 
     private void updateAOAllNeighbours(Position position) {
@@ -228,10 +234,15 @@ public class GameWorldMapView extends UniformGridPane {
             square = newTileSquare();
             Map<String, Tile> exits = tile.getExits();
 
+
             for (Direction direction : Direction.values()) {
                 square.setHasExit(direction, exits.containsKey(direction.name()));
             }
+
             tileSquareMap.put(pos, square);
+
+            updateTileBlocks(pos); // Updates height and top block.
+            updateAOSingle(pos);
         }
         return square;
     }
