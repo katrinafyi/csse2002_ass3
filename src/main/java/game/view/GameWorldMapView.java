@@ -36,7 +36,7 @@ public class GameWorldMapView extends UniformGridPane {
     private final List<TileSquare> visibleTileSquares = new ArrayList<>();
 
     private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
-    private final Cache<Position, Integer> tileHeights = new Cache<>(this::getTileHeight); // TODO: CLEAR THIS WHEN REQUIERD.
+    private final Cache<Position, Integer> tileHeights = new Cache<>(this::getTileHeight);
     private final BlockWorldModel model;
 
     private final FadingLabel successLabel;
@@ -187,6 +187,7 @@ public class GameWorldMapView extends UniformGridPane {
     private void resetInternalState() {
         this.getChildren().clear();
         removeTilesFromGrid();
+        tileHeights.clear();
         tileSquareMap.clear();
     }
 

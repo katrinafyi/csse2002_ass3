@@ -56,6 +56,11 @@ public class MainApplication extends Application {
     
     private final Map<KeyCode, Button> keyBindings = new HashMap<>();
 
+    private double verticalExtra;
+    private double horizontalExtra;
+    private double hGap = 20;
+    private double gridPadding = 10;
+
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
 
@@ -63,8 +68,8 @@ public class MainApplication extends Application {
         primaryStage.setTitle("Window title");
 
         GridPane rootGrid = new GridPane();
-        rootGrid.setPadding(new Insets(10));
-        rootGrid.setHgap(20);
+        rootGrid.setPadding(new Insets(gridPadding));
+        rootGrid.setHgap(hGap);
 //        rootGrid.setStyle("-fx-background-color: purple;");
 
         model = new GameModel();
@@ -130,7 +135,8 @@ public class MainApplication extends Application {
         primaryStage.setHeight(580.5);
         primaryStage.show();
 
-        double verticalExtra = primaryStage.getHeight() - scene.getHeight();
+        verticalExtra = primaryStage.getHeight() - scene.getHeight();
+        horizontalExtra = primaryStage.getWidth() - scene.getWidth();
         primaryStage.setMinHeight(controlsPane.getHeight() + verticalExtra + 20);
     }
 
