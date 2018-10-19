@@ -7,18 +7,12 @@ import game.model.Direction;
 
 public class BuilderMovedEvent extends BuilderEvent {
     private final Direction direction;
-    private final Position oldPosition;
 
-    public BuilderMovedEvent(Direction direction, Position oldPosition) {
-        this.oldPosition = oldPosition;
+    public BuilderMovedEvent(Direction direction) {
         this.direction = direction;
     }
 
     public Direction getDirection() {
         return direction;
-    }
-
-    public Position getOldPosition() {
-        return oldPosition;
     }
 }

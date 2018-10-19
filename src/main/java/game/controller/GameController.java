@@ -55,25 +55,20 @@ public class GameController implements BlockWorldController, MessageController {
     }
 
     private void fireMapLoaded() {
-        model.notifyListeners(
-                new WorldMapLoadedEvent(model.getCurrentPosition(), new HashMap<>()));
+        model.notifyListeners(new WorldMapLoadedEvent());
     }
 
     private void fireBlocksChanged(Position position) {
         Tile tile = model.getTile(position);
-        model.notifyListeners(new BlocksChangedEvent(position, tile));
+        model.notifyListeners(new BlocksChangedEvent(position));
     }
 
     private void fireBuilderMoved(Direction dir) {
-        model.notifyListeners(
-                new BuilderMovedEvent(
-                        model.getBuilder(), model.getCurrentPosition(),
-                        model.getTile(model.getCurrentPosition()), dir));
+        model.notifyListeners(new BuilderMovedEvent(dir));
     }
 
     private void fireInventoryChanged() {
-        model.notifyListeners(
-                new InventoryChangedEvent(model.getBuilder(), model.getInventoryCount()));
+        model.notifyListeners(new InventoryChangedEvent());
     }
 
     //region  ### Implemented world interaction functions ###

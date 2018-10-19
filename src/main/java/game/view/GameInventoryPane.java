@@ -5,6 +5,7 @@ import game.Utilities;
 import game.controller.BlockWorldController;
 import game.controller.MessageController;
 import game.model.BlockType;
+import game.model.BlockWorldModel;
 import game.model.EventDispatcher;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.InventoryChangedEvent;
@@ -32,14 +33,14 @@ public class GameInventoryPane extends VBox implements InventoryView {
     }
 
     private final GridPane grid = new GridPane();
-    private final EventDispatcher<BaseBlockWorldEvent> model;
+    private final BlockWorldModel model;
     private final BlockWorldController controller;
     private final MessageController messageController;
 
     private final Map<BlockType, Label> countLabels = new HashMap<>();
     private final Map<BlockType, Button> blockButtons = new HashMap<>();
 
-    public GameInventoryPane(EventDispatcher<BaseBlockWorldEvent> model,
+    public GameInventoryPane(BlockWorldModel model,
                              BlockWorldController controller,
                              MessageController messenger) {
         this.model = model;
@@ -59,7 +60,7 @@ public class GameInventoryPane extends VBox implements InventoryView {
     }
 
     private void updateInventory(InventoryChangedEvent event) {
-        for (Map.Entry<BlockType, Integer> blockCount : event.getBlocksCount().entrySet()) {
+        for (Map.Entry<BlockType, Integer> blockCount : model.getInventoryCount().entrySet()) {
             BlockType block = blockCount.getKey();
             if (!carryableBlocks.contains(block)) {
                 continue;
