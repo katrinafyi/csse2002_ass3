@@ -7,19 +7,20 @@ import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.util.Duration;
 
 import javax.rmi.CORBA.Util;
 
 public class UniformGridPane extends GridPane {
-    protected final int COLUMNS;
-    protected final int ROWS;
+    public final int COLUMNS;
+    public final int ROWS;
 
-    protected final int HALF_COLS;
-    protected final int HALF_ROWS;
+    public final int HALF_COLS;
+    public final int HALF_ROWS;
 
-    protected final double GAP;
+    public final double GAP;
 
     public UniformGridPane(int columns, int rows) {
         this(columns, rows, 5);

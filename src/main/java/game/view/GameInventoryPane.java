@@ -6,8 +6,6 @@ import game.controller.BlockWorldController;
 import game.controller.MessageController;
 import game.model.BlockType;
 import game.model.BlockWorldModel;
-import game.model.EventDispatcher;
-import game.model.events.BaseBlockWorldEvent;
 import game.model.events.InventoryChangedEvent;
 import game.view.components.InventoryView;
 import game.view.components.TileSquare;
@@ -74,10 +72,10 @@ public class GameInventoryPane extends VBox implements InventoryView {
         try {
             controller.placeBlock(blockToPlace);
         } catch (TooHighException e) {
-            messageController.handleError(
+            messageController.handleErrorMessage(
                     "You can't place "+blockToPlace.name()+" up here!");
         } catch (NoSuchElementException e) {
-            messageController.handleError(
+            messageController.handleErrorMessage(
                     "You have no more "+blockToPlace.name()+"!");
         }
     }

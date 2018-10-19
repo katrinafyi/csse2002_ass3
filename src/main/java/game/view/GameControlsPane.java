@@ -61,9 +61,9 @@ public class GameControlsPane extends VBox implements ControlsView {
         Button b3 = new Button("(Load map)");
         b3.setOnAction(e -> {
             try {
-                controller.loadWorldMapFile("validTestCase2.txt");
+                controller.loadWorldMapFile("maps/validTestCase2.txt");
             } catch (WorldMapInconsistentException | WorldMapFormatException | FileNotFoundException e1) {
-                System.out.println(e1);
+                e1.printStackTrace();
             }
         });
 
@@ -94,7 +94,7 @@ public class GameControlsPane extends VBox implements ControlsView {
         try {
             controller.moveBuilder(direction);
         } catch (NoExitException e) {
-            messageController.handleError("It's too high!");
+            messageController.handleErrorMessage("It's too high!");
         }
     }
 
@@ -102,7 +102,7 @@ public class GameControlsPane extends VBox implements ControlsView {
         try {
             controller.moveBlock(direction);
         } catch (NoExitException | InvalidBlockException | TooHighException e) {
-            messageController.handleError("You can't move this block there!");
+            messageController.handleErrorMessage("You can't move this block there!");
         }
     }
 
@@ -110,7 +110,7 @@ public class GameControlsPane extends VBox implements ControlsView {
         try {
             controller.dig();
         } catch (InvalidBlockException | TooLowException e) {
-            messageController.handleError("You can't dig that!");
+            messageController.handleErrorMessage("You can't dig that!");
         }
     }
 

@@ -35,7 +35,8 @@ import java.util.NoSuchElementException;
  * Remark: Classes beginning with Game* are the concrete implementations of the
  * interfaces/abstract classes described by BlockWorld*.
  */
-public class GameController implements BlockWorldController, MessageController {
+public class GameController
+        implements BlockWorldController, MessageController {
 
     /** Model component. */
     private final BlockWorldModel model;
@@ -158,13 +159,13 @@ public class GameController implements BlockWorldController, MessageController {
     //endregion
 
     @Override
-    public void handleError(String errorMessage) {
+    public void handleErrorMessage(String errorMessage) {
         System.out.println("Firing error event: " + errorMessage);
         model.notifyListeners(new ErrorEvent(errorMessage));
     }
 
     @Override
-    public void handleMessage(String message) {
+    public void handleInfoMessage(String message) {
         model.notifyListeners(new MessageEvent(message));
     }
 }

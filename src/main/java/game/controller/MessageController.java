@@ -8,11 +8,11 @@ public interface MessageController {
      * Handle an error with the given message.
      * @param errorMessage Error message.
      */
-    void handleError(String errorMessage);
+    void handleErrorMessage(String errorMessage);
 
     /**
-     * Handle a non-error message with the given message.
+     * Handle an informational message with the given message.
      * @param message Message text.
      */
-    void handleMessage(String message);
+    void handleInfoMessage(String message);
 }

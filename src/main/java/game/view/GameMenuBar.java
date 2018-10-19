@@ -84,13 +84,13 @@ public class GameMenuBar extends MenuBar {
         }
         try {
             controller.loadWorldMapFile(currentFile.getAbsolutePath());
-            messenger.handleMessage("World map loaded!");
+            messenger.handleInfoMessage("World map loaded!");
         } catch (WorldMapInconsistentException e) {
-            messenger.handleError("Error loading map: World map inconsistent.");
+            messenger.handleErrorMessage("Error loading map: World map inconsistent.");
         } catch (WorldMapFormatException e) {
-            messenger.handleError("Error loading map: Invalid world map format.");
+            messenger.handleErrorMessage("Error loading map: Invalid world map format.");
         } catch (FileNotFoundException e) {
-            messenger.handleError("Error loading map: File not found.");
+            messenger.handleErrorMessage("Error loading map: File not found.");
         }
     }
 
@@ -109,9 +109,9 @@ public class GameMenuBar extends MenuBar {
     private void saveCurrentMap() {
         try {
             controller.saveWorldMapFile(currentFile.getAbsolutePath());
-            messenger.handleMessage("World map saved!");
+            messenger.handleInfoMessage("World map saved!");
         } catch (Exception e) {
-            messenger.handleError("Error saving map: "+e);
+            messenger.handleErrorMessage("Error saving map: "+e);
         }
     }
 

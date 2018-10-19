@@ -44,10 +44,9 @@ public class GameWorldMapView extends UniformGridPane {
 
     public GameWorldMapView(BlockWorldModel model) {
         super(9, 9, 0);
-
         this.model = model;
 
-        this.setPrefWidth(500);
+        this.setPrefWidth(495.0); // Multiple of 9.
 
         errorLabel = new FadingLabel(Duration.seconds(1), Duration.millis(500));
         setMessageLabelStyle(errorLabel, "#911414");
@@ -62,8 +61,10 @@ public class GameWorldMapView extends UniformGridPane {
         model.addListener(ErrorEvent.class, this::showErrorMessage);
         model.addListener(MessageEvent.class, this::showNormalMessage);
 
-        this.setMaxWidth(Control.USE_PREF_SIZE);
+        this.setMinHeight(Control.USE_PREF_SIZE);
         this.setMaxHeight(Control.USE_PREF_SIZE);
+        this.setMinWidth(Control.USE_PREF_SIZE);
+        this.setMaxWidth(Control.USE_PREF_SIZE);
 
         this.prefWidthProperty().addListener(this::setCellWidths);
 
@@ -84,6 +85,10 @@ public class GameWorldMapView extends UniformGridPane {
 
     private void setCellWidths(ObservableValue<? extends Number> prop,
                                Number oldValue, Number newValue) {
+        System.out.println(prop);
+        for (TileSquare square : visibleTileSquares) {
+            square.setMaxWidth((double)newValue/9.0);
+        }
     }
 
     private int getTileHeight(Position position) {
@@ -269,7 +274,7 @@ public class GameWorldMapView extends UniformGridPane {
         return pos.getX()-model.getCurrentPosition().getY()+4;
     }
 
-    public void showErrorMessage(ErrorEvent event) {
+    private void showErrorMessage(ErrorEvent event) {
         errorLabel.showAndFade(event.getMessage());
     }
 

@@ -1,8 +1,5 @@
 package game;
 
-import csse2002.block.world.WorldMapFormatException;
-import csse2002.block.world.WorldMapInconsistentException;
-import game.controller.BlockWorldController;
 import game.controller.GameController;
 import game.model.BlockType;
 import game.model.Direction;
@@ -14,37 +11,41 @@ import game.view.GameWorldMapView;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.util.Pair;
 
-import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 
 public class MainApplication extends Application {
 
     private Stage primaryStage;
+    private GameModel model;
     private GameController controller;
+    
+    private GameMenuBar menuBar;
+    private GameWorldMapView worldMapView;
+    private GameControlsPane controlsPane;
+    private GameInventoryPane inventoryPane;
+    
+    private final Map<KeyCode, Button> keyBindings = new HashMap<>();
+    
 
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -57,17 +58,17 @@ public class MainApplication extends Application {
         rootGrid.setHgap(20);
 //        rootGrid.setStyle("-fx-background-color: purple;");
 
-        GameModel model = new GameModel();
+        model = new GameModel();
         controller = new GameController(model);
 
         // Container for menu and main content.
         VBox container = new VBox();
-        MenuBar menuBar = new GameMenuBar(primaryStage, model,
+        menuBar = new GameMenuBar(primaryStage, model,
                 controller, controller);
         container.getChildren().addAll(menuBar, rootGrid);
         VBox.setVgrow(rootGrid, Priority.ALWAYS);
 
-        GameWorldMapView worldMapView = new GameWorldMapView(model);
+        worldMapView = new GameWorldMapView(model);
 
         VBox worldMapContainer = new VBox();
         worldMapContainer.setStyle("-fx-background-color: yellow;");
@@ -79,16 +80,16 @@ public class MainApplication extends Application {
         rootGrid.add(worldMapContainer, 0, 0);
 
 
-        GameControlsPane centrePane = new GameControlsPane(model, controller, controller);
-        rootGrid.add(centrePane, 1, 0);
-        GridPane.setValignment(centrePane, VPos.TOP);
+        controlsPane = new GameControlsPane(model, controller, controller);
+        rootGrid.add(controlsPane, 1, 0);
+        GridPane.setValignment(controlsPane, VPos.TOP);
 
-        GameInventoryPane rightPane = new GameInventoryPane(model, controller, controller);
-        rootGrid.add(rightPane, 2, 0);
-        GridPane.setValignment(rightPane, VPos.TOP);
+        inventoryPane = new GameInventoryPane(model, controller, controller);
+        rootGrid.add(inventoryPane, 2, 0);
+        GridPane.setValignment(inventoryPane, VPos.TOP);
 
 
-        centrePane.setMaxWidth(Double.MAX_VALUE);
+        controlsPane.setMaxWidth(Double.MAX_VALUE);
 
         ColumnConstraints col0 = new ColumnConstraints();
         col0.setHgrow(Priority.ALWAYS);
@@ -108,60 +109,88 @@ public class MainApplication extends Application {
         primaryStage.setScene(scene);
 
         ChangeListener<Number> setWidth = (a, b, c) -> {
+            int cols = worldMapView.COLUMNS;
             double size = Math.min(worldMapContainer.getWidth(), worldMapContainer.getHeight());
             size = Math.min(size, scene.getWidth()-360);
             size = Math.min(size, scene.getHeight()-45);
-            size = Math.max(size, 1);
+            size = Math.max(size, cols);
+            // Round down to nearest multiple of number of columns for
+            // seamless edges.
+            size = cols*Math.floor(size/cols);
             System.out.println(size);
             worldMapView.setPrefWidth(size);
             worldMapView.setPrefHeight(size);
         };
 
         Utilities.delayBinding(new PauseTransition(new Duration(200)),
-                worldMapContainer.widthProperty(), setWidth);
+                primaryStage.widthProperty(), setWidth);
         Utilities.delayBinding(new PauseTransition(new Duration(200)),
-                worldMapContainer.heightProperty(), setWidth);
+                primaryStage.heightProperty(), setWidth);
 
-        Map<KeyCode, Button> buttonBindings = new HashMap<>();
-        // Move builder buttons.
-        buttonBindings.put(KeyCode.W,
-                centrePane.getMoveBuilderButton(Direction.north));
-        buttonBindings.put(KeyCode.D,
-                centrePane.getMoveBuilderButton(Direction.east));
-        buttonBindings.put(KeyCode.S,
-                centrePane.getMoveBuilderButton(Direction.south));
-        buttonBindings.put(KeyCode.A,
-                centrePane.getMoveBuilderButton(Direction.west));
-        // Move block.
-        buttonBindings.put(KeyCode.UP,
-                centrePane.getMoveBlockButton(Direction.north));
-        buttonBindings.put(KeyCode.RIGHT,
-                centrePane.getMoveBlockButton(Direction.east));
-        buttonBindings.put(KeyCode.DOWN,
-                centrePane.getMoveBlockButton(Direction.south));
-        buttonBindings.put(KeyCode.LEFT,
-                centrePane.getMoveBlockButton(Direction.west));
-        // Dig button.
-        buttonBindings.put(KeyCode.Q, centrePane.getDigButton());
-        // Place blocks.
-        buttonBindings.put(KeyCode.DIGIT1, rightPane.getButton(BlockType.wood));
-        buttonBindings.put(KeyCode.DIGIT2, rightPane.getButton(BlockType.soil));
+        setKeyBindings();
+
 
         scene.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.DELETE) {
-                System.out.println(worldMapContainer);
-                System.out.println(scene);
-                System.out.println(primaryStage);
+                debugPrintSize(worldMapContainer);
+                debugPrintSize(scene);
+                debugPrintSize(primaryStage);
             }
-            Button actionButton = buttonBindings.get(e.getCode());
+            Button actionButton = keyBindings.get(e.getCode());
             if (actionButton != null) {
                 actionButton.fire();
             }
         });
 
-
+        primaryStage.setMinHeight(400);
         primaryStage.setHeight(580.5);
         primaryStage.show();
+
+        double verticalExtra = primaryStage.getHeight() - scene.getHeight();
+        primaryStage.setMinHeight(controlsPane.getHeight() + verticalExtra + 20);
+    }
+
+    private void setKeyBindings() {
+        // Move builder buttons.
+        keyBindings.put(KeyCode.W,
+                controlsPane.getMoveBuilderButton(Direction.north));
+        keyBindings.put(KeyCode.D,
+                controlsPane.getMoveBuilderButton(Direction.east));
+        keyBindings.put(KeyCode.S,
+                controlsPane.getMoveBuilderButton(Direction.south));
+        keyBindings.put(KeyCode.A,
+                controlsPane.getMoveBuilderButton(Direction.west));
+        // Move block.
+        keyBindings.put(KeyCode.UP,
+                controlsPane.getMoveBlockButton(Direction.north));
+        keyBindings.put(KeyCode.RIGHT,
+                controlsPane.getMoveBlockButton(Direction.east));
+        keyBindings.put(KeyCode.DOWN,
+                controlsPane.getMoveBlockButton(Direction.south));
+        keyBindings.put(KeyCode.LEFT,
+                controlsPane.getMoveBlockButton(Direction.west));
+        // Dig button.
+        keyBindings.put(KeyCode.Q, controlsPane.getDigButton());
+        // Place blocks.
+        keyBindings.put(KeyCode.DIGIT1, inventoryPane.getButton(BlockType.wood));
+        keyBindings.put(KeyCode.DIGIT2, inventoryPane.getButton(BlockType.soil));
+    }
+
+    /**
+     * Prints the given node and its width and height.
+     * @param node Node with getWidth() and getHeight().
+     */
+    private void debugPrintSize(Object node) {
+        try {
+            // This is really bad practice but Node, Scene and Region have no
+            // common superclass exposing these methods, but they are all
+            // present. Otherwise, we would need 3 almost identical methods.
+            String w = node.getClass().getMethod("getWidth").invoke(node).toString();
+            String h = node.getClass().getMethod("getHeight").invoke(node).toString();
+            System.out.println(node + ": " + w + "x" + h);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
 }
