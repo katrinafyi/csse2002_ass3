@@ -21,6 +21,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Control;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -28,6 +29,7 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class GameWorldMapView extends FastGridPane {
     private final Map<Direction, int[]> oppositeShifts = new EnumMap<>(Direction.class);
@@ -263,14 +265,9 @@ public class GameWorldMapView extends FastGridPane {
                 if (tile == null) {
                     continue;
                 }
+                tile.setMaxWidth(getWidth()/columns);
                 tile.setBuilderTile(r == halfRows && c == halfCols);
                 this.add(tile, c, r);
-//                Random rand = new Random();
-//                this.add(new StackPane() {{
-//                    Utilities.setMaxWidthHeight(this);
-//                    this.setStyle(String.format("-fx-background-color: #%06x",
-//                            rand.nextInt(256*256*256)));
-//                }}, c, r);
             }
         }
         drawMessageLabels();
@@ -317,7 +314,6 @@ public class GameWorldMapView extends FastGridPane {
 
     private TileSquare newTileSquare() {
         TileSquare tile = new TileSquare();
-        tile.maxWidthProperty().bind(widthProperty().divide(columns));
         return tile;
     }
 
