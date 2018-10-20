@@ -65,14 +65,15 @@ public class TileSquare extends StackPane implements TileView {
 
     @Override
     public void setBuilderTile(boolean isBuilderTile) {
-        if (isBuilderTile && steveImage == null) {
+        if (steveImage != null) {
+            steveImage.setVisible(isBuilderTile);
+            return;
+        }
+        if (isBuilderTile) {
             steveImage = ratioImageView();
             loadAndSetImage(steveImage, "file:src/images/steve_shadow.png");
             steveImage.fitWidthProperty().bind(this.maxWidthProperty().multiply(0.8));
             this.getChildren().add(steveImage);
-        } else if (!isBuilderTile && steveImage != null) {
-            this.getChildren().remove(steveImage);
-            steveImage = null;
         }
     }
 
