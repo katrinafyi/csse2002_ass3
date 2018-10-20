@@ -20,8 +20,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Control;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -48,6 +52,10 @@ public class GameWorldMapView extends UniformGridPane {
     public GameWorldMapView(BlockWorldModel model) {
         super(9, 9, 0);
         this.model = model;
+
+        // o.O
+        this.setBackground(new Background(new BackgroundFill(
+                Color.SKYBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
 
         this.setPrefWidth(495.0); // Multiple of 9.
 
