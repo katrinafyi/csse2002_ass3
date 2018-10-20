@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -138,7 +139,7 @@ public class MainApplication extends Application {
 
     private void setWorldMapViewDimensions(ObservableValue<? extends Number> observable,
                                            Number oldValue, Number newValue) {
-        int cols = worldMapView.COLUMNS;
+        int cols = worldMapView.columns;
         double size = Math.min(worldMapContainer.getWidth(),
                 worldMapContainer.getHeight());
         size = Math.min(size, scene.getWidth()-360);
@@ -174,6 +175,9 @@ public class MainApplication extends Application {
                 System.out.println();
                 debugPrintSize(controlsPane);
                 debugPrintSize(inventoryPane);
+                System.out.println();
+                System.out.println(worldMapView.getChildren());
+                debugPrintClasses(worldMapView.getChildren());
                 break;
             case CLOSE_BRACKET:
                 toggleDebugLayout();
@@ -236,6 +240,14 @@ public class MainApplication extends Application {
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
+    }
+
+    private void debugPrintClasses(Collection<?> collection) {
+        Map<Class, Integer> count = new HashMap<>();
+        for (Object o : collection) {
+            count.put(o.getClass(), 1+count.computeIfAbsent(o.getClass(), x -> 0));
+        }
+        System.out.println(count);
     }
 
 }

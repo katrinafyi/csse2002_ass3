@@ -15,6 +15,7 @@ import game.model.events.ErrorEvent;
 import game.model.events.MessageEvent;
 import game.model.events.WorldMapLoadedEvent;
 import game.view.components.FadingLabel;
+import game.view.components.FastGridPane;
 import game.view.components.TileSquare;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -23,15 +24,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class GameWorldMapView extends UniformGridPane {
+public class GameWorldMapView extends FastGridPane {
+    private final Map<Direction, int[]> oppositeShifts = new EnumMap<>(Direction.class);
 
-    private final List<TileSquare> visibleTileSquares = new ArrayList<>();
 
     private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
     private final Cache<Position, Integer> tileHeights = new Cache<>(this::getTileHeight);
@@ -44,8 +44,10 @@ public class GameWorldMapView extends UniformGridPane {
     private boolean heightsVisible = false;
 
     public GameWorldMapView(BlockWorldModel model) {
-        super(9, 9, 0);
+        super(9, 9);
         this.model = model;
+
+        setOppositeShifts();
 
         // o.O
         Utilities.setBackground(this, Color.SKYBLUE);
@@ -69,6 +71,12 @@ public class GameWorldMapView extends UniformGridPane {
         this.setMinWidth(Control.USE_PREF_SIZE);
         this.setMaxWidth(Control.USE_PREF_SIZE);
 
+        this.heightProperty().addListener((a, b, c) -> {
+            if (model.getCurrentPosition() != null) {
+                drawTilesToGrid();
+            }
+        });
+
         drawMessageLabels();
     }
 
@@ -90,6 +98,34 @@ public class GameWorldMapView extends UniformGridPane {
         updateVisibilities();
     }
 
+    private void setOppositeShifts() {
+        int[][] allShifts = new int[][] {
+                {-1,  1,  0,  1, 1, 0},
+                {-1, -1, -1,  0, 0, 1},
+                {-1, -1,  0, -1, 1, 0},
+                { 1, -1,  1,  0, 0, 1}
+        };
+        oppositeShifts.put(Direction.north, allShifts[0]);
+        oppositeShifts.put(Direction.east, allShifts[1]);
+        oppositeShifts.put(Direction.south, allShifts[2]);
+        oppositeShifts.put(Direction.west, allShifts[3]);
+    }
+
+    private TileSquare[] getTilesToRemove(Direction movedDirection) {
+        int[] shifts = oppositeShifts.get(movedDirection);
+        int colShift = (columns-1)/2;
+        int rowShift = (rows-1)/2;
+        int curX = model.getCurrentPosition().getX() + shifts[0]*colShift + shifts[2];
+        int curY = model.getCurrentPosition().getY() + shifts[1]*rowShift + shifts[3];
+
+        TileSquare[] tilesToRemove = new TileSquare[columns];
+        for (int i = 0; i < columns; i++) {
+            tilesToRemove[i] = tileSquareMap.get(
+                    new Position(curX + i*shifts[4], curY + i*shifts[5]));
+        }
+        return tilesToRemove;
+    }
+
     private void updateVisibilities() {
         for (TileSquare square : tileSquareMap.values()) {
             square.setExitVisibility(exitsVisible);
@@ -100,13 +136,13 @@ public class GameWorldMapView extends UniformGridPane {
 
     private static void setMessageLabelStyle(FadingLabel label, String colour) {
         label.setPadding(new Insets(10));
-        label.setStyle(
-                "-fx-font-size: 15;"
-                + "-fx-font-weight: bold;"
-                +"-fx-text-fill: white;"
-                + "-fx-background-color: "+colour+";"
-                + "-fx-border-radius: 5;"
-        );
+//        label.setStyle(
+//                "-fx-font-size: 15;"
+//                + "-fx-font-weight: bold;"
+//                +"-fx-text-fill: white;"
+//                + "-fx-background-color: "+colour+";"
+//                + "-fx-border-radius: 5;"
+//        );
         GridPane.setHalignment(label, HPos.CENTER);
     }
 
@@ -199,20 +235,14 @@ public class GameWorldMapView extends UniformGridPane {
 
 
     private void builderMovedHandler(BuilderMovedEvent event) {
-        removeTilesFromGrid();
+        getChildren().removeAll(getTilesToRemove(event.getDirection()));
         drawTilesToGrid();
     }
 
     private void resetInternalState() {
         this.getChildren().clear();
-        removeTilesFromGrid();
         tileHeights.clear();
         tileSquareMap.clear();
-    }
-
-    private void removeTilesFromGrid() {
-        getChildren().clear();
-        visibleTileSquares.clear();
     }
 
     private void drawTilesToGrid() {
@@ -220,17 +250,20 @@ public class GameWorldMapView extends UniformGridPane {
         int curX = current.getX();
         int curY = current.getY();
 
-        for (int c = 0; c < this.COLUMNS; c++) {
-            for (int r = 0; r < this.ROWS; r++) {
+        int halfCols = (this.columns-1)/2;
+        int halfRows = (this.rows-1)/2;
+
+        for (int c = 0; c < this.columns; c++) {
+            for (int r = 0; r < this.rows; r++) {
                 // Position index of the current cell.
                 Position pos = new Position(
-                        curX+c-this.HALF_COLS,
-                        curY+r-this.HALF_ROWS);
+                        curX+c-halfCols,
+                        curY+r-halfRows);
                 TileSquare tile = getOrMakeSquare(pos);
                 if (tile == null) {
                     continue;
                 }
-                tile.setBuilderTile(r == this.HALF_ROWS && c == this.HALF_COLS);
+                tile.setBuilderTile(r == halfRows && c == halfCols);
                 this.add(tile, c, r);
 //                Random rand = new Random();
 //                this.add(new StackPane() {{
@@ -238,15 +271,15 @@ public class GameWorldMapView extends UniformGridPane {
 //                    this.setStyle(String.format("-fx-background-color: #%06x",
 //                            rand.nextInt(256*256*256)));
 //                }}, c, r);
-                visibleTileSquares.add(tile);
             }
         }
         drawMessageLabels();
     }
 
     private void drawMessageLabels() {
-        add(errorLabel, 1, 3, 7, 1);
-        add(successLabel, 1, 3, 7, 1);
+        getChildren().removeAll(errorLabel, successLabel);
+        add(errorLabel, 4.5, 3);
+        add(successLabel, 4.5, 3);
     }
 
     private TileSquare getOrMakeSquare(Position pos) {
@@ -284,7 +317,7 @@ public class GameWorldMapView extends UniformGridPane {
 
     private TileSquare newTileSquare() {
         TileSquare tile = new TileSquare();
-        tile.maxWidthProperty().bind(widthProperty().divide(COLUMNS));
+        tile.maxWidthProperty().bind(widthProperty().divide(columns));
         return tile;
     }
 

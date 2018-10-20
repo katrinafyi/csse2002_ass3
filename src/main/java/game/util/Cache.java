@@ -16,8 +16,8 @@ public class Cache<K, V> extends HashMap<K, V> {
     }
 
     @Override
-    public V get(Object url) {
-        return computeIfAbsent((K)url, defaultGenerator);
+    public V get(Object key) {
+        return computeIfAbsent((K)key, defaultGenerator);
     }
 
     public static Cache<String, Image> getImageCache() {

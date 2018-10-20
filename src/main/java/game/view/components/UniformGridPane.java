@@ -1,4 +1,4 @@
-package game.view;
+package game.view.components;
 
 import game.util.Utilities;
 import javafx.geometry.Pos;
