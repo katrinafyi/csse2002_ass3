@@ -7,6 +7,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
@@ -49,12 +52,12 @@ public class Utilities {
     }
 
     public static void setBackground(Region region, Color color) {
-        if (color == null) {
-            region.setBackground(null);
-            return;
-        }
         region.setBackground(new Background(new BackgroundFill(
                 color, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
+    public static void setBorder(Region region, Color color) {
+        region.setBorder(new Border(new BorderStroke(color,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.THIN)));
+    }
 }

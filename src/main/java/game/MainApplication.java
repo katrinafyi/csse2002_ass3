@@ -77,10 +77,9 @@ public class MainApplication extends Application {
         VBox.setVgrow(rootGrid, Priority.ALWAYS);
 
         worldMapView = new GameWorldMapView(model);
+        Utilities.setBorder(worldMapView, Color.BLACK);
 
         worldMapContainer = new VBox();
-        worldMapContainer.setStyle("-fx-background-color: yellow;");
-        worldMapView.setStyle("-fx-border-color: black;");
         Utilities.setMaxWidthHeight(worldMapContainer);
         worldMapContainer.getChildren().add(worldMapView);
         worldMapContainer.setAlignment(Pos.TOP_CENTER);
