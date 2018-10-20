@@ -15,16 +15,10 @@ import game.model.events.MessageEvent;
 import game.model.events.WorldMapLoadedEvent;
 import game.view.components.FadingLabel;
 import game.view.components.TileSquare;
-import game.view.components.TileView;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Control;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -33,7 +27,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class GameWorldMapView extends UniformGridPane {
 
@@ -54,9 +47,7 @@ public class GameWorldMapView extends UniformGridPane {
         this.model = model;
 
         // o.O
-        this.setBackground(new Background(new BackgroundFill(
-                Color.SKYBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-
+        Utilities.setBackground(this, Color.SKYBLUE);
         this.setPrefWidth(495.0); // Multiple of 9.
 
         errorLabel = new FadingLabel(Duration.seconds(1), Duration.millis(500));

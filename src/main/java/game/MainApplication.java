@@ -10,34 +10,26 @@ import game.view.GameMenuBar;
 import game.view.GameWorldMapView;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
-import javafx.beans.Observable;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.beans.property.ReadOnlyProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 
 public class MainApplication extends Application {
@@ -60,6 +52,8 @@ public class MainApplication extends Application {
     private double horizontalExtra;
     private double hGap = 20;
     private double gridPadding = 10;
+
+    private boolean debugEnabled = false;
 
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -123,9 +117,10 @@ public class MainApplication extends Application {
         primaryStage.setScene(scene);
 
 
-        Utilities.<Number>delayBinding(new PauseTransition(new Duration(200)),
+        PauseTransition pauseTransition = new PauseTransition(Duration.millis(200));
+        Utilities.<Number>delayBinding(pauseTransition,
                 primaryStage.widthProperty(), this::setWorldMapViewDimensions);
-        Utilities.<Number>delayBinding(new PauseTransition(new Duration(200)),
+        Utilities.<Number>delayBinding(pauseTransition,
                 primaryStage.heightProperty(), this::setWorldMapViewDimensions);
 
         setKeyBindings();
@@ -159,11 +154,6 @@ public class MainApplication extends Application {
 
     private void keyPressHandler(KeyEvent keyEvent) {
         // Debug layout.
-        if (keyEvent.getCode() == KeyCode.DELETE) {
-            debugPrintSize(worldMapView);
-            debugPrintSize(scene);
-            debugPrintSize(primaryStage);
-        }
         // Get and click the equivalent button.
         Button actionButton = keyBindings.get(keyEvent.getCode());
         if (actionButton != null) {
@@ -177,6 +167,27 @@ public class MainApplication extends Application {
             case X:
                 worldMapView.setExitsVisible(!worldMapView.isExitsVisible());
                 break;
+            case OPEN_BRACKET: // Print layout info.
+                debugPrintSize(worldMapView);
+                debugPrintSize(scene);
+                debugPrintSize(primaryStage);
+                break;
+            case CLOSE_BRACKET:
+                toggleDebugLayout();
+                break;
+        }
+    }
+
+    private void toggleDebugLayout() {
+        debugEnabled = !debugEnabled;
+        if (debugEnabled) {
+            Utilities.setBackground(worldMapContainer, Color.PURPLE);
+            Utilities.setBackground(controlsPane, Color.GREEN);
+            Utilities.setBackground(inventoryPane, Color.YELLOW);
+        } else {
+            Utilities.setBackground(worldMapContainer, null);
+            Utilities.setBackground(controlsPane, null);
+            Utilities.setBackground(inventoryPane, null);
         }
     }
 

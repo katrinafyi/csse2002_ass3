@@ -2,14 +2,14 @@ package game;
 
 import csse2002.block.world.Position;
 import javafx.animation.PauseTransition;
-import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 
 public class Utilities {
     public static void setMaxWidthHeight(Region region) {
@@ -46,6 +46,15 @@ public class Utilities {
             pause.setOnFinished(e -> listener.changed(prop, oldValue, newValue));
             pause.playFromStart();
         });
+    }
+
+    public static void setBackground(Region region, Color color) {
+        if (color == null) {
+            region.setBackground(null);
+            return;
+        }
+        region.setBackground(new Background(new BackgroundFill(
+                color, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
 }
