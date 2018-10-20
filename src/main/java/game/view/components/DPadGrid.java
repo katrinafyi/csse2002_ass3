@@ -1,6 +1,6 @@
 package game.view.components;
 
-import game.view.Cache;
+import game.util.Cache;
 import game.view.UniformGridPane;
 import game.model.Direction;
 import javafx.geometry.HPos;

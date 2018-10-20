@@ -1,4 +1,4 @@
-package game;
+package game.util;
 
 import csse2002.block.world.Position;
 import javafx.animation.PauseTransition;

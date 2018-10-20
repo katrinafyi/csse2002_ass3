@@ -1,7 +1,7 @@
 package game.view;
 
 import csse2002.block.world.TooHighException;
-import game.Utilities;
+import game.util.Utilities;
 import game.controller.BlockWorldController;
 import game.controller.MessageController;
 import game.model.BlockType;

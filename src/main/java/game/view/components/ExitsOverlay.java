@@ -1,6 +1,6 @@
 package game.view.components;
 
-import game.view.Cache;
+import game.util.Cache;
 import game.model.Direction;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

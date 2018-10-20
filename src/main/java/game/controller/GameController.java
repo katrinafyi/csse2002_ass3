@@ -10,7 +10,7 @@ import csse2002.block.world.TooLowException;
 import csse2002.block.world.WorldMap;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
-import game.Utilities;
+import game.util.Utilities;
 import game.model.BlockType;
 import game.model.BlockWorldModel;
 import game.model.Direction;

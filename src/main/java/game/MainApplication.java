@@ -4,6 +4,7 @@ import game.controller.GameController;
 import game.model.BlockType;
 import game.model.Direction;
 import game.model.GameModel;
+import game.util.Utilities;
 import game.view.GameControlsPane;
 import game.view.GameInventoryPane;
 import game.view.GameMenuBar;
@@ -170,6 +171,9 @@ public class MainApplication extends Application {
                 debugPrintSize(worldMapView);
                 debugPrintSize(scene);
                 debugPrintSize(primaryStage);
+                System.out.println();
+                debugPrintSize(controlsPane);
+                debugPrintSize(inventoryPane);
                 break;
             case CLOSE_BRACKET:
                 toggleDebugLayout();
@@ -227,7 +231,8 @@ public class MainApplication extends Application {
             // present. Otherwise, we would need 3 almost identical methods.
             String w = node.getClass().getMethod("getWidth").invoke(node).toString();
             String h = node.getClass().getMethod("getHeight").invoke(node).toString();
-            System.out.println(node + ": " + w + "x" + h);
+            System.out.println("(" + node.getClass().getName() + ") " + node);
+            System.out.println("  " + w + "x" + h);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }

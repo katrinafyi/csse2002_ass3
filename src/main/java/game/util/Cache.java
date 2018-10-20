@@ -1,4 +1,4 @@
-package game.view;
+package game.util;
 
 
 import javafx.scene.image.Image;
@@ -17,12 +17,7 @@ public class Cache<K, V> extends HashMap<K, V> {
 
     @Override
     public V get(Object url) {
-        V image = super.get(url);
-        if (image == null) {
-            image = defaultGenerator.apply((K)url);
-            this.put((K)url, image);
-        }
-        return image;
+        return computeIfAbsent((K)url, defaultGenerator);
     }
 
     public static Cache<String, Image> getImageCache() {

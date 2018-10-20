@@ -1,7 +1,7 @@
 package game.view.components;
 
 import game.model.Direction;
-import game.view.Cache;
+import game.util.Cache;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
@@ -40,7 +40,7 @@ public class AmbientOcclusion extends StackPane {
         }
     }
 
-    private int mod(int i) {
+    private static int mod(int i) {
         return Math.floorMod(i, 8); // Ensures positive modulus.
     }
 

@@ -2,7 +2,7 @@ package game.view.components;
 
 import game.model.BlockType;
 import game.model.Direction;
-import game.view.Cache;
+import game.util.Cache;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;

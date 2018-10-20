@@ -1,17 +1,10 @@
 package game.view;
 
-import game.Utilities;
-import javafx.animation.PauseTransition;
+import game.util.Utilities;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.Control;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-import javafx.util.Duration;
-
-import javax.rmi.CORBA.Util;
 
 public class UniformGridPane extends GridPane {
     public final int COLUMNS;
