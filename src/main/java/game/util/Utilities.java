@@ -5,6 +5,8 @@ import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.Control;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -59,5 +61,12 @@ public class Utilities {
     public static void setBorder(Region region, Color color) {
         region.setBorder(new Border(new BorderStroke(color,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.THIN)));
+    }
+
+    public static void usePrefWidthHeight(Region node) {
+        node.setMinWidth(Control.USE_PREF_SIZE);
+        node.setMaxWidth(Control.USE_PREF_SIZE);
+        node.setMinHeight(Control.USE_PREF_SIZE);
+        node.setMaxHeight(Control.USE_PREF_SIZE);
     }
 }

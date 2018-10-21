@@ -28,6 +28,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import javax.rmi.CORBA.Util;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -87,10 +88,7 @@ public class GameWorldMapView extends UniformGridPane {
         model.addListener(ErrorEvent.class, this::showErrorMessage);
         model.addListener(MessageEvent.class, this::showNormalMessage);
 
-        this.setMinHeight(Control.USE_PREF_SIZE);
-        this.setMaxHeight(Control.USE_PREF_SIZE);
-        this.setMinWidth(Control.USE_PREF_SIZE);
-        this.setMaxWidth(Control.USE_PREF_SIZE);
+        Utilities.usePrefWidthHeight(this);
 
         this.heightProperty().addListener(this::resizeChildren);
 
@@ -100,10 +98,7 @@ public class GameWorldMapView extends UniformGridPane {
             for (int r = 0; r < rows; r++) {
                 Pane p = new Pane();
                 panes[c][r] = p;
-                p.setMaxWidth(Control.USE_PREF_SIZE);
-                p.setMinWidth(Control.USE_PREF_SIZE);
-                p.setMaxHeight(Control.USE_PREF_SIZE);
-                p.setMinHeight(Control.USE_PREF_SIZE);
+                Utilities.usePrefWidthHeight(p);
                 p.prefWidthProperty().bind(heightProperty().divide(rows));
                 p.prefHeightProperty().bind(heightProperty().divide(rows));
                 add(p, c, r);
