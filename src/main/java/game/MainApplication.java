@@ -4,6 +4,8 @@ import game.controller.GameController;
 import game.model.BlockType;
 import game.model.Direction;
 import game.model.GameModel;
+import game.model.events.BaseBlockWorldEvent;
+import game.model.events.WorldMapLoadedEvent;
 import game.util.Utilities;
 import game.view.GameControlsPane;
 import game.view.GameInventoryPane;
@@ -90,14 +92,17 @@ public class MainApplication extends Application {
 
 
         controlsPane = new GameControlsPane(model, controller, controller);
+        controlsPane.setDisable(true);
         rootGrid.add(controlsPane, 1, 0);
         GridPane.setValignment(controlsPane, VPos.TOP);
         GridPane.setVgrow(controlsPane, Priority.NEVER);
 
         inventoryPane = new GameInventoryPane(model, controller, controller);
+        inventoryPane.setDisable(true);
         rootGrid.add(inventoryPane, 2, 0);
         GridPane.setValignment(inventoryPane, VPos.TOP);
 
+        model.addListener(WorldMapLoadedEvent.class, this::activateControls);
 
         controlsPane.setMaxWidth(Double.MAX_VALUE);
 
@@ -137,6 +142,11 @@ public class MainApplication extends Application {
         System.out.println(verticalExtra + " | " + horizontalExtra);
         primaryStage.setMinHeight(500);
         primaryStage.setMinWidth(795);
+    }
+
+    private void activateControls(BaseBlockWorldEvent e) {
+        controlsPane.setDisable(false);
+        inventoryPane.setDisable(false);
     }
 
 
