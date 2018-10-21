@@ -7,13 +7,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
 public class UniformGridPane extends GridPane {
-    public final int COLUMNS;
-    public final int ROWS;
+    public final int columns;
+    public final int rows;
 
-    public final int HALF_COLS;
-    public final int HALF_ROWS;
+    public final int halfCols;
+    public final int halfRows;
 
-    public final double GAP;
+    public final double gap;
 
     public UniformGridPane(int columns, int rows) {
         this(columns, rows, 5);
@@ -22,11 +22,11 @@ public class UniformGridPane extends GridPane {
     public UniformGridPane(int columns, int rows, double gap)
     {
         super();
-        COLUMNS = columns;
-        ROWS = rows;
-        HALF_COLS = (columns-1)/2;
-        HALF_ROWS = (ROWS-1)/2;
-        GAP = gap;
+        this.columns = columns;
+        this.rows = rows;
+        halfCols = (columns-1)/2;
+        halfRows = (this.rows -1)/2;
+        this.gap = gap;
 
         Utilities.setMaxWidthHeight(this);
 
@@ -43,14 +43,14 @@ public class UniformGridPane extends GridPane {
     }
 
     private void applyRowAndColumnConstraints() {
-        for (int i = 0; i < COLUMNS; i++) {
+        for (int i = 0; i < columns; i++) {
             ColumnConstraints columnConstraints = new ColumnConstraints();
-            columnConstraints.setPercentWidth(100.0 / COLUMNS);
+            columnConstraints.setPercentWidth(100.0 / columns);
             this.getColumnConstraints().add(columnConstraints);
         }
-        for (int j = 0; j < ROWS; j++) {
+        for (int j = 0; j < rows; j++) {
             RowConstraints rowConstraints = new RowConstraints();
-            rowConstraints.setPercentHeight(100.0 / ROWS);
+            rowConstraints.setPercentHeight(100.0 / rows);
             this.getRowConstraints().add(rowConstraints);
         }
     }
