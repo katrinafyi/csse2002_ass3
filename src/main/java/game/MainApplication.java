@@ -92,6 +92,7 @@ public class MainApplication extends Application {
         controlsPane = new GameControlsPane(model, controller, controller);
         rootGrid.add(controlsPane, 1, 0);
         GridPane.setValignment(controlsPane, VPos.TOP);
+        GridPane.setVgrow(controlsPane, Priority.NEVER);
 
         inventoryPane = new GameInventoryPane(model, controller, controller);
         rootGrid.add(inventoryPane, 2, 0);
@@ -133,7 +134,9 @@ public class MainApplication extends Application {
 
         verticalExtra = primaryStage.getHeight() - scene.getHeight();
         horizontalExtra = primaryStage.getWidth() - scene.getWidth();
-        primaryStage.setMinHeight(controlsPane.getHeight() + verticalExtra + 20);
+        System.out.println(verticalExtra + " | " + horizontalExtra);
+        primaryStage.setMinHeight(500);
+        primaryStage.setMinWidth(795);
     }
 
 
