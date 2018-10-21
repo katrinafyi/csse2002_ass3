@@ -5,10 +5,13 @@ import game.model.Direction;
 import game.util.Cache;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.CacheHint;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +52,14 @@ public class TileSquare extends StackPane implements TileView {
         this.getChildren().addAll(
                 blockImage, heightImage,
                 exitsOverlay, ambientOcclusion);
+        setCache(getChildren());
+    }
+
+    private void setCache(Collection<Node> nodes) {
+        for (Node node : nodes) {
+            node.setCache(true);
+            node.setCacheHint(CacheHint.SPEED);
+        }
     }
 
     private static ImageView ratioImageView() {
