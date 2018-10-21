@@ -15,5 +15,13 @@
             "**.png"
         ],
         "glob": true
+    },
+    "doc": {
+        "src_path": "doc",
+        "dest_path": "doc",
+        "include": [
+            "*.pdf"
+        ],
+        "glob": true
     }
 }
