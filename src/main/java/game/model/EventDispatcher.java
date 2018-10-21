@@ -29,6 +29,7 @@ public class EventDispatcher<T> {
             if (eventType == null || Utilities.isInstance(event, eventType)) {
                 for (Consumer<? extends T> listener : eventListeners.get(eventType)) {
                     // Because we check
+                    //noinspection unchecked
                     ((Consumer<U>)listener).accept(event);
                 }
             }

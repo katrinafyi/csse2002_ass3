@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
  * Handles top-level interaction with performing actions on a WorldMap.
  * @serial exclude
  */
+@SuppressWarnings("ALL")
 public class Main {
 
     /**

@@ -14,6 +14,7 @@ import java.util.List;
  * A class to store a world map.
  * @serial exclude
  */
+@SuppressWarnings("SameParameterValue")
 public class WorldMap {
 
     // the sparse tile array to store tiles

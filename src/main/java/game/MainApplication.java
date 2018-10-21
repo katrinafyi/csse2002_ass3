@@ -144,11 +144,13 @@ public class MainApplication extends Application {
         primaryStage.setMinHeight(585);
     }
 
+    @SuppressWarnings("unused")
     private void activateControls(BaseBlockWorldEvent e) {
         controlsPane.setDisable(false);
         inventoryPane.setDisable(false);
     }
 
+    @SuppressWarnings("unused")
     private void setWorldMapViewDimensions(ObservableValue<? extends Number> observable,
                                            Number oldValue, Number newValue) {
         int cols = worldMapView.columns;

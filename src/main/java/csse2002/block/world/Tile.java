@@ -15,6 +15,7 @@ import java.util.TreeMap;
  * Maintains a mapping between exit names and other tiles. <br>
  * @serial exclude
  */
+@SuppressWarnings("ALL")
 public class Tile implements Serializable {
     /* The maximum number of blocks allowed on a tile. */
     private static final int MAX_BLOCKS = 8;
@@ -166,7 +167,7 @@ public class Tile implements Serializable {
      * @throws NoExitException if name is not in exits, or name is null
      */
     public void removeExit(String name) throws NoExitException {
-        if (name == null || exits.containsKey(name) == false) {
+        if (name == null || !exits.containsKey(name)) {
             throw new NoExitException();
         }
 

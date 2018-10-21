@@ -31,22 +31,6 @@ public enum BlockType {
     }
 
     /**
-     * Instantiates a new object of the block's type.
-     *
-     * @return New block object.
-     */
-    public Block newInstance() {
-        try {
-            return blockClass.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            // The enum values we define should never result in these
-            // exceptions.
-            throw new AssertionError(
-                    "Exception while instantiating block class.", e);
-        }
-    }
-
-    /**
      * Returns the enum value of the given block instance.
      *
      * @param block Block instance.

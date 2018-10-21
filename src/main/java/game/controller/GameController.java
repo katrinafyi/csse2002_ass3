@@ -10,7 +10,6 @@ import csse2002.block.world.TooLowException;
 import csse2002.block.world.WorldMap;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
-import game.util.Utilities;
 import game.model.BlockType;
 import game.model.BlockWorldModel;
 import game.model.Direction;
@@ -20,6 +19,7 @@ import game.model.events.ErrorEvent;
 import game.model.events.InventoryChangedEvent;
 import game.model.events.MessageEvent;
 import game.model.events.WorldMapLoadedEvent;
+import game.util.Utilities;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

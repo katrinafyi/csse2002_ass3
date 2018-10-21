@@ -5,8 +5,6 @@ import csse2002.block.world.NoExitException;
 import csse2002.block.world.Tile;
 import csse2002.block.world.TooHighException;
 import csse2002.block.world.TooLowException;
-import csse2002.block.world.WorldMapFormatException;
-import csse2002.block.world.WorldMapInconsistentException;
 import game.controller.BlockWorldController;
 import game.controller.MessageController;
 import game.model.BlockWorldModel;
@@ -21,13 +19,12 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-import java.io.FileNotFoundException;
 import java.util.Map;
 
 public class GameControlsPane extends VBox implements ControlsView {
     private final BlockWorldModel model;
     private final BlockWorldController controller;
-    private MessageController messageController;
+    private final MessageController messageController;
 
     private final DPadGrid builderDPad;
     private final DPadGrid blockDPad;

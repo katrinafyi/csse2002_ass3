@@ -27,8 +27,8 @@ public class GameMenuBar extends MenuBar {
     private final MessageController messenger;
     private File currentFile;
 
-    private MenuItem saveMap;
-    private MenuItem saveMapAs;
+    private final MenuItem saveMap;
+    private final MenuItem saveMapAs;
 
     public GameMenuBar(Stage mainStage, BlockWorldModel model,
                        BlockWorldController controller,

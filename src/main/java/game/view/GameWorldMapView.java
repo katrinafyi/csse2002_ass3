@@ -124,6 +124,7 @@ public class GameWorldMapView extends UniformGridPane {
         updateVisibilities();
     }
 
+    @SuppressWarnings("unused")
     private void resizeChildren(ObservableValue<? extends Number> obs,
                                 Number oldValue, Number newValue) {
         if (model.getCurrentPosition() != null) {
@@ -237,6 +238,7 @@ public class GameWorldMapView extends UniformGridPane {
         return positions;
     }
 
+    @SuppressWarnings("unused")
     private void builderMovedHandler(BuilderMovedEvent event) {
         clearTilePanes();
         drawTilesToGrid();
@@ -302,6 +304,7 @@ public class GameWorldMapView extends UniformGridPane {
         return square;
     }
 
+    @SuppressWarnings("unused")
     private void worldMapLoadedHandler(WorldMapLoadedEvent event) {
         resetInternalState();
         System.out.println("map loaded v2");

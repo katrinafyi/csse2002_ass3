@@ -17,6 +17,7 @@ public class Cache<K, V> extends HashMap<K, V> {
 
     @Override
     public V get(Object key) {
+        //noinspection unchecked
         return computeIfAbsent((K)key, defaultGenerator);
     }
 

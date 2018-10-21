@@ -6,7 +6,6 @@ import csse2002.block.world.Position;
 import csse2002.block.world.Tile;
 import csse2002.block.world.WorldMap;
 import game.model.events.BaseBlockWorldEvent;
-import javafx.event.Event;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,10 +27,6 @@ public abstract class BlockWorldModel extends EventDispatcher<BaseBlockWorldEven
     public abstract Position getCurrentPosition();
 
     public abstract void setCurrentPosition(Position currentPosition);
-
-    public final Tile getAdjacentTile(Tile tile, Direction direction) {
-        return tile.getExits().get(direction.name());
-    }
 
     public final Map<BlockType, Integer> getInventoryCount() {
         Map<BlockType, Integer> countMap = new HashMap<>();

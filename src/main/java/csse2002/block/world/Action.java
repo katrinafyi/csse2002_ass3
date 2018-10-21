@@ -1,13 +1,8 @@
 package csse2002.block.world;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.Buffer;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Represents an Action which can be performed on the block world (also
@@ -17,6 +12,7 @@ import java.util.List;
  * a direction, digging on the current tile the builder is standing on and
  * dropping an item from a builder's inventory.
  */
+@SuppressWarnings({"BooleanMethodIsAlwaysInverted", "WeakerAccess"})
 public class Action {
 
     /**
