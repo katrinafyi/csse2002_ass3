@@ -17,11 +17,13 @@ import game.model.events.WorldMapLoadedEvent;
 import game.view.components.FadingLabel;
 import game.view.components.FastGridPane;
 import game.view.components.TileSquare;
+import game.view.components.UniformGridPane;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Control;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -32,12 +34,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class GameWorldMapView extends FastGridPane {
+public class GameWorldMapView extends UniformGridPane {
     private final Map<Direction, int[]> oppositeShifts = new EnumMap<>(Direction.class);
 
 
     private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
     private final Cache<Position, Integer> tileHeights = new Cache<>(this::getTileHeight);
+    private final Pane[][] panes;
+
     private final BlockWorldModel model;
 
     private final FadingLabel successLabel;
@@ -49,8 +53,10 @@ public class GameWorldMapView extends FastGridPane {
     private boolean heightsVisible = false;
 
     public GameWorldMapView(BlockWorldModel model) {
-        super(9, 9);
+        super(9, 9, 0);
         this.model = model;
+
+        panes = new Pane[columns][rows];
 
         setOppositeShifts();
 
@@ -89,6 +95,20 @@ public class GameWorldMapView extends FastGridPane {
         this.heightProperty().addListener(this::resizeChildren);
 
         drawMessageLabels();
+
+        for (int c = 0; c < columns; c++) {
+            for (int r = 0; r < rows; r++) {
+                Pane p = new Pane();
+                panes[c][r] = p;
+                p.setMaxWidth(Control.USE_PREF_SIZE);
+                p.setMinWidth(Control.USE_PREF_SIZE);
+                p.setMaxHeight(Control.USE_PREF_SIZE);
+                p.setMinHeight(Control.USE_PREF_SIZE);
+                p.prefWidthProperty().bind(heightProperty().divide(rows));
+                p.prefHeightProperty().bind(heightProperty().divide(rows));
+                add(p, c, r);
+            }
+        }
     }
 
     public boolean isExitsVisible() {
@@ -253,12 +273,15 @@ public class GameWorldMapView extends FastGridPane {
 
 
     private void builderMovedHandler(BuilderMovedEvent event) {
-        getChildren().removeAll(getTilesToRemove(event.getDirection()));
+        for (Pane[] pane : panes) {
+            for (Pane pane1 : pane) {
+                pane1.getChildren().clear();
+            }
+        }
         drawTilesToGrid();
     }
 
     private void resetInternalState() {
-        this.getChildren().clear();
         tileHeights.clear();
         tileSquareMap.clear();
     }
@@ -281,9 +304,8 @@ public class GameWorldMapView extends FastGridPane {
                 if (tile == null) {
                     continue;
                 }
-                tile.setMaxWidth(getWidth()/columns);
                 tile.setBuilderTile(r == halfRows && c == halfCols);
-                this.add(tile, c, r);
+                panes[c][r].getChildren().add(tile);
             }
         }
         drawMessageLabels();
@@ -330,6 +352,7 @@ public class GameWorldMapView extends FastGridPane {
 
     private TileSquare newTileSquare() {
         TileSquare tile = new TileSquare();
+        tile.maxWidthProperty().bind(widthProperty().divide(columns));
         return tile;
     }
 
