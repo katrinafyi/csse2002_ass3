@@ -52,10 +52,10 @@ public class TileSquare extends StackPane implements TileView {
         this.getChildren().addAll(
                 blockImage, heightImage,
                 exitsOverlay, ambientOcclusion);
-        setCache(getChildren());
+        setCacheOptions(getChildren());
     }
 
-    private void setCache(Collection<Node> nodes) {
+    private void setCacheOptions(Collection<Node> nodes) {
         for (Node node : nodes) {
             node.setCache(true);
             node.setCacheHint(CacheHint.SPEED);

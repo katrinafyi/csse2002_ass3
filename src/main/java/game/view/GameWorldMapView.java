@@ -44,6 +44,7 @@ public class GameWorldMapView extends UniformGridPane {
 
     private boolean exitsVisible = false;
     private boolean heightsVisible = false;
+    private boolean ambientOcclusionOn = true;
 
     public GameWorldMapView(BlockWorldModel model) {
         super(9, 9, 0);
@@ -114,6 +115,15 @@ public class GameWorldMapView extends UniformGridPane {
         updateVisibilities();
     }
 
+    public boolean isAmbientOcclusionOn() {
+        return ambientOcclusionOn;
+    }
+
+    public void setAmbientOcclusionOn(boolean ambientOcclusionOn) {
+        this.ambientOcclusionOn = ambientOcclusionOn;
+        updateVisibilities();
+    }
+
     private void resizeChildren(ObservableValue<? extends Number> obs,
                                 Number oldValue, Number newValue) {
         if (model.getCurrentPosition() != null) {
@@ -125,6 +135,7 @@ public class GameWorldMapView extends UniformGridPane {
         for (TileSquare square : tileSquareMap.values()) {
             square.setExitVisibility(exitsVisible);
             square.setHeightVisibility(heightsVisible);
+            square.getAmbientOcclusion().setVisible(ambientOcclusionOn);
         }
     }
 
@@ -283,6 +294,7 @@ public class GameWorldMapView extends UniformGridPane {
 
             square.setExitVisibility(exitsVisible);
             square.setHeightVisibility(heightsVisible);
+            square.getAmbientOcclusion().setVisible(ambientOcclusionOn);
 
             updateTileBlocks(pos); // Updates height and top block.
             updateAOSingle(pos);

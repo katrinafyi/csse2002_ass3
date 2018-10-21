@@ -149,7 +149,6 @@ public class MainApplication extends Application {
         inventoryPane.setDisable(false);
     }
 
-
     private void setWorldMapViewDimensions(ObservableValue<? extends Number> observable,
                                            Number oldValue, Number newValue) {
         int cols = worldMapView.columns;
@@ -180,6 +179,10 @@ public class MainApplication extends Application {
                 break;
             case X:
                 worldMapView.setExitsVisible(!worldMapView.isExitsVisible());
+                break;
+            case C:
+                worldMapView.setAmbientOcclusionOn(
+                        !worldMapView.isAmbientOcclusionOn());
                 break;
             case OPEN_BRACKET: // Print layout info.
                 debugPrintSize(worldMapView);
