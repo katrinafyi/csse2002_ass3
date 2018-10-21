@@ -52,7 +52,7 @@ public class GameInventoryPane extends VBox implements InventoryView {
 
         applyGridLayout();
 
-        this.getChildren().addAll(new Label("Inventory"), grid);
+        this.getChildren().add(grid);
 
         generateAllBlockRows();
     }

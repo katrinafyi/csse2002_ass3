@@ -47,14 +47,15 @@ public class MainApplication extends Application {
     private VBox worldMapContainer;
     private GameControlsPane controlsPane;
     private GameInventoryPane inventoryPane;
+    private VBox rightBox;
 
     private Scene scene;
-    
+
     private final Map<KeyCode, Button> keyBindings = new HashMap<>();
 
     private double verticalExtra;
     private double horizontalExtra;
-    private double hGap = 20;
+    private double hGap = 10;
     private double gridPadding = 10;
 
     private boolean debugEnabled = false;
@@ -63,7 +64,7 @@ public class MainApplication extends Application {
         this.primaryStage = primaryStage;
 
 
-        primaryStage.setTitle("Window title");
+        primaryStage.setTitle("DigDrop");
 
         GridPane rootGrid = new GridPane();
         rootGrid.setPadding(new Insets(gridPadding));
@@ -90,18 +91,20 @@ public class MainApplication extends Application {
 
         rootGrid.add(worldMapContainer, 0, 0);
 
+        rightBox = new VBox();
+        rightBox.setSpacing(30);
 
         controlsPane = new GameControlsPane(model, controller, controller);
         controlsPane.setDisable(true);
-        rootGrid.add(controlsPane, 1, 0);
         GridPane.setValignment(controlsPane, VPos.TOP);
         GridPane.setVgrow(controlsPane, Priority.NEVER);
 
         inventoryPane = new GameInventoryPane(model, controller, controller);
         inventoryPane.setDisable(true);
-        rootGrid.add(inventoryPane, 2, 0);
         GridPane.setValignment(inventoryPane, VPos.TOP);
 
+        rightBox.getChildren().addAll(controlsPane, inventoryPane);
+        rootGrid.add(rightBox, 1, 0);
         model.addListener(WorldMapLoadedEvent.class, this::activateControls);
 
         controlsPane.setMaxWidth(Double.MAX_VALUE);
@@ -111,10 +114,7 @@ public class MainApplication extends Application {
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPrefWidth(150);
         col1.setMinWidth(150);
-        ColumnConstraints col2 = new ColumnConstraints();
-        col2.setPrefWidth(150);
-        col2.setMinWidth(150);
-        rootGrid.getColumnConstraints().addAll(col0, col1, col2);
+        rootGrid.getColumnConstraints().addAll(col0, col1);
 
         RowConstraints row0 = new RowConstraints();
         row0.setPercentHeight(100);
@@ -134,14 +134,14 @@ public class MainApplication extends Application {
 
         scene.setOnKeyPressed(this::keyPressHandler);
 
-        primaryStage.setHeight(580.5);
+        primaryStage.setHeight(585);
         primaryStage.show();
 
         verticalExtra = primaryStage.getHeight() - scene.getHeight();
         horizontalExtra = primaryStage.getWidth() - scene.getWidth();
         System.out.println(verticalExtra + " | " + horizontalExtra);
-        primaryStage.setMinHeight(500);
-        primaryStage.setMinWidth(795);
+        primaryStage.setMinWidth(700);
+        primaryStage.setMinHeight(585);
     }
 
     private void activateControls(BaseBlockWorldEvent e) {
@@ -154,8 +154,8 @@ public class MainApplication extends Application {
         int cols = worldMapView.columns;
         double size = Math.min(worldMapContainer.getWidth(),
                 worldMapContainer.getHeight());
-        size = Math.min(size, scene.getWidth()-360);
-        size = Math.min(size, scene.getHeight()-45);
+        size = Math.min(size, scene.getWidth()-180);
+        size = Math.min(size, scene.getHeight()-45.5);
         size = Math.max(size, cols);
         // Round down to nearest multiple of number of columns for
         // seamless edges.
@@ -186,6 +186,7 @@ public class MainApplication extends Application {
                 break;
             case OPEN_BRACKET: // Print layout info.
                 debugPrintSize(worldMapView);
+                debugPrintSize(worldMapContainer);
                 debugPrintSize(scene);
                 debugPrintSize(primaryStage);
                 System.out.println();
@@ -207,10 +208,12 @@ public class MainApplication extends Application {
             Utilities.setBackground(worldMapContainer, Color.PURPLE);
             Utilities.setBackground(controlsPane, Color.GREEN);
             Utilities.setBackground(inventoryPane, Color.YELLOW);
+            Utilities.setBackground(rightBox, Color.RED);
         } else {
             Utilities.setBackground(worldMapContainer, null);
             Utilities.setBackground(controlsPane, null);
             Utilities.setBackground(inventoryPane, null);
+            Utilities.setBackground(rightBox, null);
         }
     }
 
