@@ -56,16 +56,7 @@ public class GameControlsPane extends VBox implements ControlsView {
         digButton.maxWidthProperty().bind(digButton.heightProperty());
         digButton.setOnAction(e -> this.digBlock());
 
-        Button b3 = new Button("(Load map)");
-        b3.setOnAction(e -> {
-            try {
-                controller.loadWorldMapFile("maps/validTestCase2.txt");
-            } catch (WorldMapInconsistentException | WorldMapFormatException | FileNotFoundException e1) {
-                e1.printStackTrace();
-            }
-        });
-
-        this.getChildren().addAll(builderDPad, blockDPad, digButton,  b3);
+        this.getChildren().addAll(builderDPad, blockDPad, digButton);
     }
 
     private void updateBuilderCanMove(BaseBlockWorldEvent event) {
