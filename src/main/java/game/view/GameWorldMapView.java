@@ -240,7 +240,7 @@ public class GameWorldMapView extends UniformGridPane {
 
     @SuppressWarnings("unused")
     private void builderMovedHandler(BuilderMovedEvent event) {
-        clearTilePanes();
+        //clearTilePanes();
         drawTilesToGrid();
     }
 
@@ -259,6 +259,7 @@ public class GameWorldMapView extends UniformGridPane {
     }
 
     private void drawTilesToGrid() {
+        long start = System.nanoTime();
         Position current = model.getCurrentPosition();
         int curX = current.getX();
         int curY = current.getY();
@@ -272,9 +273,11 @@ public class GameWorldMapView extends UniformGridPane {
                     continue; // No tile at this position.
                 }
                 tile.setBuilderTile(r == halfRows && c == halfCols);
-                tilePanes[c][r].getChildren().add(tile);
+                tilePanes[c][r].getChildren().setAll(tile);
             }
         }
+        double time = (System.nanoTime()-start)/1000000.0;
+        System.out.println("Frame time: " + time + " ms (" + 1/time*1000 + " fps)");
     }
 
     private TileSquare getOrMakeSquare(Position pos) {
