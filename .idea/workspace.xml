@@ -1,0 +1,1536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fd610299-18a6-4a5d-9528-5a2463333c8b" name="Default Changelist" comment="" />
+    <list id="093f0b50-b0a7-4054-930a-a4e79adbc31f" name="Revert &quot;Attempting optimisations.&quot;" comment="Revert &quot;Attempting optimisations.&quot;&#10;&#10;This reverts commit acd8bc7" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="1465801760">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="36" />
+          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.11" value="4" />
+          <entry key="project.open.time.12" value="2" />
+          <entry key="project.open.time.13" value="4" />
+          <entry key="project.open.time.14" value="1" />
+          <entry key="project.open.time.15" value="3" />
+          <entry key="project.open.time.16" value="3" />
+          <entry key="project.open.time.17" value="3" />
+          <entry key="project.open.time.18" value="3" />
+          <entry key="project.open.time.19" value="1" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.21" value="3" />
+          <entry key="project.open.time.22" value="1" />
+          <entry key="project.open.time.23" value="2" />
+          <entry key="project.open.time.24" value="1" />
+          <entry key="project.open.time.25" value="2" />
+          <entry key="project.open.time.26" value="1" />
+          <entry key="project.open.time.30" value="1" />
+          <entry key="project.open.time.35" value="1" />
+          <entry key="project.opened" value="38" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="BlockTypes" value="1" />
+          <entry key="JAVA/game" value="6" />
+          <entry key="MODULES/mdl-csse2002_ass3" value="1" />
+          <entry key="MainApplication" value="1" />
+          <entry key="MapLoadedCallback" value="1" />
+          <entry key="bat" value="1" />
+          <entry key="class" value="1" />
+          <entry key="css" value="1" />
+          <entry key="events" value="4" />
+          <entry key="gitignore" value="1" />
+          <entry key="iml" value="1" />
+          <entry key="java" value="554" />
+          <entry key="json" value="2" />
+          <entry key="md" value="2" />
+          <entry key="model" value="1" />
+          <entry key="properties" value="2" />
+          <entry key="py" value="3" />
+          <entry key="sql" value="2" />
+          <entry key="txt" value="4" />
+          <entry key="uml" value="1" />
+          <entry key="xml" value="9" />
+          <entry key="yml" value="6" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CLASS" value="1" />
+          <entry key="CSS" value="1" />
+          <entry key="IDEA_MODULE" value="1" />
+          <entry key="JAVA" value="554" />
+          <entry key="JSON" value="2" />
+          <entry key="Markdown" value="2" />
+          <entry key="PLAIN_TEXT" value="9" />
+          <entry key="Properties" value="2" />
+          <entry key="SQL" value="2" />
+          <entry key="UML" value="16" />
+          <entry key="XML" value="9" />
+          <entry key="YAML" value="6" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="css" value="106" />
+          <entry key="dummy" value="1" />
+          <entry key="java" value="93175" />
+          <entry key="json" value="79" />
+          <entry key="md" value="10" />
+          <entry key="py" value="14" />
+          <entry key="txt" value="5375" />
+          <entry key="xml" value="178" />
+          <entry key="yml" value="341" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="CSS" value="106" />
+          <entry key="JAVA" value="93175" />
+          <entry key="JSON" value="79" />
+          <entry key="Markdown" value="10" />
+          <entry key="PLAIN_TEXT" value="5390" />
+          <entry key="XML" value="178" />
+          <entry key="YAML" value="341" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.vcs.git.usages">
+        <counts>
+          <entry key="git.branch.checkout.local" value="3" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/game/controller/BlockWorldController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/game/view/GameWorldMapView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="970">
+              <caret line="339" selection-start-line="339" selection-end-line="339" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/TileSquare.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="731">
+              <caret line="56" column="4" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="4" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>(.), (.),$</find>
+      <find>camera</find>
+      <find>hRotate</find>
+      <find>light</find>
+      <find>builder</find>
+      <find>vbox.</find>
+      <find>TileSquare.class</find>
+      <find>gridPane</find>
+      <find>system.out.</find>
+      <find>notifyListeners</find>
+      <find>eventDispatcher</find>
+      <find>positionTileMap</find>
+      <find>currentPosition</find>
+      <find>, Dire</find>
+      <find>imageView</find>
+      <find>static {</find>
+      <find>static</find>
+      <find>containskey</find>
+      <find>BlocksChanged</find>
+      <find>.getWorldMap().getTile(</find>
+      <find>.getBuil</find>
+      <find>buttonBindings</find>
+      <find>right</find>
+      <find>setWidth</find>
+      <find>getWidth</find>
+      <find>system.out</find>
+      <find>.put(</find>
+      <find>-color:</find>
+      <find>Image::new</find>
+      <find>setstyle</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>w</replace>
+      <replace>$2, $1,</replace>
+      <replace>$3, $2, $1</replace>
+      <replace>-$1, $2,</replace>
+      <replace>light</replace>
+      <replace>pitchRotate</replace>
+      <replace>worldMap.getBuilder()</replace>
+      <replace>this.</replace>
+      <replace>getClass()</replace>
+      <replace>this</replace>
+      <replace>eventDispatcher.notifyListeners</replace>
+      <replace>model</replace>
+      <replace>model.getTileMap()</replace>
+      <replace>model.getCurrentPosition()</replace>
+      <replace>(Dire</replace>
+      <replace>.getTile(</replace>
+      <replace>keyBindings</replace>
+      <replace>inventory</replace>
+      <replace>.put(KeyCode.</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="efb35bcec0cbe341e6adc7dd6727fd4b28961e40" />
+      </map>
+    </option>
+    <option name="RESET_MODE" value="MIXED" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/game/GameController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/GameController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/components/DPadGrid.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/controller/BlockWorldController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/controller/ErrorController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/events/ErrorEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/events/BaseMessageEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/events/MessageEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/GameMenuBar.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/EventDispatcher.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/components/ControlsView.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/components/InventoryView.java" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/.travis.yml" />
+        <option value="$PROJECT_DIR$/assemble_zip.py" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/SpriteLoader.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/GameModel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/BlockWorldModel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/events/ExitsChangedEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/events/WorldMapLoadedEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/events/InventoryChangedEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/events/BuilderEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/events/BlocksChangedEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/events/TileEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/events/WorldMapEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/events/BuilderMovedEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/UniformGridPane.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/controller/KeyboardController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/KeyboardInput.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/model/events/KeyEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/controller/MessageController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/components/TileView.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/Utilities.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/Cache.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/util/Logger.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/util/Logging.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/util/GameLogging.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/components/FastGridPane.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/components/FadingLabel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/components/AmbientOcclusion.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/components/UniformGridPane.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/util/Utilities.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/GameControlsPane.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/GameInventoryPane.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/MainApplication.java" />
+        <option value="$PROJECT_DIR$/zip_structure.json" />
+        <option value="$PROJECT_DIR$/src/main/java/game/controller/GameController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/util/Cache.java" />
+        <option value="$PROJECT_DIR$/src/main/java/csse2002/block/world/Tile.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/components/TileSquare.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/GameWorldMapView.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="csse2002_ass3" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="csse2002_ass3" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-210" />
+    <option name="y" value="880" />
+    <option name="width" value="3026" />
+    <option name="height" value="1946" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+          <State>
+            <id>Declaration redundancyJava</id>
+          </State>
+          <State>
+            <id>Java</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>unused</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="csse2002_ass3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="csse2002_ass3" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="csse2002_ass3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="csse2002_ass3" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="csse2002_ass3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="csse2002_ass3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="csse2002_ass3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="csse2002_ass3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="csse2002_ass3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="csse2002_ass3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="csse2002_ass3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="csse2002_ass3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="csse2002_ass3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="csse2002_ass3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="csse2002_ass3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="csse2002_ass3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="csse2002_ass3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="csse2002_ass3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="csse2002_ass3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="csse2002_ass3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="csse2002_ass3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="csse2002_ass3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="changeliste&#9;PSI&#9;JAVA://javafx.beans.value.ChangeListener" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/game" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/csse2002_block_world.jar!/" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="game.model" />
+      <recent name="game" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="game.view.components" />
+      <recent name="game.controller" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="game.model.events" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="MainApplication" type="Application" factoryName="Application" singleton="true" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="game.MainApplication" />
+      <module name="csse2002_ass3" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game.view.components.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.MainApplication" />
+        <item itemvalue="Application.MainApplication" />
+        <item itemvalue="Application.MainApplication" />
+        <item itemvalue="Application.MainApplication" />
+        <item itemvalue="Application.MainApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-6" y="-6" width="1513" height="973" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28591067" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.48728523" weight="0.32977462" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4316151" weight="0.33689204" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49140894" weight="0.39976275" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.4941581" visible="true" weight="0.32977462" />
+      <window_info anchor="bottom" id="Statistic" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5010309" side_tool="true" weight="0.32977462" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.46735394" weight="0.32977462" />
+      <window_info anchor="bottom" id="Dependency Viewer" order="11" sideWeight="0.49828178" visible="true" weight="0.32977462" />
+      <window_info anchor="bottom" id="Run with VisualVM" order="12" sideWeight="0.49072164" weight="0.32977462" />
+      <window_info anchor="bottom" id="Debug with VisualVM" order="13" />
+      <window_info anchor="bottom" id="Inspection Results" order="14" sideWeight="0.49896908" visible="true" weight="0.32977462" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info anchor="right" id="Module Dependencies" order="4" weight="0.3298969" />
+      <window_info anchor="right" id="Maven Projects" order="5" weight="0.3298969" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_NEW_TODO" value="false" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/__temp" />
+    </ignored-roots>
+    <MESSAGE value="Use pane-base grid pane equivalent." />
+    <MESSAGE value="Attempting optimisations." />
+    <MESSAGE value="Move width setting of tile squares." />
+    <MESSAGE value="Add pyramid and sandbox maps." />
+    <MESSAGE value="Correctly center messages again." />
+    <MESSAGE value="Lowercase public fields." />
+    <MESSAGE value="Use panes to hold TileSquares." />
+    <MESSAGE value="Utilities method." />
+    <MESSAGE value="Remove unused code, fix panes updating/clearing." />
+    <MESSAGE value="Remove FastGridPane." />
+    <MESSAGE value="Add pyramid2 map." />
+    <MESSAGE value="Fix min width/height." />
+    <MESSAGE value="Disable until enabled." />
+    <MESSAGE value="Cache." />
+    <MESSAGE value="Disable/Enable AO." />
+    <MESSAGE value="Remove load map button." />
+    <MESSAGE value="Stack controls and inventory vertically, finalise layout." />
+    <MESSAGE value="Add docs and one more map." />
+    <MESSAGE value="Add docs to zip." />
+    <MESSAGE value="Cleaning up code." />
+    <MESSAGE value="Use Canvas." />
+    <MESSAGE value="Canvas-based image-backed rendering." />
+    <MESSAGE value="Fumbling around with threading." />
+    <MESSAGE value="Revert &quot;Fumbling around with threading.&quot;&#10;&#10;This reverts commit dbfa365" />
+    <MESSAGE value="Refactor some things. Clean up." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor some things. Clean up." />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>player.getTranslateX()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>player.getTransforms()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>((ObservableFloatArrayImpl) mesh.getPoints()).size
+        
+        /3</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>com.sun.javafx.collections.ObservableFloatArrayImpl</custom-info>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>((ObservableFloatArrayImpl) mesh.getPoints()).size</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>com.sun.javafx.collections.ObservableFloatArrayImpl</custom-info>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>meshView.material</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>meshView</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>getAdjacentPositions(new Position(0, 0))</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>scene.getHeight()-worldMapContainer.getHeight()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>player.getTranslateZ()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/model/GameModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/model/events/KeyboardEvent.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/controller/KeyboardController.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/controller/MessageController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="30" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/model/BlockWorldModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/KeyboardInput.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/scene/Parent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="80" column="38" lean-forward="true" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/beans/value/ChangeListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="61" column="6" selection-start-line="61" selection-start-column="6" selection-end-line="61" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/beans/binding/DoubleExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3349">
+          <caret line="275" column="25" selection-start-line="275" selection-start-column="25" selection-end-line="275" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/logging/SimpleFormatter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="61" column="60" selection-start-line="61" selection-start-column="60" selection-end-line="61" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/jre/lib/rt.jar!/sun/util/logging/LoggingSupport.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="30" column="43" lean-forward="true" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/util/GameLogging.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/ControlsView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/com/sun/javafx/sg/prism/NGRegion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="1725" selection-start-line="1725" selection-end-line="1725" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/lang/StringBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="406" selection-start-line="406" selection-end-line="406" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/lang/Throwable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="657" selection-start-line="657" selection-end-line="657" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/com/sun/javafx/geom/Path2D.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="382">
+          <caret line="146" selection-start-line="146" selection-end-line="146" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/com/sun/javafx/tk/RenderJob.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="57" selection-start-line="57" selection-end-line="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/HashMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-340">
+          <caret line="1971" column="28" selection-start-line="1971" selection-start-column="28" selection-end-line="1971" selection-end-column="28" />
+          <folding>
+            <element signature="e#66765#66766#0" expanded="true" />
+            <element signature="e#66822#66823#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/scene/CacheHint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="43" column="32" lean-forward="true" selection-start-line="43" selection-start-column="32" selection-end-line="43" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="1168" column="38" selection-start-line="1168" selection-start-column="38" selection-end-line="1168" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/util/Utilities.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="69" column="49" selection-start-line="69" selection-start-column="49" selection-end-line="69" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/FastGridPane.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/UniformGridPane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/TileView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="6" column="9" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/GameControlsPane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="986">
+          <caret line="58" column="66" selection-start-line="58" selection-start-column="66" selection-end-line="58" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/AmbientOcclusion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-238">
+          <caret line="31" column="45" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/GameInventoryPane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="94" column="27" selection-start-line="94" selection-start-column="27" selection-end-line="94" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zip_structure.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_BUILD.bat">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assemble_zip.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="uml://JAVA/game">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>game</OriginalElement>
+          <nodes>
+            <node x="304.125" y="228.0">game.controller.BlockWorldController</node>
+            <node x="1807.0656167328045" y="228.0">game.model.events.ErrorEvent</node>
+            <node x="23.625" y="109.0">game.view.components.IconButton</node>
+            <node x="469.125" y="228.0">game.controller.MessageController</node>
+            <node x="1858.770825066138" y="109.0">game.model.events.BaseMessageEvent</node>
+            <node x="423.1425471230158" y="757.0">game.view.GameMenuBar</node>
+            <node x="920.7416583994714" y="757.0">game.view.GameInventoryPane</node>
+            <node x="1314.6739417989425" y="228.0">game.model.events.BuilderMovedEvent</node>
+            <node x="1640.307585152117" y="109.0">game.view.components.TileView</node>
+            <node x="1107.625" y="228.0">game.model.events.InventoryChangedEvent</node>
+            <node x="767.469783399471" y="896.0">game.MainApplication</node>
+            <node x="1208.6367518187838" y="757.0">game.controller.GameController</node>
+            <node x="802.375" y="109.0">game.model.EventDispatcher</node>
+            <node x="1736.307585152117" y="109.0">game.view.components.ExitsOverlay</node>
+            <node x="1929.0656167328045" y="228.0">game.model.events.MessageEvent</node>
+            <node x="1615.583325066138" y="228.0">game.view.components.TileSquare</node>
+            <node x="979.625" y="228.0">game.view.components.InventoryView</node>
+            <node x="198.035404265873" y="757.0">game.view.GameControlsPane</node>
+            <node x="2073.0656167328043" y="228.0">game.model.events.BlocksChangedEvent</node>
+            <node x="757.0749917328046" y="652.0">game.model.GameModel</node>
+            <node x="1593.4656167328044" y="757.0">game.view.GameWorldMapView</node>
+            <node x="843.3166583994714" y="0.0">game.model.events.BaseBlockWorldEvent</node>
+            <node x="832.625" y="228.0">game.model.BlockWorldModel</node>
+            <node x="1213.2916583994715" y="109.0">game.view.components.UniformGridPane</node>
+            <node x="640.625" y="109.0">game.model.events.WorldMapEvent</node>
+            <node x="185.40832506613788" y="109.0">game.view.components.DPadGrid.ButtonSpec</node>
+            <node x="621.125" y="228.0">game.model.events.WorldMapLoadedEvent</node>
+            <node x="79.125" y="228.0">game.view.components.ControlsView</node>
+            <node x="2236.0656167328043" y="228.0">game.view.components.FadingLabel</node>
+            <node x="2104.5656167328043" y="109.0">game.model.events.TileEvent</node>
+            <node x="1491.307585152117" y="109.0">game.view.components.AmbientOcclusion</node>
+            <node x="1356.2916583994715" y="109.0">game.model.events.BuilderEvent</node>
+            <node x="201.125" y="228.0">game.view.components.DPadGrid</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="game.view.GameInventoryPane" target="game.view.components.TileSquare">
+              <point x="48.65000000000009" y="-14.5" />
+              <point x="1038.8916583994715" y="627.0" />
+              <point x="1624.383325066138" y="627.0" />
+              <point x="-35.200000000000045" y="14.5" />
+            </edge>
+            <edge source="game.model.events.ErrorEvent" target="game.model.events.BaseMessageEvent">
+              <point x="25.5" y="-14.5" />
+              <point x="1883.5656167328045" y="208.0" />
+              <point x="1914.645825066138" y="208.0" />
+              <point x="-18.625" y="14.5" />
+            </edge>
+            <edge source="game.view.GameWorldMapView" target="game.view.components.FadingLabel">
+              <point x="49.5" y="-14.5" />
+              <point x="1714.9656167328044" y="717.0" />
+              <point x="2284.0656167328043" y="717.0" />
+              <point x="0.0" y="14.5" />
+            </edge>
+            <edge source="game.model.events.BuilderEvent" target="game.model.events.BaseBlockWorldEvent">
+              <point x="0.0" y="-14.5" />
+              <point x="1405.7916583994715" y="79.0" />
+              <point x="932.5388806216936" y="79.0" />
+              <point x="16.22222222222217" y="14.5" />
+            </edge>
+            <edge source="game.model.BlockWorldModel" target="game.model.EventDispatcher">
+              <point x="-31.75" y="-14.5" />
+              <point x="864.375" y="168.0" />
+              <point x="861.375" y="168.0" />
+              <point x="0.0" y="14.5" />
+            </edge>
+            <edge source="game.view.GameControlsPane" target="game.model.events.WorldMapLoadedEvent">
+              <point x="33.25" y="-14.5" />
+              <point x="297.785404265873" y="547.0" />
+              <point x="636.7249999999999" y="547.0" />
+              <point x="-62.40000000000009" y="14.5" />
+            </edge>
+            <edge source="game.MainApplication" target="game.view.GameMenuBar">
+              <point x="-29.75" y="-14.5" />
+              <point x="797.219783399471" y="846.0" />
+              <point x="450.8925471230158" y="846.0" />
+              <point x="-27.75" y="14.5" />
+            </edge>
+            <edge source="game.view.GameInventoryPane" target="game.controller.BlockWorldController">
+              <point x="-62.549999999999955" y="-14.5" />
+              <point x="927.6916583994714" y="447.0" />
+              <point x="397.3392857142858" y="447.0" />
+              <point x="20.71428571428578" y="14.5" />
+            </edge>
+            <edge source="game.MainApplication" target="game.view.GameWorldMapView">
+              <point x="46.75" y="-14.5" />
+              <point x="873.719783399471" y="866.0" />
+              <point x="1629.4656167328044" y="866.0" />
+              <point x="-36.0" y="14.5" />
+            </edge>
+            <edge source="game.controller.GameController" target="game.model.BlockWorldModel">
+              <point x="-17.40000000000009" y="-14.5" />
+              <point x="1249.2367518187837" y="357.0" />
+              <point x="915.175" y="357.0" />
+              <point x="19.049999999999955" y="14.5" />
+            </edge>
+            <edge source="game.view.GameControlsPane" target="game.model.events.BaseBlockWorldEvent">
+              <point x="-61.75" y="-14.5" />
+              <point x="202.785404265873" y="737.0" />
+              <point x="13.125" y="737.0" />
+              <point x="13.125" y="69.0" />
+              <point x="867.6499917328047" y="69.0" />
+              <point x="-48.66666666666674" y="14.5" />
+            </edge>
+            <edge source="game.view.GameMenuBar" target="game.controller.BlockWorldController">
+              <point x="-31.71428571428578" y="-14.5" />
+              <point x="446.92826140873" y="467.0" />
+              <point x="355.9107142857142" y="467.0" />
+              <point x="-20.71428571428578" y="14.5" />
+            </edge>
+            <edge source="game.controller.GameController" target="game.model.events.BlocksChangedEvent">
+              <point x="52.200000000000045" y="-14.5" />
+              <point x="1318.8367518187838" y="687.0" />
+              <point x="2108.8156167328043" y="687.0" />
+              <point x="-35.75" y="14.5" />
+            </edge>
+            <edge source="game.view.GameWorldMapView" target="game.model.events.BaseBlockWorldEvent">
+              <point x="67.5" y="-14.5" />
+              <point x="1732.9656167328044" y="737.0" />
+              <point x="2342.5656167328043" y="737.0" />
+              <point x="2342.5656167328043" y="49.0" />
+              <point x="981.2055472883603" y="49.0" />
+              <point x="64.88888888888891" y="14.5" />
+            </edge>
+            <edge source="game.view.GameControlsPane" target="game.view.components.ControlsView">
+              <point x="-33.25" y="-14.5" />
+              <point x="231.285404265873" y="707.0" />
+              <point x="130.125" y="707.0" />
+              <point x="0.0" y="14.5" />
+            </edge>
+            <edge source="game.MainApplication" target="game.view.GameInventoryPane">
+              <point x="12.75" y="-14.5" />
+              <point x="839.719783399471" y="826.0" />
+              <point x="955.4916583994714" y="826.0" />
+              <point x="-34.75" y="14.5" />
+            </edge>
+            <edge source="game.view.components.DPadGrid" target="game.view.components.IconButton">
+              <point x="-34.166666666666515" y="-14.5" />
+              <point x="207.95833333333348" y="208.0" />
+              <point x="98.625" y="208.0" />
+              <point x="30.0" y="14.5" />
+            </edge>
+            <edge source="game.controller.GameController" target="game.controller.MessageController">
+              <point x="-40.59999999999991" y="-14.5" />
+              <point x="1226.0367518187838" y="377.0" />
+              <point x="591.6964285714287" y="377.0" />
+              <point x="56.57142857142867" y="14.5" />
+            </edge>
+            <edge source="game.view.GameWorldMapView" target="game.model.events.WorldMapLoadedEvent">
+              <point x="-67.5" y="-14.5" />
+              <point x="1597.9656167328044" y="327.0" />
+              <point x="761.5250000000001" y="327.0" />
+              <point x="62.40000000000009" y="14.5" />
+            </edge>
+            <edge source="game.view.GameMenuBar" target="game.model.events.BaseBlockWorldEvent">
+              <point x="-47.57142857142867" y="-14.5" />
+              <point x="431.0711185515871" y="477.0" />
+              <point x="293.625" y="477.0" />
+              <point x="293.625" y="79.0" />
+              <point x="883.8722139550271" y="79.0" />
+              <point x="-32.44444444444434" y="14.5" />
+            </edge>
+            <edge source="game.model.events.BlocksChangedEvent" target="game.model.events.TileEvent">
+              <point x="-35.75" y="-14.5" />
+              <point x="2108.8156167328043" y="208.0" />
+              <point x="2124.5656167328043" y="208.0" />
+              <point x="-20.0" y="14.5" />
+            </edge>
+            <edge source="game.view.GameWorldMapView" target="game.view.components.TileSquare">
+              <point x="-4.5" y="-14.5" />
+              <point x="1660.9656167328044" y="627.0" />
+              <point x="1677.183325066138" y="627.0" />
+              <point x="17.600000000000023" y="14.5" />
+            </edge>
+            <edge source="game.model.events.TileEvent" target="game.model.events.BaseBlockWorldEvent">
+              <point x="0.0" y="-14.5" />
+              <point x="2144.5656167328043" y="59.0" />
+              <point x="964.9833250661381" y="59.0" />
+              <point x="48.66666666666674" y="14.5" />
+            </edge>
+            <edge source="game.model.GameModel" target="game.model.BlockWorldModel">
+              <point x="0.0" y="-14.5" />
+              <point x="852.2416583994714" y="597.0" />
+              <point x="877.075" y="597.0" />
+              <point x="-19.049999999999955" y="14.5" />
+            </edge>
+            <edge source="game.controller.GameController" target="game.model.events.InventoryChangedEvent">
+              <point x="5.7999999999999545" y="-14.5" />
+              <point x="1272.4367518187837" y="337.0" />
+              <point x="1227.625" y="337.0" />
+              <point x="40.0" y="14.5" />
+            </edge>
+            <edge source="game.view.GameInventoryPane" target="game.model.events.InventoryChangedEvent">
+              <point x="34.75" y="-14.5" />
+              <point x="1024.9916583994714" y="597.0" />
+              <point x="1147.625" y="597.0" />
+              <point x="-40.0" y="14.5" />
+            </edge>
+            <edge source="game.view.GameMenuBar" target="game.model.events.WorldMapLoadedEvent">
+              <point x="31.71428571428578" y="-14.5" />
+              <point x="510.35683283730157" y="557.0" />
+              <point x="667.925" y="557.0" />
+              <point x="-31.200000000000045" y="14.5" />
+            </edge>
+            <edge source="game.controller.GameController" target="game.model.events.BuilderMovedEvent">
+              <point x="17.40000000000009" y="-14.5" />
+              <point x="1284.0367518187838" y="617.0" />
+              <point x="1382.6739417989425" y="617.0" />
+              <point x="0.0" y="14.5" />
+            </edge>
+            <edge source="game.model.events.WorldMapLoadedEvent" target="game.model.events.WorldMapEvent">
+              <point x="0.0" y="-14.5" />
+              <point x="0.0" y="14.5" />
+            </edge>
+            <edge source="game.view.GameWorldMapView" target="game.model.BlockWorldModel">
+              <point x="-58.5" y="-14.5" />
+              <point x="1606.9656167328044" y="317.0" />
+              <point x="940.575" y="317.0" />
+              <point x="44.450000000000045" y="14.5" />
+            </edge>
+            <edge source="game.view.GameWorldMapView" target="game.model.events.BuilderMovedEvent">
+              <point x="-31.5" y="-14.5" />
+              <point x="1633.9656167328044" y="287.0" />
+              <point x="1428.007275132276" y="287.0" />
+              <point x="45.33333333333337" y="14.5" />
+            </edge>
+            <edge source="game.model.events.MessageEvent" target="game.model.events.BaseMessageEvent">
+              <point x="31.0" y="-14.5" />
+              <point x="2022.0656167328045" y="208.0" />
+              <point x="1989.145825066138" y="208.0" />
+              <point x="55.875" y="14.5" />
+            </edge>
+            <edge source="game.model.BlockWorldModel" target="game.model.events.BaseBlockWorldEvent">
+              <point x="31.75" y="-14.5" />
+              <point x="927.875" y="168.0" />
+              <point x="930.875" y="168.0" />
+              <point x="930.875" y="89.0" />
+              <point x="916.3166583994714" y="89.0" />
+              <point x="0.0" y="14.5" />
+            </edge>
+            <edge source="game.view.GameInventoryPane" target="game.view.components.InventoryView">
+              <point x="20.84999999999991" y="-14.5" />
+              <point x="1011.0916583994713" y="587.0" />
+              <point x="1033.625" y="587.0" />
+              <point x="0.0" y="14.5" />
+            </edge>
+            <edge source="game.view.GameMenuBar" target="game.controller.MessageController">
+              <point x="15.85714285714289" y="-14.5" />
+              <point x="494.4996899801587" y="537.0" />
+              <point x="535.125" y="537.0" />
+              <point x="0.0" y="14.5" />
+            </edge>
+            <edge source="game.view.GameInventoryPane" target="game.controller.MessageController">
+              <point x="-34.75" y="-14.5" />
+              <point x="955.4916583994714" y="427.0" />
+              <point x="553.9821428571429" y="427.0" />
+              <point x="18.85714285714289" y="14.5" />
+            </edge>
+            <edge source="game.view.GameWorldMapView" target="game.model.events.MessageEvent">
+              <point x="22.5" y="-14.5" />
+              <point x="1687.9656167328044" y="677.0" />
+              <point x="2022.0656167328045" y="677.0" />
+              <point x="31.0" y="14.5" />
+            </edge>
+            <edge source="game.view.components.TileSquare" target="game.view.components.AmbientOcclusion">
+              <point x="-22.0" y="-14.5" />
+              <point x="1637.583325066138" y="168.0" />
+              <point x="1555.807585152117" y="168.0" />
+              <point x="0.0" y="14.5" />
+            </edge>
+            <edge source="game.model.events.BaseMessageEvent" target="game.model.events.BaseBlockWorldEvent">
+              <point x="0.0" y="-14.5" />
+              <point x="1933.270825066138" y="69.0" />
+              <point x="948.761102843916" y="69.0" />
+              <point x="32.44444444444457" y="14.5" />
+            </edge>
+            <edge source="game.model.events.InventoryChangedEvent" target="game.model.events.BuilderEvent">
+              <point x="0.0" y="-14.5" />
+              <point x="1187.625" y="198.0" />
+              <point x="1381.0416583994715" y="198.0" />
+              <point x="-24.75" y="14.5" />
+            </edge>
+            <edge source="game.MainApplication" target="game.model.GameModel">
+              <point x="4.25" y="-14.5" />
+              <point x="831.219783399471" y="816.0" />
+              <point x="876.4916583994714" y="816.0" />
+              <point x="24.25" y="14.5" />
+            </edge>
+            <edge source="game.view.GameWorldMapView" target="game.model.events.BlocksChangedEvent">
+              <point x="31.5" y="-14.5" />
+              <point x="1696.9656167328044" y="697.0" />
+              <point x="2180.3156167328043" y="697.0" />
+              <point x="35.75" y="14.5" />
+            </edge>
+            <edge source="game.view.GameWorldMapView" target="game.model.events.ErrorEvent">
+              <point x="13.5" y="-14.5" />
+              <point x="1678.9656167328044" y="657.0" />
+              <point x="1883.5656167328045" y="657.0" />
+              <point x="25.5" y="14.5" />
+            </edge>
+            <edge source="game.controller.GameController" target="game.model.events.WorldMapLoadedEvent">
+              <point x="-29.0" y="-14.5" />
+              <point x="1237.6367518187838" y="367.0" />
+              <point x="730.325" y="367.0" />
+              <point x="31.200000000000045" y="14.5" />
+            </edge>
+            <edge source="game.model.events.BuilderMovedEvent" target="game.model.events.BuilderEvent">
+              <point x="0.0" y="-14.5" />
+              <point x="1382.6739417989425" y="208.0" />
+              <point x="1430.5416583994715" y="208.0" />
+              <point x="24.75" y="14.5" />
+            </edge>
+            <edge source="game.view.GameInventoryPane" target="game.model.BlockWorldModel">
+              <point x="-6.9500000000000455" y="-14.5" />
+              <point x="983.2916583994713" y="407.0" />
+              <point x="889.7750000000001" y="407.0" />
+              <point x="-6.349999999999909" y="14.5" />
+            </edge>
+            <edge source="game.view.GameControlsPane" target="game.model.events.BuilderMovedEvent">
+              <point x="61.75" y="-14.5" />
+              <point x="326.285404265873" y="607.0" />
+              <point x="1337.3406084656092" y="607.0" />
+              <point x="-45.33333333333337" y="14.5" />
+            </edge>
+            <edge source="game.view.GameControlsPane" target="game.model.BlockWorldModel">
+              <point x="42.75" y="-14.5" />
+              <point x="307.285404265873" y="567.0" />
+              <point x="838.9749999999999" y="567.0" />
+              <point x="-57.15000000000009" y="14.5" />
+            </edge>
+            <edge source="game.controller.GameController" target="game.model.events.ErrorEvent">
+              <point x="29.0" y="-14.5" />
+              <point x="1295.6367518187838" y="647.0" />
+              <point x="1832.5656167328045" y="647.0" />
+              <point x="-25.5" y="14.5" />
+            </edge>
+            <edge source="game.view.GameWorldMapView" target="game.view.components.UniformGridPane">
+              <point x="-40.5" y="-14.5" />
+              <point x="1624.9656167328044" y="297.0" />
+              <point x="1287.794783399471" y="297.0" />
+              <point x="1287.794783399471" y="188.0" />
+              <point x="1290.1666583994715" y="188.0" />
+              <point x="15.375" y="14.5" />
+            </edge>
+            <edge source="game.view.GameControlsPane" target="game.controller.BlockWorldController">
+              <point x="-4.75" y="-14.5" />
+              <point x="259.785404265873" y="487.0" />
+              <point x="314.4821428571429" y="487.0" />
+              <point x="-62.14285714285711" y="14.5" />
+            </edge>
+            <edge source="game.view.GameControlsPane" target="game.view.components.IconButton">
+              <point x="-52.25" y="-14.5" />
+              <point x="212.285404265873" y="727.0" />
+              <point x="40.875" y="727.0" />
+              <point x="40.875" y="208.0" />
+              <point x="38.625" y="208.0" />
+              <point x="-30.0" y="14.5" />
+            </edge>
+            <edge source="game.MainApplication" target="game.controller.GameController">
+              <point x="38.25" y="-14.5" />
+              <point x="865.219783399471" y="856.0" />
+              <point x="1295.6367518187838" y="856.0" />
+              <point x="29.0" y="14.5" />
+            </edge>
+            <edge source="game.view.GameControlsPane" target="game.controller.MessageController">
+              <point x="14.25" y="-14.5" />
+              <point x="278.785404265873" y="507.0" />
+              <point x="478.55357142857133" y="507.0" />
+              <point x="-56.57142857142867" y="14.5" />
+            </edge>
+            <edge source="game.MainApplication" target="game.model.events.WorldMapLoadedEvent">
+              <point x="-12.75" y="-14.5" />
+              <point x="814.219783399471" y="826.0" />
+              <point x="699.125" y="826.0" />
+              <point x="0.0" y="14.5" />
+            </edge>
+            <edge source="game.view.components.TileSquare" target="game.view.components.ExitsOverlay">
+              <point x="22.0" y="-14.5" />
+              <point x="1681.583325066138" y="198.0" />
+              <point x="1760.307585152117" y="198.0" />
+              <point x="-24.0" y="14.5" />
+            </edge>
+            <edge source="game.controller.GameController" target="game.model.events.MessageEvent">
+              <point x="40.59999999999991" y="-14.5" />
+              <point x="1307.2367518187837" y="667.0" />
+              <point x="1960.0656167328045" y="667.0" />
+              <point x="-31.0" y="14.5" />
+            </edge>
+            <edge source="game.MainApplication" target="game.model.events.BaseBlockWorldEvent">
+              <point x="-55.25" y="-14.5" />
+              <point x="771.719783399471" y="876.0" />
+              <point x="0.0" y="876.0" />
+              <point x="0.0" y="59.0" />
+              <point x="851.4277695105825" y="59.0" />
+              <point x="-64.88888888888891" y="14.5" />
+            </edge>
+            <edge source="game.view.components.DPadGrid" target="game.view.components.DPadGrid.ButtonSpec">
+              <point x="-20.5" y="-14.5" />
+              <point x="221.625" y="198.0" />
+              <point x="200.90832506613788" y="198.0" />
+              <point x="-31.0" y="14.5" />
+            </edge>
+            <edge source="game.view.GameControlsPane" target="game.view.components.DPadGrid">
+              <point x="-14.25" y="-14.5" />
+              <point x="250.285404265873" y="477.0" />
+              <point x="262.625" y="477.0" />
+              <point x="20.5" y="14.5" />
+            </edge>
+            <edge source="game.MainApplication" target="game.view.GameControlsPane">
+              <point x="-46.75" y="-14.5" />
+              <point x="780.219783399471" y="866.0" />
+              <point x="231.285404265873" y="866.0" />
+              <point x="-33.25" y="14.5" />
+            </edge>
+            <edge source="game.controller.GameController" target="game.controller.BlockWorldController">
+              <point x="-52.19999999999993" y="-14.5" />
+              <point x="1214.4367518187837" y="387.0" />
+              <point x="438.7678571428571" y="387.0" />
+              <point x="62.14285714285711" y="14.5" />
+            </edge>
+            <edge source="game.model.events.WorldMapEvent" target="game.model.events.BaseBlockWorldEvent">
+              <point x="0.0" y="-14.5" />
+              <point x="699.125" y="89.0" />
+              <point x="900.0944361772492" y="89.0" />
+              <point x="-16.22222222222217" y="14.5" />
+            </edge>
+            <edge source="game.view.components.TileSquare" target="game.view.components.TileView">
+              <point x="7.333333333333371" y="-14.5" />
+              <point x="1666.9166583994715" y="188.0" />
+              <point x="1678.307585152117" y="188.0" />
+              <point x="0.0" y="14.5" />
+            </edge>
+            <edge source="game.view.GameMenuBar" target="game.model.BlockWorldModel">
+              <point x="47.57142857142867" y="-14.5" />
+              <point x="526.2139756944445" y="587.0" />
+              <point x="864.375" y="587.0" />
+              <point x="-31.75" y="14.5" />
+            </edge>
+            <edge source="game.view.components.DPadGrid" target="game.view.components.UniformGridPane">
+              <point x="20.5" y="-14.5" />
+              <point x="262.625" y="178.0" />
+              <point x="1228.6666583994715" y="178.0" />
+              <point x="-46.125" y="14.5" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="0.6000000000000001" x="182.0" y="426.0" />
+          <SelectedNodes>
+            <node>game.controller.BlockWorldController</node>
+          </SelectedNodes>
+          <Categories />
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/MainApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="43" column="3" selection-start-line="43" selection-start-column="3" selection-end-line="43" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#setKeyBindings#0;class#MainApplication#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/csse2002/block/world/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/controller/GameController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="149" column="11" selection-start-line="149" selection-start-column="11" selection-end-line="149" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/model/BlockType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/scene/canvas/Canvas.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="508">
+          <caret line="73" column="31" lean-forward="true" selection-start-line="73" selection-start-column="31" selection-end-line="73" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/scene/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="1926" column="25" selection-start-line="1926" selection-start-column="25" selection-end-line="1926" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/scene/layout/Region.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="1148" column="32" selection-start-line="1148" selection-start-column="32" selection-end-line="1148" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/com/sun/javafx/sg/prism/NGCanvas.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="639" selection-start-line="639" selection-end-line="639" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/csse2002/block/world/Builder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="195" column="23" selection-start-line="195" selection-start-column="23" selection-end-line="195" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/csse2002/block/world/WorldMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/csse2002/block/world/Tile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="169" column="28" selection-start-line="169" selection-start-column="28" selection-end-line="169" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/util/Cache.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#354#355#0" expanded="true" />
+            <element signature="e#410#411#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/model/EventDispatcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="32" column="21" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/concurrent/ExecutorService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3628">
+          <caret line="136" column="17" selection-start-line="136" selection-start-column="17" selection-end-line="136" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/csse2002/block/world/Block.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/FadingLabel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-141">
+          <caret column="27" selection-start-column="27" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/controller/BlockWorldController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/TileSquare.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="56" column="4" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/GameWorldMapView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="970">
+          <caret line="339" selection-start-line="339" selection-end-line="339" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>csse2002_ass3</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: csse2002.block.world:csse2002_ass2:1.0-SNAPSHOT</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <last-edited>Unnamed</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
