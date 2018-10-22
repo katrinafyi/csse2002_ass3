@@ -20,8 +20,13 @@ import game.view.components.UniformGridPane;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -31,9 +36,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameWorldMapView extends UniformGridPane {
-    private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
     private final Cache<Position, Integer> tileHeights = new Cache<>(this::getTileHeight);
-    private final Pane[][] tilePanes;
+
+    private final Map<Position, Image> tileCache = new HashMap<>();
+    private final TileSquare renderTile;
+    private final Scene renderScene;
+    private final Canvas mainCanvas;
+    private final ImageView[][] imageViews;
 
     private final BlockWorldModel model;
 
@@ -46,12 +55,23 @@ public class GameWorldMapView extends UniformGridPane {
     private boolean heightsVisible = false;
     private boolean ambientOcclusionOn = true;
 
+    private final static Color BACKGROUND_COLOR = Color.SKYBLUE;
+
     public GameWorldMapView(BlockWorldModel model) {
         super(9, 9, 0);
         this.model = model;
-        tilePanes = new Pane[columns][rows];
+        imageViews = new ImageView[columns][rows];
 
-        Utilities.setBackground(this, Color.SKYBLUE);
+        renderTile = new TileSquare();
+        renderScene = new Scene(renderTile);
+        renderTile.maxWidthProperty().bind(heightProperty().divide(rows/2));
+
+        mainCanvas = new Canvas();
+        mainCanvas.widthProperty().bind(this.widthProperty());
+        mainCanvas.heightProperty().bind(this.heightProperty());
+        mainCanvas.getGraphicsContext2D().fillRect(100, 0, 100, 100);
+        add(mainCanvas, 0, 0, columns, rows);
+
         this.setPrefWidth(495.0); // Multiple of 9.
 
         errorLabel = new FadingLabel(Duration.seconds(1), Duration.millis(500));
@@ -79,14 +99,18 @@ public class GameWorldMapView extends UniformGridPane {
 
         Utilities.usePrefWidthHeight(this);
 
+        TileSquare head = new TileSquare();
+        head.setBuilderTile(true);
+        head.maxWidthProperty().bind(widthProperty().divide(columns));
+        add(head, halfCols, halfRows);
+
         for (int c = 0; c < columns; c++) {
             for (int r = 0; r < rows; r++) {
-                Pane p = new Pane();
-                tilePanes[c][r] = p;
-                Utilities.usePrefWidthHeight(p);
-                p.prefWidthProperty().bind(heightProperty().divide(rows));
-                p.prefHeightProperty().bind(heightProperty().divide(rows));
-                add(p, c, r);
+                ImageView view = new ImageView();
+                view.setPreserveRatio(true);
+                view.fitWidthProperty().bind(heightProperty().divide(rows));
+                imageViews[c][r] = null;
+                add(view, c, r);
             }
         }
         drawMessageLabels();
@@ -128,16 +152,13 @@ public class GameWorldMapView extends UniformGridPane {
     private void resizeChildren(ObservableValue<? extends Number> obs,
                                 Number oldValue, Number newValue) {
         if (model.getCurrentPosition() != null) {
-            drawTilesToGrid();
+            redrawTiles();
         }
     }
 
     private void updateVisibilities() {
-        for (TileSquare square : tileSquareMap.values()) {
-            square.setExitVisibility(exitsVisible);
-            square.setHeightVisibility(heightsVisible);
-            square.getAmbientOcclusion().setVisible(ambientOcclusionOn);
-        }
+        tileCache.clear();
+        redrawTiles();
     }
 
     private static void setMessageLabelStyle(FadingLabel label, String colour) {
@@ -167,38 +188,29 @@ public class GameWorldMapView extends UniformGridPane {
     private void blocksChangedHandler(BlocksChangedEvent event) {
         Position position = event.getPosition();
 
+        tileHeights.remove(position);
         updateTileBlocks(position);
         updateAOAllNeighbours(position);
+        redrawTiles();
     }
 
     private void updateTileBlocks(Position position) {
-        Tile tile = model.getTile(position);
-        TileSquare tileSquare = tileSquareMap.get(position);
-        assert tileSquare != null;
-
-        int height = tile.getBlocks().size();
-        tileSquare.setHeight(height);
-
-        try {
-            tileSquare.setTopBlock(height == 0
-                    ? null : BlockType.fromBlock(tile.getTopBlock()));
-        } catch (TooLowException e) {
-            throw new AssertionError(e);
-        }
-        tileHeights.put(position, height);
+        tileCache.remove(position);
     }
 
     private void updateAOAllNeighbours(Position position) {
-        updateAOSingle(position);
+//        updateAOSingle(position);
+        tileCache.remove(position);
         Position[] neighbours = getAdjacentPositions(position);
         for (int i = 0; i < 8; i++) {
-            updateAOSingle(neighbours[i]);
+            tileCache.remove(neighbours[i]);
+            continue;
+//            updateAOSingle(neighbours[i]);
         }
         System.out.println(Arrays.toString(getAdjacentPositions(model.getCurrentPosition())));
     }
 
-    private void updateAOSingle(Position position) {
-        TileSquare tileSquare = tileSquareMap.get(position);
+    private void updateAOSingle(TileSquare tileSquare, Position position) {
         if (tileSquare == null) {
             return; // No tile exists here. Nothing to do.
         }
@@ -240,14 +252,12 @@ public class GameWorldMapView extends UniformGridPane {
 
     @SuppressWarnings("unused")
     private void builderMovedHandler(BuilderMovedEvent event) {
-        clearTilePanes();
-        drawTilesToGrid();
+        redrawTiles();
     }
 
     private void clearTilePanes() {
-        for (Pane[] paneColumn : tilePanes) {
-            for (Pane pane : paneColumn) {
-                pane.getChildren().clear();
+        for (ImageView[] col : imageViews) {
+            for (ImageView view : col) {
             }
         }
     }
@@ -255,61 +265,85 @@ public class GameWorldMapView extends UniformGridPane {
     private void resetInternalState() {
         clearTilePanes();
         tileHeights.clear();
-        tileSquareMap.clear();
+        tileCache.clear();
     }
 
-    private void drawTilesToGrid() {
+    private void redrawTiles() {
+        long startTime = System.nanoTime();
         Position current = model.getCurrentPosition();
         int curX = current.getX();
         int curY = current.getY();
+
+        GraphicsContext graphics = mainCanvas.getGraphicsContext2D();
+
+        double cellWidth = getWidth()/columns;
+        double cellHeight = getHeight()/rows;
 
         for (int c = 0; c < this.columns; c++) {
             for (int r = 0; r < this.rows; r++) {
                 // Position index of the current cell.
                 Position pos = new Position(curX+ c -halfCols, curY+ r -halfRows);
-                TileSquare tile = getOrMakeSquare(pos);
-                if (tile == null) {
-                    continue; // No tile at this position.
+                Image image = getOrRenderTileImage(pos);
+                if (image != null) {
+                    graphics.drawImage(image, c * cellWidth, r * cellHeight,
+                            cellWidth, cellHeight);
+                } else {
+                    graphics.clearRect(c*cellWidth, r*cellHeight, cellWidth, cellHeight);
                 }
-                tile.setBuilderTile(r == halfRows && c == halfCols);
-                tilePanes[c][r].getChildren().add(tile);
+
             }
         }
+        System.out.println("Frame time: " + (System.nanoTime()-startTime)/1000000.0 + "ms");
     }
 
-    private TileSquare getOrMakeSquare(Position pos) {
+    private Image getOrRenderTileImage(Position pos) {
         Tile tile = model.getTile(pos);
         if (tile == null) {
             return null;
         }
-        TileSquare square = tileSquareMap.get(pos);
-        if (square == null) {
-            square = newTileSquare();
-            Map<String, Tile> exits = tile.getExits();
-
-
-            for (Direction direction : Direction.values()) {
-                square.setHasExit(direction, exits.containsKey(direction.name()));
-            }
-
-            tileSquareMap.put(pos, square);
-
-            square.setExitVisibility(exitsVisible);
-            square.setHeightVisibility(heightsVisible);
-            square.getAmbientOcclusion().setVisible(ambientOcclusionOn);
-
-            updateTileBlocks(pos); // Updates height and top block.
-            updateAOSingle(pos);
+        Image image = tileCache.get(pos);
+        if (image == null) {
+            image = renderOneTile(pos);
+            tileCache.put(pos, image);
         }
-        return square;
+        return image;
+    }
+
+    private Image renderOneTile(Position position) {
+        Tile tile = model.getTile(position);
+        int height = tile.getBlocks().size();
+        Map<String, Tile> exits = tile.getExits();
+
+        BlockType topBlock;
+        try {
+            topBlock = height == 0 ? null
+                    : BlockType.fromBlock(tile.getTopBlock());
+        } catch (TooLowException e) {
+            throw new AssertionError(e);
+        }
+
+        renderTile.setTopBlock(topBlock);
+        renderTile.setHeight(height);
+        tileHeights.put(position, height);
+
+        for (Direction direction : Direction.values()) {
+            renderTile.setHasExit(direction, exits.containsKey(direction.name()));
+        }
+
+        renderTile.setExitVisibility(exitsVisible);
+        renderTile.setHeightVisibility(heightsVisible);
+        renderTile.getAmbientOcclusion().setVisible(ambientOcclusionOn);
+
+        updateAOSingle(renderTile, position);
+
+        return renderTile.snapshot(new SnapshotParameters(), null);
     }
 
     @SuppressWarnings("unused")
     private void worldMapLoadedHandler(WorldMapLoadedEvent event) {
         resetInternalState();
         System.out.println("map loaded v2");
-
-        drawTilesToGrid();
+        redrawTiles();
     }
 
     private TileSquare newTileSquare() {
