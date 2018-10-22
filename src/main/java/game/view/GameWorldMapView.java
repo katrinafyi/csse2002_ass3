@@ -17,11 +17,14 @@ import game.model.events.WorldMapLoadedEvent;
 import game.view.components.FadingLabel;
 import game.view.components.TileSquare;
 import game.view.components.UniformGridPane;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.SnapshotResult;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -31,14 +34,21 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 public class GameWorldMapView extends UniformGridPane {
     private final Cache<Position, Integer> tileHeights = new Cache<>(this::getTileHeight);
 
-    private final Map<Position, Image> tileCache = new HashMap<>();
+    private final Map<Position, Image> tileCache = new ConcurrentHashMap<>();
     private final TileSquare renderTile;
     private final Scene renderScene;
     private final Canvas mainCanvas;
@@ -279,20 +289,39 @@ public class GameWorldMapView extends UniformGridPane {
         double cellWidth = getWidth()/columns;
         double cellHeight = getHeight()/rows;
 
+        List<Position> positionsToRender = new ArrayList<>();
         for (int c = 0; c < this.columns; c++) {
             for (int r = 0; r < this.rows; r++) {
                 // Position index of the current cell.
                 Position pos = new Position(curX+ c -halfCols, curY+ r -halfRows);
-                Image image = getOrRenderTileImage(pos);
+                if (!tileCache.containsKey(pos) && model.getTile(pos) != null) {
+                    positionsToRender.add(pos);
+                }
+            }
+        }
+
+        ExecutorService executor = Executors.newFixedThreadPool(columns*2);
+
+        CountDownLatch remaining = new CountDownLatch(positionsToRender.size());
+        for (Position pos : positionsToRender) {
+            queueRenderTile(pos, remaining);
+        }
+
+        for (int c = 0; c < this.columns; c++) {
+            for (int r = 0; r < this.rows; r++) {
+                // Position index of the current cell.
+                Position pos = new Position(curX+ c -halfCols, curY+ r -halfRows);
+
+                Image image = tileCache.get(pos);
                 if (image != null) {
                     graphics.drawImage(image, c * cellWidth, r * cellHeight,
                             cellWidth, cellHeight);
                 } else {
                     graphics.clearRect(c*cellWidth, r*cellHeight, cellWidth, cellHeight);
                 }
-
             }
         }
+
         System.out.println("Frame time: " + (System.nanoTime()-startTime)/1000000.0 + "ms");
     }
 
@@ -303,13 +332,16 @@ public class GameWorldMapView extends UniformGridPane {
         }
         Image image = tileCache.get(pos);
         if (image == null) {
-            image = renderOneTile(pos);
+            System.out.println("Rendering manually "+pos);
             tileCache.put(pos, image);
         }
         return image;
     }
 
-    private Image renderOneTile(Position position) {
+    private void queueRenderTile(Position position, CountDownLatch count) {
+        System.out.println("xx " + position);
+        TileSquare renderTile = new TileSquare();
+
         Tile tile = model.getTile(position);
         int height = tile.getBlocks().size();
         Map<String, Tile> exits = tile.getExits();
@@ -322,9 +354,9 @@ public class GameWorldMapView extends UniformGridPane {
             throw new AssertionError(e);
         }
 
+        System.out.println("xy " + position);
         renderTile.setTopBlock(topBlock);
         renderTile.setHeight(height);
-        tileHeights.put(position, height);
 
         for (Direction direction : Direction.values()) {
             renderTile.setHasExit(direction, exits.containsKey(direction.name()));
@@ -334,9 +366,15 @@ public class GameWorldMapView extends UniformGridPane {
         renderTile.setHeightVisibility(heightsVisible);
         renderTile.getAmbientOcclusion().setVisible(ambientOcclusionOn);
 
+        System.out.println("xz " + position);
         updateAOSingle(renderTile, position);
-
-        return renderTile.snapshot(new SnapshotParameters(), null);
+        Platform.runLater(() -> renderTile.snapshot((snap) -> {
+            System.out.println("fdsjail" + position);
+            tileCache.put(position, snap.getImage());
+            count.countDown();
+            return null;
+        }, new SnapshotParameters(), null));
+        System.out.println("zz" + position);
     }
 
     @SuppressWarnings("unused")
