@@ -25,7 +25,6 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -38,11 +37,10 @@ import java.util.Map;
 public class GameWorldMapView extends UniformGridPane {
     private final Cache<Position, Integer> tileHeights = new Cache<>(this::getTileHeight);
 
-    private final Map<Position, Image> tileCache = new HashMap<>();
+    private final Map<Position, Image> renderedTiles = new HashMap<>();
     private final TileSquare renderTile;
     private final Scene renderScene;
     private final Canvas mainCanvas;
-    private final ImageView[][] imageViews;
 
     private final BlockWorldModel model;
 
@@ -60,16 +58,14 @@ public class GameWorldMapView extends UniformGridPane {
     public GameWorldMapView(BlockWorldModel model) {
         super(9, 9, 0);
         this.model = model;
-        imageViews = new ImageView[columns][rows];
 
         renderTile = new TileSquare();
         renderScene = new Scene(renderTile);
-        renderTile.maxWidthProperty().bind(heightProperty().divide(rows/2));
+        renderTile.maxWidthProperty().bind(heightProperty().divide(rows/2.0));
 
         mainCanvas = new Canvas();
-        mainCanvas.widthProperty().bind(this.widthProperty());
-        mainCanvas.heightProperty().bind(this.heightProperty());
-        mainCanvas.getGraphicsContext2D().fillRect(100, 0, 100, 100);
+        mainCanvas.widthProperty().bind(this.prefWidthProperty());
+        mainCanvas.heightProperty().bind(this.prefHeightProperty());
         add(mainCanvas, 0, 0, columns, rows);
 
         this.setPrefWidth(495.0); // Multiple of 9.
@@ -104,15 +100,8 @@ public class GameWorldMapView extends UniformGridPane {
         head.maxWidthProperty().bind(widthProperty().divide(columns));
         add(head, halfCols, halfRows);
 
-        for (int c = 0; c < columns; c++) {
-            for (int r = 0; r < rows; r++) {
-                ImageView view = new ImageView();
-                view.setPreserveRatio(true);
-                view.fitWidthProperty().bind(heightProperty().divide(rows));
-                imageViews[c][r] = null;
-                add(view, c, r);
-            }
-        }
+        heightProperty().addListener(this::resizeChildren);
+
         drawMessageLabels();
     }
 
@@ -148,16 +137,16 @@ public class GameWorldMapView extends UniformGridPane {
         updateVisibilities();
     }
 
-    @SuppressWarnings("unused")
     private void resizeChildren(ObservableValue<? extends Number> obs,
                                 Number oldValue, Number newValue) {
         if (model.getCurrentPosition() != null) {
+            renderedTiles.clear();
             redrawTiles();
         }
     }
 
     private void updateVisibilities() {
-        tileCache.clear();
+        renderedTiles.clear();
         redrawTiles();
     }
 
@@ -189,21 +178,17 @@ public class GameWorldMapView extends UniformGridPane {
         Position position = event.getPosition();
 
         tileHeights.remove(position);
-        updateTileBlocks(position);
+        renderedTiles.remove(position);
         updateAOAllNeighbours(position);
         redrawTiles();
     }
 
-    private void updateTileBlocks(Position position) {
-        tileCache.remove(position);
-    }
-
     private void updateAOAllNeighbours(Position position) {
 //        updateAOSingle(position);
-        tileCache.remove(position);
+        renderedTiles.remove(position);
         Position[] neighbours = getAdjacentPositions(position);
         for (int i = 0; i < 8; i++) {
-            tileCache.remove(neighbours[i]);
+            renderedTiles.remove(neighbours[i]);
             continue;
 //            updateAOSingle(neighbours[i]);
         }
@@ -226,7 +211,7 @@ public class GameWorldMapView extends UniformGridPane {
         tileSquare.getAmbientOcclusion().setAdjacent(adjacent);
     }
 
-    private Position[] getAdjacentPositions(Position centre) {
+    private static Position[] getAdjacentPositions(Position centre) {
         Position[] positions = new Position[8];
 
         int curX = centre.getX()-1;
@@ -250,22 +235,14 @@ public class GameWorldMapView extends UniformGridPane {
         return positions;
     }
 
-    @SuppressWarnings("unused")
-    private void builderMovedHandler(BuilderMovedEvent event) {
+    private void builderMovedHandler(
+            @SuppressWarnings("unused") BuilderMovedEvent event) {
         redrawTiles();
     }
 
-    private void clearTilePanes() {
-        for (ImageView[] col : imageViews) {
-            for (ImageView view : col) {
-            }
-        }
-    }
-
     private void resetInternalState() {
-        clearTilePanes();
         tileHeights.clear();
-        tileCache.clear();
+        renderedTiles.clear();
     }
 
     private void redrawTiles() {
@@ -293,7 +270,7 @@ public class GameWorldMapView extends UniformGridPane {
 
             }
         }
-        System.out.println("Frame time: " + (System.nanoTime()-startTime)/1000000.0 + "ms");
+        System.out.println("Frame time: " + (System.nanoTime()-startTime)/1000000.0 + " ms");
     }
 
     private Image getOrRenderTileImage(Position pos) {
@@ -301,10 +278,10 @@ public class GameWorldMapView extends UniformGridPane {
         if (tile == null) {
             return null;
         }
-        Image image = tileCache.get(pos);
+        Image image = renderedTiles.get(pos);
         if (image == null) {
             image = renderOneTile(pos);
-            tileCache.put(pos, image);
+            renderedTiles.put(pos, image);
         }
         return image;
     }
