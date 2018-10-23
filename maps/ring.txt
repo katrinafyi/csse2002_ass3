@@ -1,0 +1,26 @@
+0
+0
+Bob
+wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood
+
+total:9
+0 
+1 wood
+2 
+3 wood
+4 
+5 wood
+6 
+7 wood
+8 
+
+exits
+0 east:1
+1 east:2
+2 south:3
+3 south:4
+4 west:5
+5 west:6
+6 north:7
+7 north:0,west:8
+8 east:7
