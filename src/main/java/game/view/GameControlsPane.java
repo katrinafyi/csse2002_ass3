@@ -107,8 +107,17 @@ public class GameControlsPane extends VBox implements ControlsView {
     private void digBlock() {
         try {
             controller.dig();
-        } catch (InvalidBlockException | TooLowException e) {
-            messageController.handleErrorMessage("You can't dig that!");
+        } catch (InvalidBlockException e) {
+            BlockType block;
+            try {
+                block = BlockType.fromBlock(
+                        model.getBuilder().getCurrentTile().getTopBlock());
+            } catch (TooLowException e1) {
+                throw new AssertionError(e1);
+            }
+            messageController.handleErrorMessage("You can't dig "+block+"!");
+        } catch (TooLowException e) {
+            messageController.handleErrorMessage("You can't dig bedrock!");
         }
     }
 
