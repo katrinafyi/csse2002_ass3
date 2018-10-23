@@ -212,7 +212,8 @@ public class MainApplication extends Application {
             case CLOSE_BRACKET:
                 toggleDebugLayout();
                 break;
-            case J: // Creative mode hacks.
+            // These don't work with the provided WorldMap implementation.
+            /*case J: // Creative mode hacks.
                 model.getCurrentTile().getBlocks().add(new StoneBlock());
                 model.notifyListeners(new BlocksChangedEvent(model.getCurrentPosition()));
                 break;
@@ -224,7 +225,7 @@ public class MainApplication extends Application {
                 int size = model.getCurrentTile().getBlocks().size();
                 model.getCurrentTile().getBlocks().remove(size-1);
                 model.notifyListeners(new BlocksChangedEvent(model.getCurrentPosition()));
-                break;
+                break;*/
         }
     }
 
