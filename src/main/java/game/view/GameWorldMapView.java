@@ -271,8 +271,9 @@ public class GameWorldMapView extends UniformGridPane {
                 // Position index of the current cell.
                 Position pos = new Position(curX+ c -halfCols, curY+ r -halfRows);
                 TileSquare tile = getOrMakeSquare(pos);
-                if (tile == null) {
-                    continue; // No tile at this position.
+                if (tile == null) { // No tile at this position.
+                    tilePanes[c][r].getChildren().clear();
+                    continue;
                 }
                 tile.setBuilderTile(r == halfRows && c == halfCols);
                 tilePanes[c][r].getChildren().setAll(tile);
