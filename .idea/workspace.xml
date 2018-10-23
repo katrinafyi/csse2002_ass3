@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="8" />
+    <option name="CUSTOM_SCOPE_NAME" value="game Package" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="fd610299-18a6-4a5d-9528-5a2463333c8b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/model/EventDispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/model/EventDispatcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/view/GameControlsPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/view/GameControlsPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/view/components/AmbientOcclusion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/view/components/AmbientOcclusion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/view/components/ControlsView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/view/components/ControlsView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/view/components/DPadGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/view/components/DPadGrid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/view/components/ExitsOverlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/view/components/ExitsOverlay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/view/components/FadingLabel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/view/components/FadingLabel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/view/components/IconButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/view/components/IconButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/view/components/InventoryView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/view/components/InventoryView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/view/components/TileSquare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/view/components/TileSquare.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/view/components/TileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/view/components/TileView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/view/components/UniformGridPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/view/components/UniformGridPane.java" afterDir="false" />
     </list>
     <list id="093f0b50-b0a7-4054-930a-a4e79adbc31f" name="Revert &quot;Attempting optimisations.&quot;" comment="Revert &quot;Attempting optimisations.&quot;&#10;&#10;This reverts commit acd8bc7" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -63,9 +56,9 @@
           <entry key="class" value="1" />
           <entry key="css" value="1" />
           <entry key="events" value="4" />
-          <entry key="gitignore" value="1" />
+          <entry key="gitignore" value="2" />
           <entry key="iml" value="1" />
-          <entry key="java" value="608" />
+          <entry key="java" value="609" />
           <entry key="json" value="2" />
           <entry key="md" value="2" />
           <entry key="model" value="1" />
@@ -83,10 +76,10 @@
           <entry key="CLASS" value="1" />
           <entry key="CSS" value="1" />
           <entry key="IDEA_MODULE" value="1" />
-          <entry key="JAVA" value="608" />
+          <entry key="JAVA" value="609" />
           <entry key="JSON" value="2" />
           <entry key="Markdown" value="2" />
-          <entry key="PLAIN_TEXT" value="9" />
+          <entry key="PLAIN_TEXT" value="10" />
           <entry key="Properties" value="2" />
           <entry key="SQL" value="2" />
           <entry key="UML" value="16" />
@@ -98,11 +91,12 @@
         <counts>
           <entry key="css" value="106" />
           <entry key="dummy" value="1" />
+          <entry key="gitignore" value="15" />
           <entry key="java" value="111716" />
           <entry key="json" value="79" />
           <entry key="md" value="10" />
           <entry key="py" value="14" />
-          <entry key="txt" value="5736" />
+          <entry key="txt" value="5861" />
           <entry key="xml" value="178" />
           <entry key="yml" value="341" />
         </counts>
@@ -113,7 +107,7 @@
           <entry key="JAVA" value="111716" />
           <entry key="JSON" value="79" />
           <entry key="Markdown" value="10" />
-          <entry key="PLAIN_TEXT" value="5751" />
+          <entry key="PLAIN_TEXT" value="5891" />
           <entry key="XML" value="178" />
           <entry key="YAML" value="341" />
         </counts>
@@ -140,15 +134,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/ControlsView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/DPadGrid.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="92">
@@ -165,23 +150,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/FadingLabel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
-              <caret line="51" column="8" selection-start-line="51" selection-start-column="8" selection-end-line="51" selection-end-column="8" />
-              <folding>
-                <element signature="e#1109#1110#0" expanded="true" />
-                <element signature="e#1155#1156#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/IconButton.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="205">
-              <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
+              <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
               <folding>
                 <element signature="e#316#317#0" expanded="true" />
                 <element signature="e#350#351#0" expanded="true" />
@@ -242,11 +214,33 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/game/view/GameControlsPane.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="58" selection-start-line="58" selection-end-line="58" />
+            <state relative-caret-position="170">
+              <caret line="92" column="26" selection-start-line="92" selection-start-column="26" selection-end-line="92" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/game/MainApplication.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="61" column="26" selection-start-line="61" selection-start-column="26" selection-end-line="61" selection-end-column="26" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#setKeyBindings#0;class#MainApplication#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" column="31" lean-forward="true" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -332,7 +326,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/assemble_zip.py" />
         <option value="$PROJECT_DIR$/src/main/java/game/view/SpriteLoader.java" />
@@ -353,7 +346,6 @@
         <option value="$PROJECT_DIR$/src/main/java/game/view/GameMenuBar.java" />
         <option value="$PROJECT_DIR$/src/main/java/csse2002/block/world/Tile.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/view/GameWorldMapView.java" />
-        <option value="$PROJECT_DIR$/src/main/java/game/MainApplication.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/controller/MessageController.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/model/events/BlocksChangedEvent.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/model/events/BuilderMovedEvent.java" />
@@ -376,13 +368,15 @@
         <option value="$PROJECT_DIR$/src/main/java/game/view/components/AmbientOcclusion.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/view/components/ControlsView.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/view/components/FadingLabel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/game/view/GameControlsPane.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/view/components/DPadGrid.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/view/components/IconButton.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/view/components/InventoryView.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/view/components/TileSquare.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/view/components/TileView.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/view/components/UniformGridPane.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/GameControlsPane.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/MainApplication.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -408,6 +402,9 @@
       </expand>
       <select />
     </treeState>
+  </component>
+  <component name="NamedScopeManager">
+    <scope name="game Package" pattern="(!file[csse2002_ass3]:*&amp;&amp;!file[csse2002_ass3]:*/||file[csse2002_ass3]:src/main/java//*)&amp;&amp;!file[csse2002_ass3]:src/main/java/csse2002/block/world//*" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-210" />
@@ -519,8 +516,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -600,7 +597,7 @@
       <window_info id="Designer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.48728523" visible="true" weight="0.32977462" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.48728523" weight="0.32977462" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4316151" weight="0.33689204" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49140894" weight="0.39976275" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -656,8 +653,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/__temp" />
     </ignored-roots>
-    <MESSAGE value="Cache." />
-    <MESSAGE value="Disable/Enable AO." />
     <MESSAGE value="Remove load map button." />
     <MESSAGE value="Stack controls and inventory vertically, finalise layout." />
     <MESSAGE value="Add docs and one more map." />
@@ -681,7 +676,9 @@
     <MESSAGE value="Update pdf with keyboard control." />
     <MESSAGE value="Finished comments of controller, model and util packages." />
     <MESSAGE value="Fix addListener comment." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix addListener comment." />
+    <MESSAGE value="Comments for components, fixed some other comments. &#10;&#10;Tweaked some implementation details." />
+    <MESSAGE value="Fix some code style issues." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix some code style issues." />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
@@ -739,13 +736,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/zip_structure.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/_BUILD.bat">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1307,17 +1297,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/game/MainApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2591">
-          <caret line="272" column="35" lean-forward="true" selection-start-line="272" selection-start-column="35" selection-end-line="272" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#setKeyBindings#0;class#MainApplication#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/game/controller/MessageController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -1503,7 +1482,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/FadingLabel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="629">
-          <caret line="51" column="8" selection-start-line="51" selection-start-column="8" selection-end-line="51" selection-end-column="8" />
+          <caret line="50" column="8" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="8" />
           <folding>
             <element signature="e#1109#1110#0" expanded="true" />
             <element signature="e#1155#1156#0" expanded="true" />
@@ -1538,7 +1517,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/IconButton.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="205">
-          <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
+          <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
           <folding>
             <element signature="e#316#317#0" expanded="true" />
             <element signature="e#350#351#0" expanded="true" />
@@ -1570,13 +1549,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/TileView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="42" column="40" selection-start-line="42" selection-start-column="40" selection-end-line="42" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/UniformGridPane.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1122">
@@ -1592,8 +1564,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/game/view/GameControlsPane.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="58" selection-start-line="58" selection-end-line="58" />
+        <state relative-caret-position="170">
+          <caret line="92" column="26" selection-start-line="92" selection-start-column="26" selection-end-line="92" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/MainApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="61" column="26" selection-start-line="61" selection-start-column="26" selection-end-line="61" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#setKeyBindings#0;class#MainApplication#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/components/TileView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="477">
+          <caret line="42" column="40" selection-start-line="42" selection-start-column="40" selection-end-line="42" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="31" lean-forward="true" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -1686,7 +1683,7 @@
       </state>
       <state key="ScopeChooserConfigurable.UI">
         <settings>
-          <last-edited>Unnamed</last-edited>
+          <last-edited>game Package</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1694,6 +1691,9 @@
               </list>
             </option>
           </splitter-proportions>
+          <order>
+            <scope name="game Package" />
+          </order>
         </settings>
       </state>
     </states>
