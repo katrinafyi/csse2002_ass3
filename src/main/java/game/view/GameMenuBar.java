@@ -12,6 +12,9 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -43,9 +46,14 @@ public class GameMenuBar extends MenuBar {
 
         MenuItem openMap = new MenuItem("Open…");
         openMap.setOnAction(this::openMapAction);
+        openMap.setAccelerator(
+                new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
         saveMap = new MenuItem("Save");
         saveMap.setDisable(true);
         saveMap.setOnAction(this::saveMapAction);
+        saveMap.setAccelerator(
+                new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+
         saveMapAs = new MenuItem("Save As…");
         saveMapAs.setDisable(true);
         saveMapAs.setOnAction(this::saveMapAsAction);
