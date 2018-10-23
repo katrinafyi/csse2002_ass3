@@ -1,7 +1,6 @@
 package game.view;
 
 import csse2002.block.world.Block;
-import csse2002.block.world.GroundBlock;
 import csse2002.block.world.InvalidBlockException;
 import csse2002.block.world.NoExitException;
 import csse2002.block.world.Tile;
@@ -91,7 +90,7 @@ public class GameControlsPane extends VBox implements ControlsView {
             controller.moveBlock(direction);
         } catch (NoExitException | InvalidBlockException | TooHighException e) {
             List<Block> blocks = model.getCurrentTile().getBlocks();
-            String message = null;
+            String message;
             if (blocks.size() == 0) {
                 message = "You can't move bedrock!";
             } else {

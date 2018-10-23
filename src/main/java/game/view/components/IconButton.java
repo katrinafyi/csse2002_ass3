@@ -1,7 +1,6 @@
 package game.view.components;
 
 import game.util.Cache;
-import game.util.Utilities;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;

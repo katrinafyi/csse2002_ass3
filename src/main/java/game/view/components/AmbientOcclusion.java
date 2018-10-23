@@ -5,7 +5,6 @@ import game.util.Cache;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 

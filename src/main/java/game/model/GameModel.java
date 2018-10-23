@@ -1,11 +1,7 @@
 package game.model;
 
 import csse2002.block.world.Position;
-import csse2002.block.world.Tile;
 import csse2002.block.world.WorldMap;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Concrete implementation of the game's model.

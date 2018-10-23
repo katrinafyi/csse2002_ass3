@@ -4,7 +4,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
-import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 /**

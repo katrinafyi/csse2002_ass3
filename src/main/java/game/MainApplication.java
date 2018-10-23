@@ -59,8 +59,8 @@ public class MainApplication extends Application {
 
     private double verticalExtra;
     private double horizontalExtra;
-    private double hGap = 10;
-    private double gridPadding = 10;
+    private final double hGap = 10;
+    private final double gridPadding = 10;
 
     private boolean debugEnabled = false;
 
