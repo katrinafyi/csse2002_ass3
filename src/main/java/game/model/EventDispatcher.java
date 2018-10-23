@@ -69,6 +69,9 @@ public class EventDispatcher<T> {
             if (eventType == null || Utilities.isInstance(event, eventType)) {
                 for (Consumer<? extends T> listener : eventListeners.get(eventType)) {
                     // Because we check using isInstance, we can be sure that
+                    // this cast succeeds, except if an invalid null listener
+                    // is added.
+
                     //noinspection unchecked
                     ((Consumer<U>)listener).accept(event);
                 }

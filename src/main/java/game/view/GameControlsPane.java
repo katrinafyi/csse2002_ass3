@@ -15,6 +15,7 @@ import game.model.Direction;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BuilderMovedEvent;
 import game.model.events.WorldMapLoadedEvent;
+import game.util.Utilities;
 import game.view.components.ControlsView;
 import game.view.components.DPadGrid;
 import game.view.components.IconButton;
@@ -54,6 +55,7 @@ public class GameControlsPane extends VBox implements ControlsView {
         blockDPad.setCentreImage("file:src/images/iron_shovel_shadow.png");
 
         digButton = new IconButton("file:src/images/iron_pickaxe.png");
+        Utilities.setMaxWidthHeight(digButton);
         digButton.maxWidthProperty().bind(digButton.heightProperty());
         digButton.setOnAction(e -> this.digBlock());
 

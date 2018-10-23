@@ -1,7 +1,7 @@
 package game.view.components;
 
-import game.util.Cache;
 import game.model.Direction;
+import game.util.Cache;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -22,6 +22,7 @@ public class ExitsOverlay extends StackPane {
     }
 
     private final Set<Direction> exitsAdded = new HashSet<>();
+
     public void setHasExit(Direction direction, boolean hasExit) {
         if (hasExit && !exitsAdded.contains(direction)) {
             exitsAdded.add(direction);
@@ -34,6 +35,10 @@ public class ExitsOverlay extends StackPane {
             imageView.fitHeightProperty().bind(prefHeightProperty());
 
             getChildren().add(imageView);
+        }
+        if (!hasExit && exitsAdded.contains(direction)) {
+            throw new UnsupportedOperationException(
+                    "Removing exits is not supported.");
         }
     }
 }
