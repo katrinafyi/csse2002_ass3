@@ -1,10 +1,13 @@
 package game;
 
+import csse2002.block.world.GrassBlock;
+import csse2002.block.world.StoneBlock;
 import game.controller.GameController;
 import game.model.BlockType;
 import game.model.Direction;
 import game.model.GameModel;
 import game.model.events.BaseBlockWorldEvent;
+import game.model.events.BlocksChangedEvent;
 import game.model.events.WorldMapLoadedEvent;
 import game.util.Utilities;
 import game.view.GameControlsPane;
@@ -19,6 +22,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.ColumnConstraints;
@@ -135,6 +139,7 @@ public class MainApplication extends Application {
         scene.setOnKeyPressed(this::keyPressHandler);
 
         primaryStage.setHeight(585);
+        primaryStage.getIcons().add(new Image("file:src/images/icon.png"));
         primaryStage.show();
 
         verticalExtra = primaryStage.getHeight() - scene.getHeight();
@@ -168,6 +173,9 @@ public class MainApplication extends Application {
     }
 
     private void keyPressHandler(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.S && keyEvent.isControlDown()) {
+            return; // Used by save shortcut.
+        }
         // Debug layout.
         // Get and click the equivalent button.
         Button actionButton = keyBindings.get(keyEvent.getCode());
@@ -200,6 +208,19 @@ public class MainApplication extends Application {
                 break;
             case CLOSE_BRACKET:
                 toggleDebugLayout();
+                break;
+            case J: // Creative mode hacks.
+                model.getBuilder().getCurrentTile().getBlocks().add(new StoneBlock());
+                model.notifyListeners(new BlocksChangedEvent(model.getCurrentPosition()));
+                break;
+            case K:
+                model.getBuilder().getCurrentTile().getBlocks().add(new GrassBlock());
+                model.notifyListeners(new BlocksChangedEvent(model.getCurrentPosition()));
+                break;
+            case L:
+                int size = model.getBuilder().getCurrentTile().getBlocks().size();
+                model.getBuilder().getCurrentTile().getBlocks().remove(size-1);
+                model.notifyListeners(new BlocksChangedEvent(model.getCurrentPosition()));
                 break;
         }
     }

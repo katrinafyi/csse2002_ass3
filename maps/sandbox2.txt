@@ -1,7 +1,7 @@
 0
 0
 Test Name
-soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,soil,wood,wood,wood,wood,wood,wood,soil
+soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,soil,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,wood,soil,wood,wood,wood,wood,wood,wood,soil,wood,wood,wood,wood,wood,wood,wood,soil,soil,soil,soil,soil,soil,soil
 
 total:400
 0 soil,grass
@@ -64,7 +64,7 @@ total:400
 57 soil,grass
 58 soil,grass
 59 soil,grass,wood,wood
-60 soil,wood
+60 soil,stone
 61 soil,grass,wood,wood
 62 soil,grass
 63 soil,grass
@@ -75,8 +75,8 @@ total:400
 68 soil,grass
 69 soil,grass
 70 soil,grass,wood,wood
-71 soil,wood
-72 soil,wood
+71 soil,stone
+72 soil,stone
 73 soil,grass,wood,wood
 74 soil,grass
 75 soil,grass
@@ -88,8 +88,8 @@ total:400
 81 soil,grass
 82 soil,grass,wood,wood
 83 wood,wood,wood
-84 soil,wood
-85 soil,wood
+84 soil,stone
+85 soil,stone
 86 soil,grass,wood,wood
 87 soil,grass
 88 soil,grass
@@ -102,7 +102,7 @@ total:400
 95 soil,grass
 96 soil,wood,wood,wood
 97 wood,wood,wood
-98 soil,wood
+98 soil,stone
 99 soil,grass,wood,wood
 100 soil,grass
 101 soil,grass
@@ -116,7 +116,7 @@ total:400
 109 soil,grass
 110 soil,grass
 111 soil,wood,wood,wood
-112 soil,wood
+112 soil,stone
 113 soil,wood
 114 soil,soil
 115 soil,grass
