@@ -277,7 +277,8 @@ public class GameWorldMapView extends UniformGridPane {
             }
         }
         double time = (System.nanoTime()-start)/1000000.0;
-        System.out.println("Frame time: " + time + " ms (" + 1/time*1000 + " fps)");
+        System.out.println("Frame time: " + time + " ms ("
+                + (int)(1/time*1000) + " fps)");
     }
 
     private TileSquare getOrMakeSquare(Position pos) {
