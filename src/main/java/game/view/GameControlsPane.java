@@ -42,7 +42,6 @@ public class GameControlsPane extends VBox implements ControlsView {
         this.messageController = messenger;
 
         model.addListener(BuilderMovedEvent.class, this::updateBuilderCanMove);
-        model.addListener(WorldMapLoadedEvent.class, this::updateBuilderCanMove);
 
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(10);
@@ -76,6 +75,8 @@ public class GameControlsPane extends VBox implements ControlsView {
         try {
             controller.moveBuilder(direction);
         } catch (NoExitException e) {
+            // Because we disable buttons when there is no exit, we know
+            // this exception is caused by incorrect heights.
             int adjHeight = model.getCurrentTile()
                     .getExits().get(direction.name()).getBlocks().size();
             int ourHeight = model.getCurrentTile()

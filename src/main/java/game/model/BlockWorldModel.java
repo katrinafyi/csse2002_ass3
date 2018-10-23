@@ -12,9 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Abstract superclass of the model component for the block world game.*
- * Handles event dispatch and provides some shortcut methods (marked final)
- * to access common getters.
+ * Abstract superclass of the model component for the block world game.
+ * Handles event dispatch and describes functions to manipulate the world map's
+ * state. Contains some shortcut methods (marked final) to for common getters.
  *
  * <p>Implementing classes should manage the state of the world map, as this
  * abstract base class is stateless.</p>
