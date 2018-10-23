@@ -139,7 +139,9 @@ public class MainApplication extends Application {
         scene.setOnKeyPressed(this::keyPressHandler);
 
         primaryStage.setHeight(585);
-        primaryStage.getIcons().add(new Image("file:src/images/icon.png"));
+        for (int i = 0; i < 4; i++) {
+            primaryStage.getIcons().add(new Image("file:src/images/icon"+i+".png"));
+        }
         primaryStage.show();
 
         verticalExtra = primaryStage.getHeight() - scene.getHeight();

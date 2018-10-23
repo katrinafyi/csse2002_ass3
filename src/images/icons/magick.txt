@@ -1,0 +1,1 @@
+magick grass_top2.png ( +clone -background black -shadow 80x3+0+0 ) +swap -background none -layers merge +repage out.png
