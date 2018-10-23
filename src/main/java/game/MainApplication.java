@@ -142,11 +142,12 @@ public class MainApplication extends Application {
         for (int i = 0; i < 4; i++) {
             primaryStage.getIcons().add(new Image("file:src/images/icon"+i+".png"));
         }
+
+        worldMapView.setPrefWidth(495);
+        worldMapView.setPrefHeight(495);
+
         primaryStage.show();
 
-        verticalExtra = primaryStage.getHeight() - scene.getHeight();
-        horizontalExtra = primaryStage.getWidth() - scene.getWidth();
-        System.out.println(verticalExtra + " | " + horizontalExtra);
         primaryStage.setMinWidth(700);
         primaryStage.setMinHeight(585);
     }

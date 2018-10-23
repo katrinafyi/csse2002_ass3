@@ -52,7 +52,6 @@ public class GameWorldMapView extends UniformGridPane {
         tilePanes = new Pane[columns][rows];
 
         Utilities.setBackground(this, Color.SKYBLUE);
-        this.setPrefWidth(495.0); // Multiple of 9.
 
         errorLabel = new FadingLabel(Duration.seconds(1), Duration.millis(500));
         setMessageLabelStyle(errorLabel, "#911414");

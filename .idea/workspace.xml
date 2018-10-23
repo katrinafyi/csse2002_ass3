@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fd610299-18a6-4a5d-9528-5a2463333c8b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/maps/sandbox.txt" beforeDir="false" afterPath="$PROJECT_DIR$/maps/sandbox.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maps/sandbox2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/maps/sandbox2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/csse2002/block/world/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/csse2002/block/world/Tile.java" afterDir="false" />
+    <list default="true" id="fd610299-18a6-4a5d-9528-5a2463333c8b" name="Default Changelist" comment="More icons.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/game/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/game/view/GameWorldMapView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/view/GameWorldMapView.java" afterDir="false" />
     </list>
     <list id="093f0b50-b0a7-4054-930a-a4e79adbc31f" name="Revert &quot;Attempting optimisations.&quot;" comment="Revert &quot;Attempting optimisations.&quot;&#10;&#10;This reverts commit acd8bc7" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -56,7 +55,7 @@
           <entry key="events" value="4" />
           <entry key="gitignore" value="1" />
           <entry key="iml" value="1" />
-          <entry key="java" value="560" />
+          <entry key="java" value="561" />
           <entry key="json" value="2" />
           <entry key="md" value="2" />
           <entry key="model" value="1" />
@@ -74,7 +73,7 @@
           <entry key="CLASS" value="1" />
           <entry key="CSS" value="1" />
           <entry key="IDEA_MODULE" value="1" />
-          <entry key="JAVA" value="560" />
+          <entry key="JAVA" value="561" />
           <entry key="JSON" value="2" />
           <entry key="Markdown" value="2" />
           <entry key="PLAIN_TEXT" value="9" />
@@ -89,11 +88,11 @@
         <counts>
           <entry key="css" value="106" />
           <entry key="dummy" value="1" />
-          <entry key="java" value="95017" />
+          <entry key="java" value="95381" />
           <entry key="json" value="79" />
           <entry key="md" value="10" />
           <entry key="py" value="14" />
-          <entry key="txt" value="5478" />
+          <entry key="txt" value="5545" />
           <entry key="xml" value="178" />
           <entry key="yml" value="341" />
         </counts>
@@ -101,10 +100,10 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="106" />
-          <entry key="JAVA" value="95017" />
+          <entry key="JAVA" value="95381" />
           <entry key="JSON" value="79" />
           <entry key="Markdown" value="10" />
-          <entry key="PLAIN_TEXT" value="5493" />
+          <entry key="PLAIN_TEXT" value="5560" />
           <entry key="XML" value="178" />
           <entry key="YAML" value="341" />
         </counts>
@@ -121,17 +120,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/game/controller/BlockWorldController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
+            <state relative-caret-position="-68">
               <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/game/MainApplication.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="174" column="18" selection-start-line="174" selection-start-column="18" selection-end-line="174" selection-end-column="18" />
+            <state relative-caret-position="284">
+              <caret line="166" column="28" lean-forward="true" selection-start-line="166" selection-start-column="28" selection-end-line="166" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#setKeyBindings#0;class#MainApplication#0" />
@@ -140,13 +139,12 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/csse2002/block/world/Tile.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="318">
-              <caret line="292" column="9" selection-start-line="292" selection-start-column="9" selection-end-line="292" selection-end-column="9" />
+              <caret line="110" selection-start-line="110" selection-end-line="110" />
               <folding>
-                <element signature="e#3714#3715#0" expanded="true" />
                 <element signature="e#3778#3779#0" expanded="true" />
               </folding>
             </state>
@@ -203,8 +201,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/game/view/GameWorldMapView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-209">
-              <caret line="283" column="9" selection-start-line="283" selection-start-column="9" selection-end-line="283" selection-end-column="9" />
+            <state relative-caret-position="335">
+              <caret line="78" column="25" selection-start-line="78" selection-start-column="25" selection-end-line="78" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3711#3712#0" expanded="true" />
@@ -361,10 +359,10 @@
         <option value="$PROJECT_DIR$/src/main/java/game/util/Cache.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/view/components/TileSquare.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/view/GameMenuBar.java" />
-        <option value="$PROJECT_DIR$/src/main/java/game/view/GameWorldMapView.java" />
         <option value="$PROJECT_DIR$/src/main/java/game/view/GameControlsPane.java" />
-        <option value="$PROJECT_DIR$/src/main/java/game/MainApplication.java" />
         <option value="$PROJECT_DIR$/src/main/java/csse2002/block/world/Tile.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/view/GameWorldMapView.java" />
+        <option value="$PROJECT_DIR$/src/main/java/game/MainApplication.java" />
       </list>
     </option>
   </component>
@@ -589,7 +587,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1513" height="973" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29003435" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -652,9 +649,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/__temp" />
     </ignored-roots>
-    <MESSAGE value="Lowercase public fields." />
-    <MESSAGE value="Use panes to hold TileSquares." />
-    <MESSAGE value="Utilities method." />
     <MESSAGE value="Remove unused code, fix panes updating/clearing." />
     <MESSAGE value="Remove FastGridPane." />
     <MESSAGE value="Add pyramid2 map." />
@@ -677,7 +671,10 @@
     <MESSAGE value="Keyboard shortcuts." />
     <MESSAGE value="Round fps." />
     <MESSAGE value="More specific dig error message." />
-    <option name="LAST_COMMIT_MESSAGE" value="More specific dig error message." />
+    <MESSAGE value="Add icons and update sandbox maps." />
+    <MESSAGE value="Add resources." />
+    <MESSAGE value="More icons." />
+    <option name="LAST_COMMIT_MESSAGE" value="More icons." />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
@@ -1471,47 +1468,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/game/controller/BlockWorldController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/game/view/GameMenuBar.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-85">
           <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/GameWorldMapView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-209">
-          <caret line="283" column="9" selection-start-line="283" selection-start-column="9" selection-end-line="283" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3711#3712#0" expanded="true" />
-            <element signature="e#3746#3747#0" expanded="true" />
-            <element signature="e#3922#3923#0" expanded="true" />
-            <element signature="e#3959#3960#0" expanded="true" />
-            <element signature="e#4147#4148#0" expanded="true" />
-            <element signature="e#4188#4189#0" expanded="true" />
-            <element signature="e#5627#5628#0" expanded="true" />
-            <element signature="e#5686#5687#0" expanded="true" />
-            <element signature="e#7928#7955#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/game/MainApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="174" column="18" selection-start-line="174" selection-start-column="18" selection-end-line="174" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#setKeyBindings#0;class#MainApplication#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1543,10 +1503,46 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/csse2002/block/world/Tile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="318">
-          <caret line="292" column="9" selection-start-line="292" selection-start-column="9" selection-end-line="292" selection-end-column="9" />
+          <caret line="110" selection-start-line="110" selection-end-line="110" />
           <folding>
-            <element signature="e#3714#3715#0" expanded="true" />
             <element signature="e#3778#3779#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/controller/BlockWorldController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-68">
+          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/view/GameWorldMapView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="78" column="25" selection-start-line="78" selection-start-column="25" selection-end-line="78" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3711#3712#0" expanded="true" />
+            <element signature="e#3746#3747#0" expanded="true" />
+            <element signature="e#3922#3923#0" expanded="true" />
+            <element signature="e#3959#3960#0" expanded="true" />
+            <element signature="e#4147#4148#0" expanded="true" />
+            <element signature="e#4188#4189#0" expanded="true" />
+            <element signature="e#5627#5628#0" expanded="true" />
+            <element signature="e#5686#5687#0" expanded="true" />
+            <element signature="e#7928#7955#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/MainApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="166" column="28" lean-forward="true" selection-start-line="166" selection-start-column="28" selection-end-line="166" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#setKeyBindings#0;class#MainApplication#0" />
           </folding>
         </state>
       </provider>
