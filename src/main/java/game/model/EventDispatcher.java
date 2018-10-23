@@ -35,7 +35,7 @@ public class EventDispatcher<T> {
      * <p>
      * If eventType is null, the listener will be fired for all events.
      * In this case, the listener must accept a superclass of all event types
-     * (for example, {@link }
+     * (for example, {@link T} or {@link Object}).
      * </p>
      * @param eventType Event type or null for any event.
      * @param listener Callback accepting an event object.
