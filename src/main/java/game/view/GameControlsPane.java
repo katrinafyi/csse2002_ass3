@@ -98,7 +98,7 @@ public class GameControlsPane extends VBox implements ControlsView {
                 if (!topBlock.isMoveable()) {
                     message = "You can't move " + BlockType.fromBlock(topBlock) + "!";
                 } else {
-                    message = "There's another block in the way!";
+                    message = "There's a block in the way!";
                 }
             }
             messageController.handleErrorMessage(message);
@@ -108,18 +108,21 @@ public class GameControlsPane extends VBox implements ControlsView {
     private void digBlock() {
         try {
             controller.dig();
-        } catch (InvalidBlockException e) {
-            BlockType block;
-            try {
-                block = BlockType.fromBlock(
-                        model.getCurrentTile().getTopBlock());
-            } catch (TooLowException e1) {
-                throw new AssertionError(e1);
-            }
-            messageController.handleErrorMessage("You can't dig "+block+"!");
-        } catch (TooLowException e) {
-            messageController.handleErrorMessage("You can't dig bedrock!");
+        } catch (InvalidBlockException | TooLowException e) {
+            messageController.handleErrorMessage(
+                    "You can't dig "+topBlockName()+"!");
         }
+    }
+
+    private String topBlockName() {
+        Tile tile = model.getCurrentTile();
+        Block block = null;
+        if (tile.getBlocks().size() > 0) {
+            try {
+                block = tile.getTopBlock();
+            } catch (TooLowException ignored) {}
+        }
+        return block == null ? "bedrock" : BlockType.fromBlock(block).name();
     }
 
     @Override
