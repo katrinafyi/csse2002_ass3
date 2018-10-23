@@ -1,6 +1,5 @@
 package game.util;
 
-import csse2002.block.world.Position;
 import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,57 +14,95 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
+/**
+ * Miscellaneous common functions relating to JavaFX and other things.
+ */
 public class Utilities {
+    /**
+     * Sets both the maximum width and height of the given region to
+     * {@link Double#MAX_VALUE}.
+     * @param region Region to operate on.
+     */
     public static void setMaxWidthHeight(Region region) {
         region.setMaxWidth(Double.MAX_VALUE);
         region.setMaxHeight(Double.MAX_VALUE);
     }
 
-    public static Position addPos(Position p1, Position p2) {
-        return new Position(p1.getX()+p2.getX(), p1.getY()+p2.getY());
+    /**
+     * Sets the background of the given region to a solid colour.
+     * @param region Region to set background of.
+     * @param color Background colour.
+     */
+    public static void setBackground(Region region, Color color) {
+        region.setBackground(new Background(new BackgroundFill(
+                color, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
-    public static Position negPos(Position p) {
-        return new Position(-p.getX(), -p.getY());
+    /**
+     * Sets the border of the given region to a solid colour.
+     * @param region Region to set border of.
+     * @param color Border colour.
+     */
+    public static void setBorder(Region region, Color color) {
+        region.setBorder(new Border(new BorderStroke(color,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.THIN)));
     }
 
-    public static Position subPos(Position p1, Position p2) {
-        return addPos(p1, negPos(p2));
+    /**
+     * Binds the min/max width/height of the given node to their preferred
+     * values.
+     * @param node Region to alter.
+     */
+    public static void usePrefWidthHeight(Region node) {
+        node.setMinWidth(Control.USE_PREF_SIZE);
+        node.setMaxWidth(Control.USE_PREF_SIZE);
+        node.setMinHeight(Control.USE_PREF_SIZE);
+        node.setMaxHeight(Control.USE_PREF_SIZE);
     }
 
-    public static boolean isInstance(Object object, Class<?> superclass) {
-        return superclass.isAssignableFrom(object.getClass());
-    }
-
-    public static String capitalise(String s) {
-        // From https://stackoverflow.com/a/5725949
-        return s.substring(0, 1).toUpperCase() + s.substring(1);
-    }
-
+    /**
+     * Adds a listener to the given property, which only fires after the pause
+     * transition has elapsed and no changes to the property have occurred.
+     *
+     * <p>
+     *     This prevents excessive calls to expensive layout computations.
+     *     Inspired by underscore.js's debounce() function.
+     * </p>
+     * @param pause Transition to pause on.
+     * @param property Property to observe.
+     * @param listener Callback.
+     * @param <T> Type of property.
+     */
     public static <T> void delayBinding(PauseTransition pause,
                                         ObservableValue<T> property,
                                         ChangeListener<? super T> listener) {
-        System.out.println(pause);
         property.addListener((prop, oldValue, newValue) -> {
             pause.setOnFinished(e -> listener.changed(prop, oldValue, newValue));
             pause.playFromStart();
         });
     }
 
-    public static void setBackground(Region region, Color color) {
-        region.setBackground(new Background(new BackgroundFill(
-                color, CornerRadii.EMPTY, Insets.EMPTY)));
+    /**
+     * Checks if the given object is an instance of, or some subclass of,
+     * the superclass.
+     *
+     * <p>Essentially equivalent to Python's
+     * {@literal isinstance(object, superclass)}</p>
+     * @param object Object to test.
+     * @param superclass Superclass object.
+     * @return Whether object is some superclass of the given class.
+     */
+    public static boolean isInstance(Object object, Class<?> superclass) {
+        return superclass.isAssignableFrom(object.getClass());
     }
 
-    public static void setBorder(Region region, Color color) {
-        region.setBorder(new Border(new BorderStroke(color,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.THIN)));
-    }
-
-    public static void usePrefWidthHeight(Region node) {
-        node.setMinWidth(Control.USE_PREF_SIZE);
-        node.setMaxWidth(Control.USE_PREF_SIZE);
-        node.setMinHeight(Control.USE_PREF_SIZE);
-        node.setMaxHeight(Control.USE_PREF_SIZE);
+    /**
+     * Returns the given string with its first letter capitalised.
+     * @param string String.
+     * @return String with first letter capitalised.
+     */
+    public static String capitalise(String string) {
+        // From https://stackoverflow.com/a/5725949
+        return string.substring(0, 1).toUpperCase() + string.substring(1);
     }
 }

@@ -61,7 +61,7 @@ public class GameControlsPane extends VBox implements ControlsView {
     }
 
     private void updateBuilderCanMove(BaseBlockWorldEvent event) {
-        Map<String, Tile> exits = model.getBuilder().getCurrentTile().getExits();
+        Map<String, Tile> exits = model.getCurrentTile().getExits();
         for (Direction dir : Direction.values()) {
             boolean hasExit = exits.containsKey(dir.name());
 
@@ -75,9 +75,9 @@ public class GameControlsPane extends VBox implements ControlsView {
         try {
             controller.moveBuilder(direction);
         } catch (NoExitException e) {
-            int adjHeight = model.getBuilder().getCurrentTile()
+            int adjHeight = model.getCurrentTile()
                     .getExits().get(direction.name()).getBlocks().size();
-            int ourHeight = model.getBuilder().getCurrentTile()
+            int ourHeight = model.getCurrentTile()
                     .getBlocks().size();
             String relation = adjHeight > ourHeight ? "high" : "low";
             messageController.handleErrorMessage("It's too "+relation+"!");
@@ -88,7 +88,7 @@ public class GameControlsPane extends VBox implements ControlsView {
         try {
             controller.moveBlock(direction);
         } catch (NoExitException | InvalidBlockException | TooHighException e) {
-            List<Block> blocks = model.getBuilder().getCurrentTile().getBlocks();
+            List<Block> blocks = model.getCurrentTile().getBlocks();
             String message = null;
             if (blocks.size() == 0) {
                 message = "You can't move bedrock!";
@@ -111,7 +111,7 @@ public class GameControlsPane extends VBox implements ControlsView {
             BlockType block;
             try {
                 block = BlockType.fromBlock(
-                        model.getBuilder().getCurrentTile().getTopBlock());
+                        model.getCurrentTile().getTopBlock());
             } catch (TooLowException e1) {
                 throw new AssertionError(e1);
             }

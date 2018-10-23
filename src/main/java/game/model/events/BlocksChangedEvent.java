@@ -7,7 +7,7 @@ import csse2002.block.world.Position;
  */
 public class BlocksChangedEvent extends TileEvent {
     /**
-     * Construct a new event
+     * Construct a new event representing a change at a position.
      * @param position Position of changed tile.
      */
     public BlocksChangedEvent(Position position) {

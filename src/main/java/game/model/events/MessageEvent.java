@@ -1,7 +1,7 @@
 package game.model.events;
 
 /**
- * A non-error message event.
+ * An informational (non-error) message event.
  */
 public class MessageEvent extends BaseMessageEvent {
     /**

@@ -11,7 +11,7 @@ public interface MessageController {
     void handleErrorMessage(String errorMessage);
 
     /**
-     * Handle an informational message with the given message.
+     * Handle an informational message.
      * @param message Message text.
      */
     void handleInfoMessage(String message);

@@ -2,6 +2,9 @@ package game.model;
 
 import csse2002.block.world.Position;
 
+/**
+ * Enum representing the four cardinal directions.
+ */
 public enum Direction {
     north(0, -1),
     east(1, 0),
@@ -16,6 +19,10 @@ public enum Direction {
         this.y = y;
     }
 
+    /**
+     * Returns this direction as a relative position shift.
+     * @return Position object.
+     */
     public Position asPosition() {
         return new Position(x, y);
     }

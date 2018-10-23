@@ -19,7 +19,7 @@ import game.model.events.ErrorEvent;
 import game.model.events.InventoryChangedEvent;
 import game.model.events.MessageEvent;
 import game.model.events.WorldMapLoadedEvent;
-import game.util.Utilities;
+import game.util.Positions;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -100,23 +100,38 @@ public class GameController
         model.notifyListeners(new BuilderMovedEvent(dir));
     }
 
+    /**
+     * Fires an {@link InventoryChangedEvent}.
+     */
     private void fireInventoryChanged() {
         model.notifyListeners(new InventoryChangedEvent());
     }
 
     //region  ### Implemented world interaction functions ###
+
+    /**
+     * Moves the builder in the given direction.
+     * @param direction Direction.
+     * @throws NoExitException No exit or heights incompatible.
+     */
     @Override
     public void moveBuilder(Direction direction) throws NoExitException {
-        Tile newTile = model.getBuilder().getCurrentTile()
+        Tile newTile = model.getCurrentTile()
                 .getExits().get(direction.name());
         model.getBuilder().moveTo(newTile);
 
-        model.setCurrentPosition(Utilities.addPos(
+        model.setCurrentPosition(Positions.add(
                 model.getCurrentPosition(), direction.asPosition()));
 
         fireBuilderMoved(direction);
     }
 
+    /**
+     * Digs on the current tile and if the block can be carried, adds it to the
+     * builder's inventory.
+     * @throws InvalidBlockException Block can't be dug.
+     * @throws TooLowException No blocks on tile.
+     */
     @Override
     public void dig() throws InvalidBlockException, TooLowException {
         model.getBuilder().digOnCurrentTile();
@@ -124,12 +139,19 @@ public class GameController
         fireInventoryChanged();
     }
 
+    /**
+     * Moves the top block of the current tile in the given direction.
+     * @param direction Direction.
+     * @throws NoExitException No exit in that direction.
+     * @throws InvalidBlockException Block can't be moved.
+     * @throws TooHighException Other tile is not lower than current one.
+     */
     @Override
     public void moveBlock(Direction direction)
             throws NoExitException, InvalidBlockException, TooHighException {
-        model.getBuilder().getCurrentTile().moveBlock(direction.name());
+        model.getCurrentTile().moveBlock(direction.name());
 
-        Position adjacent = Utilities.addPos(model.getCurrentPosition(),
+        Position adjacent = Positions.add(model.getCurrentPosition(),
                 direction.asPosition());
 
         // Update the current tile and the tile we moved the block to.
@@ -137,12 +159,19 @@ public class GameController
         fireBlocksChanged(adjacent);
     }
 
+    /**
+     * Places block on top of the current tile.
+     * @param blockType Block type to place.
+     * @throws NoSuchElementException Inventory does not contain given block.
+     * @throws TooHighException Tile height too high for block type.
+     * @see Tile#placeBlock(Block)
+     */
     @Override
     public void placeBlock(BlockType blockType)
             throws NoSuchElementException, TooHighException {
         List<Block> inventory = model.getBuilder().getInventory();
         for (int i = 0; i < inventory.size(); i++) {
-            if (blockType.blockClass.isAssignableFrom(inventory.get(i).getClass())) {
+            if (BlockType.fromBlock(inventory.get(i)) == blockType) {
                 try {
                     model.getBuilder().dropFromInventory(i);
                 } catch (InvalidBlockException e) {
@@ -158,12 +187,20 @@ public class GameController
     }
     //endregion
 
+    /**
+     * Handles an error message by dispatching an event to the model.
+     * @param errorMessage Error message.
+     */
     @Override
     public void handleErrorMessage(String errorMessage) {
         System.out.println("Firing error event: " + errorMessage);
         model.notifyListeners(new ErrorEvent(errorMessage));
     }
 
+    /**
+     * Handles an informational message by dispatching an event to the model.
+     * @param message Message text.
+     */
     @Override
     public void handleInfoMessage(String message) {
         model.notifyListeners(new MessageEvent(message));

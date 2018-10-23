@@ -213,16 +213,16 @@ public class MainApplication extends Application {
                 toggleDebugLayout();
                 break;
             case J: // Creative mode hacks.
-                model.getBuilder().getCurrentTile().getBlocks().add(new StoneBlock());
+                model.getCurrentTile().getBlocks().add(new StoneBlock());
                 model.notifyListeners(new BlocksChangedEvent(model.getCurrentPosition()));
                 break;
             case K:
-                model.getBuilder().getCurrentTile().getBlocks().add(new GrassBlock());
+                model.getCurrentTile().getBlocks().add(new GrassBlock());
                 model.notifyListeners(new BlocksChangedEvent(model.getCurrentPosition()));
                 break;
             case L:
-                int size = model.getBuilder().getCurrentTile().getBlocks().size();
-                model.getBuilder().getCurrentTile().getBlocks().remove(size-1);
+                int size = model.getCurrentTile().getBlocks().size();
+                model.getCurrentTile().getBlocks().remove(size-1);
                 model.notifyListeners(new BlocksChangedEvent(model.getCurrentPosition()));
                 break;
         }
