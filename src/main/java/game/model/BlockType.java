@@ -34,7 +34,10 @@ public enum BlockType {
         }
     }
 
-    /** Private constructor. */
+    /**
+     * New BlockType value.
+     * @param blockClass Block's class type.
+     */
     BlockType(Class<? extends Block> blockClass) {
         this.blockClass = blockClass;
     }

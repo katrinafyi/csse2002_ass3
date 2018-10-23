@@ -16,7 +16,7 @@ import java.util.Map;
  * Implementing classes should manage the state of the world map.
  *
  * Handles event dispatch and provides some shortcut methods (marked final)
- * to access common getters.
+ * to access common getters. This abstract class is stateless.
  */
 public abstract class BlockWorldModel extends EventDispatcher<BaseBlockWorldEvent> {
     /**
@@ -31,8 +31,16 @@ public abstract class BlockWorldModel extends EventDispatcher<BaseBlockWorldEven
      */
     public abstract void setWorldMap(WorldMap worldMap);
 
+    /**
+     * Gets the position the builder is currently at.
+     * @return Builder's current position.
+     */
     public abstract Position getCurrentPosition();
 
+    /**
+     * Sets the position the builder is currently at.
+     * @param currentPosition Builder's current position.
+     */
     public abstract void setCurrentPosition(Position currentPosition);
 
     // This method and ones later below are marked final because they are

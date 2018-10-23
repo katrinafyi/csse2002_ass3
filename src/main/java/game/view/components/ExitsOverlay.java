@@ -11,8 +11,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * An overlay for directional exits for a particular tile.
+ */
 public class ExitsOverlay extends StackPane {
-    private static final String TRIANGLE_OVERLAY = "file:src/images/triangle_overlay.png";
+    /** Path to triangle image. Image is pointing north. */
+    private static final String
+            TRIANGLE_OVERLAY = "file:src/images/triangle_overlay.png";
+    /** Map of Direction to that direction's rotation for the image. */
     private static final Map<Direction, Integer> rotation = new HashMap<>();
     static {
         rotation.put(Direction.north, 0);
@@ -21,8 +27,14 @@ public class ExitsOverlay extends StackPane {
         rotation.put(Direction.west, 270);
     }
 
+    /** Directions whose exits have already been added to this overlay. */
     private final Set<Direction> exitsAdded = new HashSet<>();
 
+    /**
+     * Sets whether an exit is present in the given direction.
+     * @param direction Direction of exit.
+     * @param hasExit Whether exit is present.
+     */
     public void setHasExit(Direction direction, boolean hasExit) {
         if (hasExit && !exitsAdded.contains(direction)) {
             exitsAdded.add(direction);
@@ -36,6 +48,8 @@ public class ExitsOverlay extends StackPane {
 
             getChildren().add(imageView);
         }
+        // We don't need to support this because exits can't be removed
+        // from a tile once its been loaded. Throw just in case.
         if (!hasExit && exitsAdded.contains(direction)) {
             throw new UnsupportedOperationException(
                     "Removing exits is not supported.");

@@ -183,7 +183,7 @@ public class GameController
             }
         }
         throw new NoSuchElementException(
-                "No block of type "+blockType.name()+" in the builder's inventory.");
+                "No block of type "+blockType+" in the builder's inventory.");
     }
     //endregion
 

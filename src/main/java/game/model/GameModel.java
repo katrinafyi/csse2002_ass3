@@ -5,6 +5,7 @@ import csse2002.block.world.WorldMap;
 
 /**
  * Concrete implementation of the game's model.
+ * Only a thin wrapper around the assignment 2 classes.
  */
 public class GameModel extends BlockWorldModel {
     /** Current world map. */

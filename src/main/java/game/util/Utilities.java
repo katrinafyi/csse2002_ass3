@@ -66,7 +66,7 @@ public class Utilities {
      *
      * <p>
      *     This prevents excessive calls to expensive layout computations.
-     *     Inspired by underscore.js's debounce() function.
+     *     Inspired by underscore.js's {@code debounce()} function.
      * </p>
      * @param pause Transition to pause on.
      * @param property Property to observe.
@@ -87,7 +87,7 @@ public class Utilities {
      * the superclass.
      *
      * <p>Essentially equivalent to Python's
-     * {@literal isinstance(object, superclass)}</p>
+     * {@code isinstance(object, superclass)}</p>
      * @param object Object to test.
      * @param superclass Superclass object.
      * @return Whether object is some superclass of the given class.

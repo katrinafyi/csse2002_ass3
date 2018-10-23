@@ -11,7 +11,7 @@ import java.util.function.Function;
  * Caches and returns results of the given generator function when
  * {@link #get(Object)} is called.
  *
- * <p>Essentially, this is Python's {@literal collections.defaultdict}.</p>
+ * <p>Essentially, this is Python's {@code collections.defaultdict}.</p>
  * @param <K> Key type (function input).
  * @param <V> Value type (result of function).
  */
@@ -22,7 +22,7 @@ public class Cache<K, V> extends HashMap<K, V> {
     private static final Cache<String, Image> imageCache = new Cache<>(Image::new);
 
     /**
-     * Function to cache results of.
+     * Function to cache results of. Used to generate missing values.
      */
     private final Function<K, V> defaultGenerator;
 
