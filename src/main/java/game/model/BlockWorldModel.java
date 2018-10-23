@@ -12,11 +12,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Abstract superclass of the model component for the block world game.
- * Implementing classes should manage the state of the world map.
- *
+ * Abstract superclass of the model component for the block world game.*
  * Handles event dispatch and provides some shortcut methods (marked final)
- * to access common getters. This abstract class is stateless.
+ * to access common getters.
+ *
+ * <p>Implementing classes should manage the state of the world map, as this
+ * abstract base class is stateless.</p>
+ *
+ * <p>This is an abstract class because it needs to extend {@link EventDispatcher}.
+ * In MVC, classes which use the model always need both its state and events
+ * so it is reasonable to tie them together.</p>
  */
 public abstract class BlockWorldModel extends EventDispatcher<BaseBlockWorldEvent> {
     /**

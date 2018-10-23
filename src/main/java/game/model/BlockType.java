@@ -11,6 +11,10 @@ import java.util.Map;
 
 /**
  * Enum representing all the valid block types defined in the game.
+ *
+ * This enum isn't strictly necessary, we could have used
+ * {@code Class<? extends Block>} everywhere this enum is used, but that's
+ * not as neat.
  */
 public enum BlockType {
     /** Wood block type. */
