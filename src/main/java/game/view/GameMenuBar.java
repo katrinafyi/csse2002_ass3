@@ -96,7 +96,7 @@ public class GameMenuBar extends MenuBar {
         } catch (WorldMapInconsistentException e) {
             messenger.handleErrorMessage("Error loading map: World map inconsistent.");
         } catch (WorldMapFormatException e) {
-            messenger.handleErrorMessage("Error loading map: Invalid world map format.");
+            messenger.handleErrorMessage("Error loading map: " + e.getMessage());
         } catch (FileNotFoundException e) {
             messenger.handleErrorMessage("Error loading map: File not found.");
         }

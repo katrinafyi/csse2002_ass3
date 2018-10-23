@@ -18,7 +18,7 @@ public class FadingLabel extends Label {
 
     /**
      * Construct a new {@link FadingLabel} which stays visible for the duration
-     * of {@code visible}, then fades to transparent over the duraction of
+     * of {@code visible}, then fades to transparent over the duration of
      * {@code fade}.
      * @param visible Visible duration.
      * @param fade Fade duration.

@@ -54,8 +54,10 @@ public class GameWorldMapView extends UniformGridPane {
         Utilities.setBackground(this, Color.SKYBLUE);
 
         errorLabel = new FadingLabel(Duration.seconds(1), Duration.millis(500));
+        errorLabel.setWrapText(true);
         setMessageLabelStyle(errorLabel, "#911414");
         successLabel = new FadingLabel(Duration.seconds(1), Duration.millis(500));
+        successLabel.setWrapText(true);
         setMessageLabelStyle(successLabel, "#167708");
 
         errorPane = new StackPane();
@@ -92,8 +94,9 @@ public class GameWorldMapView extends UniformGridPane {
     }
 
     private void drawMessageLabels() {
-        add(errorPane, 0, 3, columns, 1);
-        add(successPane, 0, 3, columns, 1);
+        // Span 3 rows to handle longer messages.
+        add(errorPane, 0, 2, columns, 3);
+        add(successPane, 0, 2, columns, 3);
     }
 
     public boolean isExitsVisible() {
