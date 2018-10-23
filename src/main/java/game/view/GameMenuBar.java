@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Paths;
 
 public class GameMenuBar extends MenuBar {
@@ -96,7 +97,11 @@ public class GameMenuBar extends MenuBar {
         } catch (WorldMapInconsistentException e) {
             messenger.handleErrorMessage("Error loading map: World map inconsistent.");
         } catch (WorldMapFormatException e) {
-            messenger.handleErrorMessage("Error loading map: " + e.getMessage());
+            String details = e.getMessage();
+            if (details == null) {
+                details = "Invalid format.";
+            }
+            messenger.handleErrorMessage("Error loading map: " + details);
         } catch (FileNotFoundException e) {
             messenger.handleErrorMessage("Error loading map: File not found.");
         }
@@ -118,7 +123,7 @@ public class GameMenuBar extends MenuBar {
         try {
             controller.saveWorldMapFile(currentFile.getAbsolutePath());
             messenger.handleInfoMessage("World map saved!");
-        } catch (Exception e) {
+        } catch (IOException e) {
             messenger.handleErrorMessage("Error saving map: "+e);
         }
     }
