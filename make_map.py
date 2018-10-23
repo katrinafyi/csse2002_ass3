@@ -18,9 +18,7 @@ def main():
 
     with open('maps/test.map', 'w') as f:
         f.write('0\n0\nTest Name\n')
-        f.write(','.join(('wood', )*100))
-        f.write(',')
-        f.write(','.join(('soil', )*100))
+        f.write(','.join(('wood,soil', )*200))
         f.write(f'\n\ntotal:{WIDTH**2}\n')
 
         i = 0
