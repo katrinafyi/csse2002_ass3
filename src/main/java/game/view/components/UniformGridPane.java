@@ -15,7 +15,7 @@ public class UniformGridPane extends GridPane {
     /** Number of rows. */
     public final int rows;
 
-    /** Half number of colunms. */
+    /** Half number of columns. */
     public final int halfCols;
     /** Half number of rows. */
     public final int halfRows;

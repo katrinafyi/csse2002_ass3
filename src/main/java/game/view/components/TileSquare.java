@@ -169,7 +169,8 @@ public class TileSquare extends StackPane implements TileView {
     }
 
     /**
-     * Gets the ambient occlusion overlay of tile tile.
+     * Gets the ambient occlusion overlay of this tile.
+     * @return Ambient occlusion overlay.
      */
     public AmbientOcclusion getAmbientOcclusion() {
         return ambientOcclusion;
