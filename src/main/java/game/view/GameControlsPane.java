@@ -1,5 +1,7 @@
 package game.view;
 
+import csse2002.block.world.Block;
+import csse2002.block.world.GroundBlock;
 import csse2002.block.world.InvalidBlockException;
 import csse2002.block.world.NoExitException;
 import csse2002.block.world.Tile;
@@ -7,6 +9,7 @@ import csse2002.block.world.TooHighException;
 import csse2002.block.world.TooLowException;
 import game.controller.BlockWorldController;
 import game.controller.MessageController;
+import game.model.BlockType;
 import game.model.BlockWorldModel;
 import game.model.Direction;
 import game.model.events.BaseBlockWorldEvent;
@@ -19,6 +22,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
+import java.util.List;
 import java.util.Map;
 
 public class GameControlsPane extends VBox implements ControlsView {
@@ -71,7 +75,12 @@ public class GameControlsPane extends VBox implements ControlsView {
         try {
             controller.moveBuilder(direction);
         } catch (NoExitException e) {
-            messageController.handleErrorMessage("It's too high!");
+            int adjHeight = model.getBuilder().getCurrentTile()
+                    .getExits().get(direction.name()).getBlocks().size();
+            int ourHeight = model.getBuilder().getCurrentTile()
+                    .getBlocks().size();
+            String relation = adjHeight > ourHeight ? "high" : "low";
+            messageController.handleErrorMessage("It's too "+relation+"!");
         }
     }
 
@@ -79,7 +88,19 @@ public class GameControlsPane extends VBox implements ControlsView {
         try {
             controller.moveBlock(direction);
         } catch (NoExitException | InvalidBlockException | TooHighException e) {
-            messageController.handleErrorMessage("You can't move this block there!");
+            List<Block> blocks = model.getBuilder().getCurrentTile().getBlocks();
+            String message = null;
+            if (blocks.size() == 0) {
+                message = "You can't move bedrock!";
+            } else {
+                Block topBlock = blocks.get(blocks.size()-1);
+                if (!topBlock.isMoveable()) {
+                    message = "You can't move " + BlockType.fromBlock(topBlock) + "!";
+                } else {
+                    message = "There's another block in the way!";
+                }
+            }
+            messageController.handleErrorMessage(message);
         }
     }
 
