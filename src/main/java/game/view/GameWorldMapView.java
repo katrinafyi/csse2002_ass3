@@ -30,22 +30,41 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Main view of the game's world map. Implemented as a square 9x9 grid of
+ * {@link Pane} instances, each containing a {@link TileSquare}.
+ */
 public class GameWorldMapView extends UniformGridPane {
+    /** Mapping of position to tile square instances. */
     private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
+    /** Cache of tile heights, used for computing AO. */
     private final Cache<Position, Integer> tileHeights = new Cache<>(this::getTileHeight);
+    /** 2-dimensional array of tile panes. Indexed as tilePanes[col][row]. */
     private final Pane[][] tilePanes;
 
+    /** Model to use for getting world map state. */
     private final BlockWorldModel model;
 
+    /** Label for showing success messages. Coloured green. */
     private final FadingLabel successLabel;
+    /** Label for showing error messages. Coloured red. */
     private final FadingLabel errorLabel;
+    /** Pane containing and aligning the success label. */
     private final StackPane successPane;
+    /** Pane containing and aligning the error label. */
     private final StackPane errorPane;
 
+    /** Whether tile exits are currently visible. */
     private boolean exitsVisible = false;
+    /** Whether tile heights are currently visible. */
     private boolean heightsVisible = false;
+    /** Whether ambient occlusion is currently enabled. */
     private boolean ambientOcclusionOn = true;
 
+    /**
+     * Constructs a new world map view from the given model.
+     * @param model Game model.
+     */
     public GameWorldMapView(BlockWorldModel model) {
         super(9, 9, 0);
         this.model = model;
@@ -78,6 +97,12 @@ public class GameWorldMapView extends UniformGridPane {
 
         Utilities.usePrefWidthHeight(this);
 
+        add(errorPane, 0, 2, columns, 3);
+        add(successPane, 0, 2, columns, 3);
+
+        // Generate panes in each cell for holding the tile squares.
+        // Faster than adding tiles to grid directly as the panes fix the
+        // size of the grid when altering tiles.
         for (int c = 0; c < columns; c++) {
             for (int r = 0; r < rows; r++) {
                 Pane p = new Pane();
@@ -88,47 +113,69 @@ public class GameWorldMapView extends UniformGridPane {
                 add(p, c, r);
             }
         }
-        drawMessageLabels();
     }
 
-    private void drawMessageLabels() {
-        // Span 3 rows to handle longer messages.
-        add(errorPane, 0, 2, columns, 3);
-        add(successPane, 0, 2, columns, 3);
-    }
-
+    /**
+     * Returns whether exits are currently visible on tiles.
+     * @return Boolean.
+     */
     public boolean isExitsVisible() {
         return exitsVisible;
     }
 
+    /**
+     * Sets the visibility of exits.
+     * @param exitsVisible Whether exits are visible.
+     */
     public void setExitsVisible(boolean exitsVisible) {
         this.exitsVisible = exitsVisible;
         updateVisibilities();
     }
 
+    /**
+     * Returns whether heights are currently visible on tiles.
+     * @return Boolean.
+     */
     public boolean isHeightsVisible() {
         return heightsVisible;
     }
 
+    /**
+     * Sets the visibility of heights.
+     * @param heightsVisible Whether heights are visible.
+     */
     public void setHeightsVisible(boolean heightsVisible) {
         this.heightsVisible = heightsVisible;
         updateVisibilities();
     }
 
+    /**
+     * Returns whether ambient occlusion is currently enabled.
+     * @return Boolean.
+     */
     public boolean isAmbientOcclusionOn() {
         return ambientOcclusionOn;
     }
 
+    /**
+     * Sets ambient occlusion.
+     * @param ambientOcclusionOn Whether ambient occlusion is enabled.
+     */
     public void setAmbientOcclusionOn(boolean ambientOcclusionOn) {
         this.ambientOcclusionOn = ambientOcclusionOn;
         updateVisibilities();
     }
 
+    /**
+     * Resizes
+     * @param obs
+     * @param oldValue
+     * @param newValue
+     */
     @SuppressWarnings("unused")
     private void resizeChildren(ObservableValue<? extends Number> obs,
                                 Number oldValue, Number newValue) {
         if (model.getCurrentPosition() != null) {
-            drawTilesToGrid();
         }
     }
 
