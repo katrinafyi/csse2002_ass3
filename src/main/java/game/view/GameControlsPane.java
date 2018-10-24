@@ -9,7 +9,7 @@ import csse2002.block.world.TooLowException;
 import game.controller.BlockWorldController;
 import game.controller.MessageController;
 import game.model.BlockType;
-import game.model.BlockWorldModel;
+import game.model.ReadOnlyBlockWorldModel;
 import game.model.Direction;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BuilderMovedEvent;
@@ -21,7 +21,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,7 +29,7 @@ import java.util.Map;
  */
 public class GameControlsPane extends VBox implements ControlsView {
     /** Game model the controls interact with. */
-    private final BlockWorldModel model;
+    private final ReadOnlyBlockWorldModel model;
     /** Controller to use when this control is interacted with. */
     private final BlockWorldController controller;
     /** Controller to use to handle messages. */
@@ -49,7 +48,7 @@ public class GameControlsPane extends VBox implements ControlsView {
      * @param controller Game controller to use for interacting with the world.
      * @param messenger Game controller to send messages to.
      */
-    public GameControlsPane(BlockWorldModel model,
+    public GameControlsPane(ReadOnlyBlockWorldModel model,
                             BlockWorldController controller,
                             MessageController messenger) {
         this.model = model;

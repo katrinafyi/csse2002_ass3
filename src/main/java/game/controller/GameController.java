@@ -11,7 +11,8 @@ import csse2002.block.world.WorldMap;
 import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 import game.model.BlockType;
-import game.model.BlockWorldModel;
+import game.model.ModifiableBlockWorldModel;
+import game.model.ReadOnlyBlockWorldModel;
 import game.model.Direction;
 import game.model.events.BlocksChangedEvent;
 import game.model.events.BuilderMovedEvent;
@@ -39,13 +40,13 @@ public class GameController
         implements BlockWorldController, MessageController {
 
     /** Model component. */
-    private final BlockWorldModel model;
+    private final ModifiableBlockWorldModel model;
 
     /**
      * Construct a new controller interacting with the given model.
      * @param model Block world model.
      */
-    public GameController(BlockWorldModel model) {
+    public GameController(ModifiableBlockWorldModel model) {
         this.model = model;
     }
 

@@ -4,7 +4,7 @@ import csse2002.block.world.WorldMapFormatException;
 import csse2002.block.world.WorldMapInconsistentException;
 import game.controller.BlockWorldController;
 import game.controller.MessageController;
-import game.model.BlockWorldModel;
+import game.model.ReadOnlyBlockWorldModel;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.WorldMapLoadedEvent;
 import javafx.event.ActionEvent;
@@ -49,7 +49,7 @@ public class GameMenuBar extends MenuBar {
      * @param controller Game controller to interact with.
      * @param messenger Message controller
      */
-    public GameMenuBar(Stage mainStage, BlockWorldModel model,
+    public GameMenuBar(Stage mainStage, ReadOnlyBlockWorldModel model,
                        BlockWorldController controller,
                        MessageController messenger) {
         this.mainStage = mainStage;

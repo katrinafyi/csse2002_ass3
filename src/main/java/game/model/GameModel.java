@@ -7,7 +7,7 @@ import csse2002.block.world.WorldMap;
  * Concrete implementation of the game's model.
  * Only a thin wrapper around the assignment 2 classes.
  */
-public class GameModel extends BlockWorldModel {
+public class GameModel extends ModifiableBlockWorldModel {
     /** Current world map. */
     private WorldMap worldMap;
     /** Current builder's position. */

@@ -3,10 +3,10 @@ package game.view;
 import csse2002.block.world.Position;
 import csse2002.block.world.Tile;
 import csse2002.block.world.TooLowException;
+import game.model.ReadOnlyBlockWorldModel;
 import game.util.Cache;
 import game.util.Utilities;
 import game.model.BlockType;
-import game.model.BlockWorldModel;
 import game.model.Direction;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BlocksChangedEvent;
@@ -44,7 +44,7 @@ public class GameWorldMapView extends UniformGridPane {
     private final Pane[][] tilePanes;
 
     /** Model to use for getting world map state. */
-    private final BlockWorldModel model;
+    private final ReadOnlyBlockWorldModel model;
 
     /** Label for showing success messages. Coloured green. */
     private final FadingLabel successLabel;
@@ -68,7 +68,7 @@ public class GameWorldMapView extends UniformGridPane {
      * Constructs a new world map view from the given model.
      * @param model Game model.
      */
-    public GameWorldMapView(BlockWorldModel model) {
+    public GameWorldMapView(ReadOnlyBlockWorldModel model) {
         super(9, 9, 0);
         this.model = model;
         tilePanes = new Pane[columns][rows];

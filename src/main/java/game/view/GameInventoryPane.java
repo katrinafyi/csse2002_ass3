@@ -1,11 +1,11 @@
 package game.view;
 
 import csse2002.block.world.TooHighException;
+import game.model.ReadOnlyBlockWorldModel;
 import game.util.Utilities;
 import game.controller.BlockWorldController;
 import game.controller.MessageController;
 import game.model.BlockType;
-import game.model.BlockWorldModel;
 import game.model.events.InventoryChangedEvent;
 import game.view.components.InventoryView;
 import game.view.components.TileSquare;
@@ -38,7 +38,7 @@ public class GameInventoryPane extends VBox implements InventoryView {
     /** Grid containing the block type buttons and counts. */
     private final GridPane grid = new GridPane();
     /** Model to get block counts from. */
-    private final BlockWorldModel model;
+    private final ReadOnlyBlockWorldModel model;
     /** Controller to use for placing blocks. */
     private final BlockWorldController controller;
     /** Controller to use for displaying messages. */
@@ -56,7 +56,7 @@ public class GameInventoryPane extends VBox implements InventoryView {
      * @param controller Game controller.
      * @param messenger Message controller.
      */
-    public GameInventoryPane(BlockWorldModel model,
+    public GameInventoryPane(ReadOnlyBlockWorldModel model,
                              BlockWorldController controller,
                              MessageController messenger) {
         this.model = model;
