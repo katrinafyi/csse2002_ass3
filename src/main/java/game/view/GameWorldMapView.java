@@ -17,9 +17,10 @@ import game.model.events.WorldMapLoadedEvent;
 import game.view.components.FadingLabel;
 import game.view.components.TileSquare;
 import game.view.components.UniformGridPane;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -54,6 +55,8 @@ public class GameWorldMapView extends UniformGridPane {
     /** Pane containing and aligning the error label. */
     private final StackPane errorPane;
 
+    private final Label positionLabel;
+
     /** Whether tile exits are currently visible. */
     private boolean exitsVisible = false;
     /** Whether tile heights are currently visible. */
@@ -74,10 +77,10 @@ public class GameWorldMapView extends UniformGridPane {
 
         errorLabel = new FadingLabel(Duration.seconds(1), Duration.millis(500));
         errorLabel.setWrapText(true);
-        setMessageLabelStyle(errorLabel, "#911414");
+        applyMessageLabelStyle(errorLabel, "#911414");
         successLabel = new FadingLabel(Duration.seconds(1), Duration.millis(500));
         successLabel.setWrapText(true);
-        setMessageLabelStyle(successLabel, "#167708");
+        applyMessageLabelStyle(successLabel, "#167708");
 
         errorPane = new StackPane();
         errorPane.getChildren().add(errorLabel);
@@ -86,6 +89,14 @@ public class GameWorldMapView extends UniformGridPane {
         successPane = new StackPane();
         successPane.getChildren().add(successLabel);
         successPane.prefWidthProperty().bind(widthProperty());
+
+        positionLabel = new Label("–");
+        applyMessageLabelStyle(positionLabel, "black");
+        // Align neatly to top right.
+        GridPane.setHalignment(positionLabel, HPos.RIGHT);
+        GridPane.setValignment(positionLabel, VPos.TOP);
+        positionLabel.setPadding(new Insets(2, 2, 3, 3));
+        positionLabel.setVisible(false); // Hide by default.
 
         model.addListener(WorldMapLoadedEvent.class, this::worldMapLoadedHandler);
         model.addListener(BuilderMovedEvent.class, this::builderMovedHandler);
@@ -96,9 +107,6 @@ public class GameWorldMapView extends UniformGridPane {
         model.addListener(MessageEvent.class, this::showNormalMessage);
 
         Utilities.usePrefWidthHeight(this);
-
-        add(errorPane, 0, 2, columns, 3);
-        add(successPane, 0, 2, columns, 3);
 
         // Generate panes in each cell for holding the tile squares.
         // Faster than adding tiles to grid directly as the panes fix the
@@ -113,6 +121,11 @@ public class GameWorldMapView extends UniformGridPane {
                 add(p, c, r);
             }
         }
+
+        // Span all columns to allow for long messages.
+        add(errorPane, 0, 2, columns, 3);
+        add(successPane, 0, 2, columns, 3);
+        add(positionLabel, 0, 0, columns, 1);
     }
 
     /**
@@ -166,19 +179,6 @@ public class GameWorldMapView extends UniformGridPane {
         updateVisibilities();
     }
 
-    /**
-     * Resizes
-     * @param obs
-     * @param oldValue
-     * @param newValue
-     */
-    @SuppressWarnings("unused")
-    private void resizeChildren(ObservableValue<? extends Number> obs,
-                                Number oldValue, Number newValue) {
-        if (model.getCurrentPosition() != null) {
-        }
-    }
-
     private void updateVisibilities() {
         for (TileSquare square : tileSquareMap.values()) {
             square.setExitVisibility(exitsVisible);
@@ -187,7 +187,7 @@ public class GameWorldMapView extends UniformGridPane {
         }
     }
 
-    private static void setMessageLabelStyle(FadingLabel label, String colour) {
+    private static void applyMessageLabelStyle(Label label, String colour) {
         label.setPadding(new Insets(10));
         label.setStyle(
                 "-fx-font-size: 15;"
@@ -213,7 +213,6 @@ public class GameWorldMapView extends UniformGridPane {
 
     private void blocksChangedHandler(BlocksChangedEvent event) {
         Position position = event.getPosition();
-
         updateTileBlocks(position);
         updateAOAllNeighbours(position);
     }
@@ -225,6 +224,7 @@ public class GameWorldMapView extends UniformGridPane {
 
         int height = tile.getBlocks().size();
         tileSquare.setHeight(height);
+        tileHeights.put(position, height);
 
         try {
             tileSquare.setTopBlock(height == 0
@@ -232,7 +232,6 @@ public class GameWorldMapView extends UniformGridPane {
         } catch (TooLowException e) {
             throw new AssertionError(e);
         }
-        tileHeights.put(position, height);
     }
 
     private void updateAOAllNeighbours(Position position) {
@@ -289,6 +288,7 @@ public class GameWorldMapView extends UniformGridPane {
     private void builderMovedHandler(BuilderMovedEvent event) {
         //clearTilePanes();
         drawTilesToGrid();
+        updatePositionLabel();
     }
 
     private void clearTilePanes() {
@@ -303,6 +303,10 @@ public class GameWorldMapView extends UniformGridPane {
         clearTilePanes();
         tileHeights.clear();
         tileSquareMap.clear();
+    }
+
+    private void updatePositionLabel() {
+        positionLabel.setText(model.getCurrentPosition().toString());
     }
 
     private void drawTilesToGrid() {
@@ -336,9 +340,9 @@ public class GameWorldMapView extends UniformGridPane {
         }
         TileSquare square = tileSquareMap.get(pos);
         if (square == null) {
-            square = newTileSquare();
+            square = new TileSquare();
+            square.maxWidthProperty().bind(widthProperty().divide(columns));
             Map<String, Tile> exits = tile.getExits();
-
 
             for (Direction direction : Direction.values()) {
                 square.setHasExit(direction, exits.containsKey(direction.name()));
@@ -362,12 +366,8 @@ public class GameWorldMapView extends UniformGridPane {
         System.out.println("map loaded v2");
 
         drawTilesToGrid();
-    }
-
-    private TileSquare newTileSquare() {
-        TileSquare tile = new TileSquare();
-        tile.maxWidthProperty().bind(widthProperty().divide(columns));
-        return tile;
+        updatePositionLabel();
+        positionLabel.setVisible(true);
     }
 
     private void showErrorMessage(ErrorEvent event) {
