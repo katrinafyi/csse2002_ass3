@@ -90,7 +90,7 @@ public class GameWorldMapView extends UniformGridPane {
         successPane.getChildren().add(successLabel);
         successPane.prefWidthProperty().bind(widthProperty());
 
-        positionLabel = new Label("–");
+        positionLabel = new Label("not displayed");
         applyMessageLabelStyle(positionLabel, "black");
         // Align neatly to top right.
         GridPane.setHalignment(positionLabel, HPos.RIGHT);

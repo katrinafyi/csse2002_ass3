@@ -13,6 +13,7 @@ import game.model.BlockWorldModel;
 import game.model.Direction;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BuilderMovedEvent;
+import game.model.events.WorldMapLoadedEvent;
 import game.view.components.ControlsView;
 import game.view.components.DPadGrid;
 import game.view.components.IconButton;
@@ -56,6 +57,7 @@ public class GameControlsPane extends VBox implements ControlsView {
         this.messenger = messenger;
 
         model.addListener(BuilderMovedEvent.class, this::updateBuilderExits);
+        model.addListener(WorldMapLoadedEvent.class, this::updateBuilderExits);
 
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(10);
