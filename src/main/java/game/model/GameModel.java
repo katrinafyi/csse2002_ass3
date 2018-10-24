@@ -14,6 +14,11 @@ public class GameModel extends BlockWorldModel {
     private Position currentPosition;
 
     /**
+     * Constructs a new {@link GameModel} with no world map or position set.
+     */
+    public GameModel() {}
+
+    /**
      * Gets the current world map.
      * @return World map.
      */

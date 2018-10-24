@@ -63,12 +63,10 @@ public class GameWorldMapView extends UniformGridPane {
         errorPane = new StackPane();
         errorPane.getChildren().add(errorLabel);
         errorPane.prefWidthProperty().bind(widthProperty());
-        errorPane.prefHeightProperty().bind(heightProperty().divide(rows));
 
         successPane = new StackPane();
         successPane.getChildren().add(successLabel);
         successPane.prefWidthProperty().bind(widthProperty());
-        successPane.prefHeightProperty().bind(heightProperty().divide(rows));
 
         model.addListener(WorldMapLoadedEvent.class, this::worldMapLoadedHandler);
         model.addListener(BuilderMovedEvent.class, this::builderMovedHandler);

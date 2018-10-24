@@ -13,8 +13,6 @@ import game.model.BlockWorldModel;
 import game.model.Direction;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BuilderMovedEvent;
-import game.model.events.WorldMapLoadedEvent;
-import game.util.Utilities;
 import game.view.components.ControlsView;
 import game.view.components.DPadGrid;
 import game.view.components.IconButton;
@@ -25,23 +23,39 @@ import javafx.scene.layout.VBox;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Pane containing two d-pads for moving the builder and blocks, as well as
+ * a dig button.
+ */
 public class GameControlsPane extends VBox implements ControlsView {
+    /** Game model the controls interact with. */
     private final BlockWorldModel model;
+    /** Controller to use when this control is interacted with. */
     private final BlockWorldController controller;
-    private final MessageController messageController;
+    /** Controller to use to handle messages. */
+    private final MessageController messenger;
 
+    /** D-pad for moving the builder. */
     private final DPadGrid builderDPad;
+    /** D-pad for moving the blocks. */
     private final DPadGrid blockDPad;
+    /** Button for digging the current block. */
     private final IconButton digButton;
 
+    /**
+     * Construct a new controls pane using the given model and controllers.
+     * @param model Game model to get state from.
+     * @param controller Game controller to use for interacting with the world.
+     * @param messenger Game controller to send messages to.
+     */
     public GameControlsPane(BlockWorldModel model,
                             BlockWorldController controller,
                             MessageController messenger) {
         this.model = model;
         this.controller = controller;
-        this.messageController = messenger;
+        this.messenger = messenger;
 
-        model.addListener(BuilderMovedEvent.class, this::updateBuilderCanMove);
+        model.addListener(BuilderMovedEvent.class, this::updateBuilderExits);
 
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(10);
@@ -53,14 +67,18 @@ public class GameControlsPane extends VBox implements ControlsView {
         blockDPad.setCentreImage("file:src/images/iron_shovel_shadow.png");
 
         digButton = new IconButton("file:src/images/iron_pickaxe.png");
-        Utilities.setMaxWidthHeight(digButton);
         digButton.maxWidthProperty().bind(digButton.heightProperty());
         digButton.setOnAction(e -> this.digBlock());
 
         this.getChildren().addAll(builderDPad, blockDPad, digButton);
     }
 
-    private void updateBuilderCanMove(BaseBlockWorldEvent event) {
+    /**
+     * Update which exits exist from the current tile, enabling only buttons
+     * which have exits.
+     * @param event Event, unused.
+     */
+    private void updateBuilderExits(BaseBlockWorldEvent event) {
         Map<String, Tile> exits = model.getCurrentTile().getExits();
         for (Direction dir : Direction.values()) {
             boolean hasExit = exits.containsKey(dir.name());
@@ -70,7 +88,11 @@ public class GameControlsPane extends VBox implements ControlsView {
         }
     }
 
-
+    /**
+     * Moves the builder in the given direction, handling exceptions from
+     * too high/low by sending messages to a controller.
+     * @param direction Direction the builder moved in.
+     */
     private void moveBuilder(Direction direction) {
         try {
             controller.moveBuilder(direction);
@@ -82,39 +104,46 @@ public class GameControlsPane extends VBox implements ControlsView {
             int ourHeight = model.getCurrentTile()
                     .getBlocks().size();
             String relation = adjHeight > ourHeight ? "high" : "low";
-            messageController.handleErrorMessage("It's too "+relation+"!");
+            messenger.handleErrorMessage("It's too "+relation+"!");
         }
     }
 
+    /**
+     * Moves a block in the given direction. Handles errors by sending
+     * messages to a controller.
+     * @param direction Direction to move block in.
+     */
     private void moveBlock(Direction direction) {
         try {
             controller.moveBlock(direction);
-        } catch (NoExitException | InvalidBlockException | TooHighException e) {
-            List<Block> blocks = model.getCurrentTile().getBlocks();
-            String message;
-            if (blocks.size() == 0) {
-                message = "You can't move bedrock!";
+        } catch (InvalidBlockException e) {
+            messenger.handleErrorMessage("You can't move "+topBlockName()+"!");
+        } catch (TooHighException e) {
+            if (model.getCurrentTile().getBlocks().size() > 0) {
+                messenger.handleErrorMessage("There's a block in the way!");
             } else {
-                Block topBlock = blocks.get(blocks.size()-1);
-                if (!topBlock.isMoveable()) {
-                    message = "You can't move " + BlockType.fromBlock(topBlock) + "!";
-                } else {
-                    message = "There's a block in the way!";
-                }
+                messenger.handleErrorMessage("You can't move bedrock!");
             }
-            messageController.handleErrorMessage(message);
-        }
+        } catch (NoExitException ignored) {}
     }
 
+    /**
+     * Attempts to dig on the current tile.
+     */
     private void digBlock() {
         try {
             controller.dig();
         } catch (InvalidBlockException | TooLowException e) {
-            messageController.handleErrorMessage(
+            messenger.handleErrorMessage(
                     "You can't dig "+topBlockName()+"!");
         }
     }
 
+    /**
+     * Gets name of the current tile's top block. If there are no blocks,
+     * "bedrock" is returned.
+     * @return Name as string.
+     */
     private String topBlockName() {
         Tile tile = model.getCurrentTile();
         Block block = null;
@@ -126,16 +155,30 @@ public class GameControlsPane extends VBox implements ControlsView {
         return block == null ? "bedrock" : BlockType.fromBlock(block).name();
     }
 
+    /**
+     * Gets the button for moving the builder in the given direction.
+     * @param direction Direction to get.
+     * @return Direction button.
+     */
     @Override
     public Button getMoveBuilderButton(Direction direction) {
         return builderDPad.getButton(direction);
     }
 
+    /**
+     * Gets the button for moving a block in the given direction.
+     * @param direction Direction to get.
+     * @return Move block button.
+     */
     @Override
     public Button getMoveBlockButton(Direction direction) {
         return blockDPad.getButton(direction);
     }
 
+    /**
+     * Gets the button for digging.
+     * @return Dig button.
+     */
     @Override
     public Button getDigButton() {
         return digButton;
