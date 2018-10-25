@@ -4,6 +4,7 @@ import game.model.Direction;
 import game.util.Cache;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 
 import java.util.HashMap;
 import java.util.HashSet;
