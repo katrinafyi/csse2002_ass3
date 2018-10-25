@@ -100,7 +100,6 @@ public class GameWorldMapView extends UniformGridPane {
         model.addListener(WorldMapLoadedEvent.class, this::worldMapLoadedHandler);
         model.addListener(BuilderMovedEvent.class, this::builderMovedHandler);
         model.addListener(BlocksChangedEvent.class, this::blocksChangedHandler);
-        model.addListener(null, this::allHandler);
 
         model.addListener(ErrorEvent.class, this::showErrorMessage);
         model.addListener(MessageEvent.class, this::showNormalMessage);
@@ -220,10 +219,6 @@ public class GameWorldMapView extends UniformGridPane {
         return model.getTile(position).getBlocks().size();
     }
 
-    private void allHandler(BaseBlockWorldEvent event) {
-        System.out.println("View caught: " + event);
-    }
-
     /**
      * Updates tiles on the changed block and updates the lighting of all
      * its neighbours.
@@ -299,6 +294,7 @@ public class GameWorldMapView extends UniformGridPane {
     private Position[] getAdjacentPositions(Position centre) {
         Position[] positions = new Position[8];
 
+        // Start at north-west of the given position.
         int curX = centre.getX()-1;
         int curY = centre.getY()-1;
 
@@ -366,7 +362,7 @@ public class GameWorldMapView extends UniformGridPane {
      * no tiles.
      */
     private void drawTilesToGrid() {
-        long start = System.nanoTime();
+//        long start = System.nanoTime();
         Position current = model.getCurrentPosition();
         int curX = current.getX();
         int curY = current.getY();
@@ -384,9 +380,9 @@ public class GameWorldMapView extends UniformGridPane {
                 tilePanes[c][r].getChildren().setAll(tile);
             }
         }
-        double time = (System.nanoTime()-start)/1000000.0;
-        System.out.println("Frame time: " + time + " ms ("
-                + (int)(1/time*1000) + " fps)");
+//        double time = (System.nanoTime()-start)/1000000.0;
+//        System.out.println("Frame time: " + time + " ms ("
+//                + (int)(1/time*1000) + " fps)");
     }
 
     /**

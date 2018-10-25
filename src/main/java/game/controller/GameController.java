@@ -193,7 +193,6 @@ public class GameController
      */
     @Override
     public void handleErrorMessage(String errorMessage) {
-        System.out.println("Firing error event: " + errorMessage);
         model.notifyListeners(new ErrorEvent(errorMessage));
     }
 

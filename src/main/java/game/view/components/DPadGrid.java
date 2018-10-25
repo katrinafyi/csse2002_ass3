@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 /**
- * A widget for 4-directional input using buttons, arranged in a 3x3 grid.
+ * A widget for movement in 4 directions using buttons, arranged in a 3x3 grid.
  */
 public class DPadGrid extends UniformGridPane {
     /**
