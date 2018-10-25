@@ -374,13 +374,13 @@ public class GameWorldMapView extends UniformGridPane {
         for (int c = 0; c < this.columns; c++) {
             for (int r = 0; r < this.rows; r++) {
                 // Position index of the current cell.
-                Position pos = new Position(curX+ c -halfCols, curY+ r -halfRows);
+                Position pos = new Position(curX+c-halfCols, curY+r-halfRows);
                 TileSquare tile = getOrMakeSquare(pos);
                 if (tile == null) { // No tile at this position.
                     tilePanes[c][r].getChildren().clear();
                     continue;
                 }
-                tile.setBuilderTile(r == halfRows && c == halfCols);
+                tile.setBuilderTile(pos.equals(current));
                 tilePanes[c][r].getChildren().setAll(tile);
             }
         }
