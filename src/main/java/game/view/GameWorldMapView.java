@@ -56,7 +56,7 @@ public class GameWorldMapView extends UniformGridPane {
     private final StackPane successPane;
     /** Pane containing and aligning the error label. */
     private final StackPane errorPane;
-
+    /** Label for showing the builder's current position. */
     private final Label positionLabel;
 
     /** Whether tile exits are currently visible. */
