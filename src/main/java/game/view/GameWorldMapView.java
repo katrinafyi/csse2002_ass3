@@ -3,17 +3,17 @@ package game.view;
 import csse2002.block.world.Position;
 import csse2002.block.world.Tile;
 import csse2002.block.world.TooLowException;
-import game.model.ReadOnlyBlockWorldModel;
-import game.util.Cache;
-import game.util.Utilities;
 import game.model.BlockType;
 import game.model.Direction;
+import game.model.ReadOnlyBlockWorldModel;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BlocksChangedEvent;
 import game.model.events.BuilderMovedEvent;
 import game.model.events.ErrorEvent;
 import game.model.events.MessageEvent;
 import game.model.events.WorldMapLoadedEvent;
+import game.util.Cache;
+import game.util.Utilities;
 import game.view.components.FadingLabel;
 import game.view.components.TileSquare;
 import game.view.components.UniformGridPane;
@@ -27,7 +27,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -179,6 +178,9 @@ public class GameWorldMapView extends UniformGridPane {
         updateVisibilities();
     }
 
+    /**
+     * Update exit, height and ambient occlusion state of all tiles.
+     */
     private void updateVisibilities() {
         for (TileSquare square : tileSquareMap.values()) {
             square.setExitVisibility(exitsVisible);
@@ -187,6 +189,12 @@ public class GameWorldMapView extends UniformGridPane {
         }
     }
 
+    /**
+     * Styles message labels with the appropriate styles. Text colour is bold
+     * white, and the given colour is applied as the background colour.
+     * @param label Label object.
+     * @param colour Background colour.
+     */
     private static void applyMessageLabelStyle(Label label, String colour) {
         label.setPadding(new Insets(10));
         label.setStyle(
@@ -199,6 +207,11 @@ public class GameWorldMapView extends UniformGridPane {
         GridPane.setHalignment(label, HPos.CENTER);
     }
 
+    /**
+     * Computes and returns the height of the tile at the given position.
+     * @param position Position of tile.
+     * @return Number of blocks on tile.
+     */
     private int getTileHeight(Position position) {
         Tile tile = model.getTile(position);
         if (tile == null) {
@@ -211,12 +224,21 @@ public class GameWorldMapView extends UniformGridPane {
         System.out.println("View caught: " + event);
     }
 
+    /**
+     * Updates tiles on the changed block and updates the lighting of all
+     * its neighbours.
+     * @param event Blocks changed event.
+     */
     private void blocksChangedHandler(BlocksChangedEvent event) {
         Position position = event.getPosition();
         updateTileBlocks(position);
         updateAOAllNeighbours(position);
     }
 
+    /**
+     * Updates the height and top block of the tile at the given position.
+     * @param position Position of tile to upadte.
+     */
     private void updateTileBlocks(Position position) {
         Tile tile = model.getTile(position);
         TileSquare tileSquare = tileSquareMap.get(position);
@@ -234,15 +256,23 @@ public class GameWorldMapView extends UniformGridPane {
         }
     }
 
+    /**
+     * Updates the ambient occlusion of all neighbours (8 blocks) surrounding
+     * the given position, as well as the position itself.
+     * @param position Position to update.
+     */
     private void updateAOAllNeighbours(Position position) {
         updateAOSingle(position);
         Position[] neighbours = getAdjacentPositions(position);
         for (int i = 0; i < 8; i++) {
             updateAOSingle(neighbours[i]);
         }
-        System.out.println(Arrays.toString(getAdjacentPositions(model.getCurrentPosition())));
     }
 
+    /**
+     * Updates ambient occlusion of the single tile at the given position.
+     * @param position Position of tile to update
+     */
     private void updateAOSingle(Position position) {
         TileSquare tileSquare = tileSquareMap.get(position);
         if (tileSquare == null) {
@@ -260,6 +290,12 @@ public class GameWorldMapView extends UniformGridPane {
         tileSquare.getAmbientOcclusion().setAdjacent(adjacent);
     }
 
+    /**
+     * Gets the 8 positions immediately adjacent to the given position,
+     * starting north-west and proceeding clockwise.
+     * @param centre Centre position.
+     * @return Array of adjacent positions.
+     */
     private Position[] getAdjacentPositions(Position centre) {
         Position[] positions = new Position[8];
 
@@ -269,21 +305,28 @@ public class GameWorldMapView extends UniformGridPane {
         int dx = 1;
         int dy = 0;
         int oldDy;
+        // Gets 8 positions. Starts by moving horizontally to the right.
         for (int i = 0; i < 8; i++) {
             positions[i] = new Position(curX, curY);
 
+            // At corners, rotate 90 degrees clockwise.
             if (i % 2 == 0 && i != 0) {
                 oldDy = dy;
                 dy = dx;
                 dx = -oldDy;
             }
 
+            // Shift to the next position.
             curX += dx;
             curY += dy;
         }
         return positions;
     }
 
+    /**
+     * Handles a builder moved event by updating tiles and the position label.
+     * @param event Builder moved event.
+     */
     @SuppressWarnings("unused")
     private void builderMovedHandler(BuilderMovedEvent event) {
         //clearTilePanes();
@@ -291,6 +334,9 @@ public class GameWorldMapView extends UniformGridPane {
         updatePositionLabel();
     }
 
+    /**
+     * Clear all tiles from the grid.
+     */
     private void clearTilePanes() {
         for (Pane[] paneColumn : tilePanes) {
             for (Pane pane : paneColumn) {
@@ -299,16 +345,26 @@ public class GameWorldMapView extends UniformGridPane {
         }
     }
 
+    /**
+     * Clear all internal state of the world map.
+     */
     private void resetInternalState() {
         clearTilePanes();
         tileHeights.clear();
         tileSquareMap.clear();
     }
 
+    /**
+     * Updates the position label's text with the current position.
+     */
     private void updatePositionLabel() {
         positionLabel.setText(model.getCurrentPosition().toString());
     }
 
+    /**
+     * Draws all tiles to the grid, including clearing positions which have
+     * no tiles.
+     */
     private void drawTilesToGrid() {
         long start = System.nanoTime();
         Position current = model.getCurrentPosition();
@@ -333,6 +389,14 @@ public class GameWorldMapView extends UniformGridPane {
                 + (int)(1/time*1000) + " fps)");
     }
 
+    /**
+     * Returns the {@link TileSquare} associated for the given position, or
+     * null if there is no tile at the position.
+     *
+     * Creates a new tile square if none has previously been generated.
+     * @param pos Position of tile.
+     * @return Tile square of position.
+     */
     private TileSquare getOrMakeSquare(Position pos) {
         Tile tile = model.getTile(pos);
         if (tile == null) {
@@ -341,39 +405,52 @@ public class GameWorldMapView extends UniformGridPane {
         TileSquare square = tileSquareMap.get(pos);
         if (square == null) {
             square = new TileSquare();
+            // Set width based on the number of columns.
             square.maxWidthProperty().bind(widthProperty().divide(columns));
             Map<String, Tile> exits = tile.getExits();
 
+            // Add all exits.
             for (Direction direction : Direction.values()) {
                 square.setHasExit(direction, exits.containsKey(direction.name()));
             }
-
+            // Add to mapping.
             tileSquareMap.put(pos, square);
-
+            // Apply visibilities.
             square.setExitVisibility(exitsVisible);
             square.setHeightVisibility(heightsVisible);
             square.getAmbientOcclusion().setVisible(ambientOcclusionOn);
-
-            updateTileBlocks(pos); // Updates height and top block.
+            // Update visual state.
+            updateTileBlocks(pos);
             updateAOSingle(pos);
         }
         return square;
     }
 
+    /**
+     * Refreshes the display as appropriate for loading a new world map.
+     * @param event World map loaded event.
+     */
     @SuppressWarnings("unused")
     private void worldMapLoadedHandler(WorldMapLoadedEvent event) {
         resetInternalState();
-        System.out.println("map loaded v2");
 
         drawTilesToGrid();
         updatePositionLabel();
         positionLabel.setVisible(true);
     }
 
+    /**
+     * Shows the fading error message in red, with text from the given event.
+     * @param event Error event.
+     */
     private void showErrorMessage(ErrorEvent event) {
         errorLabel.showAndFade(event.getMessage());
     }
 
+    /**
+     * Shows an info message in green, with text from the given event.
+     * @param event Message event.
+     */
     private void showNormalMessage(MessageEvent event) {
         successLabel.showAndFade(event.getMessage());
     }
