@@ -47,13 +47,12 @@ public class DPadGrid extends UniformGridPane {
     }
 
     /** Array of buttons to add. */
-    private static final ButtonSpec[] buttonSpecs = new ButtonSpec[4];
-    static {
-        buttonSpecs[0] = new ButtonSpec("up.png", 1, 0, Direction.north);
-        buttonSpecs[1] = new ButtonSpec("right.png", 2, 1, Direction.east);
-        buttonSpecs[2] = new ButtonSpec("down.png", 1, 2, Direction.south);
-        buttonSpecs[3] = new ButtonSpec("left.png", 0, 1, Direction.west);
-    }
+    private static final ButtonSpec[] buttonSpecs = {
+            new ButtonSpec("up.png", 1, 0, Direction.north),
+            new ButtonSpec("right.png", 2, 1, Direction.east),
+            new ButtonSpec("down.png", 1, 2, Direction.south),
+            new ButtonSpec("left.png", 0, 1, Direction.west)
+    };
     /** Base path for all icon images. */
     private static final String ICON_PATH = "file:src/images/";
 

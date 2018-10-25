@@ -1,12 +1,12 @@
 package game.view;
 
 import csse2002.block.world.TooHighException;
-import game.model.ReadOnlyBlockWorldModel;
-import game.util.Utilities;
 import game.controller.BlockWorldController;
 import game.controller.MessageController;
 import game.model.BlockType;
+import game.model.ReadOnlyBlockWorldModel;
 import game.model.events.InventoryChangedEvent;
+import game.util.Utilities;
 import game.view.components.InventoryView;
 import game.view.components.TileSquare;
 import javafx.geometry.HPos;
@@ -100,7 +100,7 @@ public class GameInventoryPane extends VBox implements InventoryView {
                     "You can't place "+blockToPlace.name()+" up here!");
         } catch (NoSuchElementException e) {
             messageController.handleErrorMessage(
-                    "You have no more "+blockToPlace.name()+"!");
+                    "You have no more "+blockToPlace.name()+" blocks!");
         }
     }
 
