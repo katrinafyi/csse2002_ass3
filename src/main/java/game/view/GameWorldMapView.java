@@ -237,7 +237,7 @@ public class GameWorldMapView extends UniformGridPane {
 
     /**
      * Updates the height and top block of the tile at the given position.
-     * @param position Position of tile to upadte.
+     * @param position Position of tile to update.
      */
     private void updateTileBlocks(Position position) {
         Tile tile = model.getTile(position);

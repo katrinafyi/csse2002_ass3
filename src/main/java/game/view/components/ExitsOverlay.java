@@ -2,12 +2,8 @@ package game.view.components;
 
 import game.model.Direction;
 import game.util.Cache;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.util.Pair;
 
 import java.util.HashMap;
 import java.util.HashSet;

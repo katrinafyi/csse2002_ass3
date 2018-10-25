@@ -1,13 +1,10 @@
 package game;
 
-import csse2002.block.world.GrassBlock;
-import csse2002.block.world.StoneBlock;
 import game.controller.GameController;
 import game.model.BlockType;
 import game.model.Direction;
 import game.model.GameModel;
 import game.model.events.BaseBlockWorldEvent;
-import game.model.events.BlocksChangedEvent;
 import game.model.events.WorldMapLoadedEvent;
 import game.util.Utilities;
 import game.view.GameControlsPane;
