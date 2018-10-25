@@ -99,7 +99,7 @@ public class MainApplication extends Application {
 
         model.addListener(WorldMapLoadedEvent.class, this::activateControls);
 
-        // Just in case later, we separate this out from the main controller.
+        // So in future, we can separate this out from the main controller.
         MessageController messenger = controller;
 
         menuBar = new GameMenuBar(primaryStage, model, controller, messenger);
@@ -126,10 +126,10 @@ public class MainApplication extends Application {
         rightBox.setAlignment(Pos.TOP_CENTER);
 
         // Builder controls view. Disable by default.
-        controlsPane = new GameControlsPane(model, controller, controller);
+        controlsPane = new GameControlsPane(model, controller, messenger);
         controlsPane.setDisable(true);
         // Inventory view.
-        inventoryPane = new GameInventoryPane(model, controller, controller);
+        inventoryPane = new GameInventoryPane(model, controller, messenger);
         inventoryPane.setDisable(true);
 
         // Add controls to right box and add right box to grid.
