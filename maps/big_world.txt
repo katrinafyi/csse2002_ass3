@@ -1,0 +1,80 @@
+4
+3
+Bob
+wood,wood,wood,soil,soil,soil,soil,wood,wood,soil
+
+total:36
+0 soil,soil,grass
+1 grass,grass,grass
+2 soil,wood,grass
+3 soil,soil,grass
+4 grass,grass,grass,wood
+5 grass,grass,grass,wood,stone
+6 grass,grass,grass,stone
+7 grass,grass,grass,stone
+8 grass,grass,grass,stone
+9 grass,grass,grass,stone
+10 grass,grass,grass,stone
+11 grass,grass,grass,stone
+12 grass,grass,grass,stone
+13 grass,grass,grass,stone
+14 grass,grass,grass,stone
+15 grass,grass,grass,stone
+16 grass,grass,grass,stone
+17 grass,grass,grass,stone
+18 grass,grass,grass
+19 grass,grass
+20 grass
+21 
+22 grass,grass
+23 grass,grass,grass
+24 grass,grass,soil
+25 grass,grass,soil
+26 grass,grass,grass,wood
+27 grass,grass,grass,wood
+28 grass,grass,stone,wood
+29 grass,grass,grass
+30 grass,grass
+31 grass,grass,grass,stone,wood
+32 grass,grass,grass,stone,wood
+33 grass,grass,grass,stone,wood
+34 grass,grass,grass,stone,wood
+35 grass,grass,grass,stone,wood
+
+exits
+0 east:1
+1 west:0,south:2
+2 north:1,south:3
+3 north:2,east:4
+4 west:3,east:5
+5 west:4,east:6,south:7
+6 west:5,south:8
+7 north:5,east:8
+8 west:7,north:6,east:9,south:10
+9 west:8
+10 north:8,south:11
+11 north:10,west:12
+12 east:11,west:13
+13 east:12,south:14
+14 north:13,west:15
+15 east:14,south:16
+16 north:15,south:17
+17 north:16,east:18
+18 east:19,west:17
+19 east:20,west:18
+20 east:21,west:19
+21 east:22,west:20
+22 east:23,west:21
+23 east:24,west:22
+24 west:23,north:25
+25 south:24,north:26
+26 south:25,east:35,west:27
+27 east:26,north:28
+28 west:29,north:31,south:27
+29 east:28,west:30
+30 east:29
+31 east:32,south:28
+32 east:33,west:31
+33 west:32,south:34
+34 north:33,south:35
+35 west:26,north:34
