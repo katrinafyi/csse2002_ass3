@@ -8,6 +8,8 @@ import game.model.ReadOnlyBlockWorldModel;
 import game.model.events.BaseBlockWorldEvent;
 import game.model.events.WorldMapLoadedEvent;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -22,6 +24,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 /**
  * Class for the game's menu bar. Contains a file menu with load and save
@@ -179,6 +182,12 @@ public class GameMenuBar extends MenuBar {
      * @param event Event.
      */
     private void exitAction(ActionEvent event) {
-        mainStage.close();
+        Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure you want to exit? Unsaved changes will be lost.",
+                ButtonType.OK, ButtonType.CANCEL);
+        Optional<ButtonType> result = exitAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            mainStage.close();
+        }
     }
 }
