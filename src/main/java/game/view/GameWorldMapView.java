@@ -6,7 +6,6 @@ import csse2002.block.world.TooLowException;
 import game.model.BlockType;
 import game.model.Direction;
 import game.model.ReadOnlyBlockWorldModel;
-import game.model.events.BaseBlockWorldEvent;
 import game.model.events.BlocksChangedEvent;
 import game.model.events.BuilderMovedEvent;
 import game.model.events.ErrorEvent;
@@ -35,6 +34,10 @@ import java.util.Map;
  * {@link Pane} instances, each containing a {@link TileSquare}.
  */
 public class GameWorldMapView extends UniformGridPane {
+    // We don't ever remove items from this unless a new map is loaded.
+    // Potentially, memory usage could increase without bound, but we
+    // only generate tiles as they are encountered so this is not much of a
+    // problem.
     /** Mapping of position to tile square instances. */
     private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
     /** Cache of tile heights, used for computing AO. */
