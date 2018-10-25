@@ -39,7 +39,8 @@ import java.util.Map;
 
 
 /**
- * Entry point of the block world game. Sets up the MVC structure.
+ * Entry point of the block world game. Initialises the GUI and
+ * sets up the MVC structure.
  */
 public class MainApplication extends Application {
 
@@ -74,7 +75,7 @@ public class MainApplication extends Application {
 
     /** Horizontal gap between grid columns. */
     private final double hGap = 10;
-    /** Padding around elements of the grid. */
+    /** Padding around the entire grid. */
     private final double gridPadding = 10;
 
     /** Whether layout debugging is currently enabled (bounds shaded). */
@@ -86,8 +87,6 @@ public class MainApplication extends Application {
      */
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-
-        primaryStage.setTitle("DigDrop");
 
         // This grid contains everything except the menu bar.
         GridPane mainGrid = new GridPane();
@@ -133,7 +132,7 @@ public class MainApplication extends Application {
         inventoryPane = new GameInventoryPane(model, controller, controller);
         inventoryPane.setDisable(true);
 
-        // Add controls to right box and add right box.
+        // Add controls to right box and add right box to grid.
         rightBox.getChildren().addAll(controlsPane, inventoryPane);
         mainGrid.add(rightBox, 1, 0);
 
@@ -149,7 +148,7 @@ public class MainApplication extends Application {
         row0.setPercentHeight(100);
         mainGrid.getRowConstraints().add(row0);
 
-        // Construct and apply a scene with the root controller.
+        // Construct and apply a scene with the root container.
         scene = new Scene(rootContainer);
         primaryStage.setScene(scene);
 
@@ -166,6 +165,9 @@ public class MainApplication extends Application {
         setKeyBindings();
         // Listen to key presses.
         scene.setOnKeyPressed(this::keyPressHandler);
+
+        // Main window title.
+        primaryStage.setTitle("DigDrop");
 
         // Add application icons of multiple sizes.
         for (int i = 0; i < 4; i++) {
@@ -217,8 +219,8 @@ public class MainApplication extends Application {
         size = cols*Math.floor(size/cols);
 
         // Set width and height to this size, making it square.
-        worldMapView.setPrefWidth(size);
         worldMapView.setPrefHeight(size);
+        worldMapView.setPrefWidth(size);
     }
 
     /**
@@ -267,7 +269,8 @@ public class MainApplication extends Application {
                 break;
             */
             // These don't work with the provided WorldMap implementation.
-            /*case J: // Creative mode hacks.
+            /*
+            case J: // Creative mode hacks for building maps.
                 model.getCurrentTile().getBlocks().add(new StoneBlock());
                 model.notifyListeners(new BlocksChangedEvent(model.getCurrentPosition()));
                 break;
@@ -279,7 +282,8 @@ public class MainApplication extends Application {
                 int size = model.getCurrentTile().getBlocks().size();
                 model.getCurrentTile().getBlocks().remove(size-1);
                 model.notifyListeners(new BlocksChangedEvent(model.getCurrentPosition()));
-                break;*/
+                break;
+            */
         }
     }
 
