@@ -1,6 +1,7 @@
 package game;
 
 import game.controller.GameController;
+import game.controller.MessageController;
 import game.model.BlockType;
 import game.model.Direction;
 import game.model.GameModel;
@@ -37,109 +38,143 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * Entry point of the block world game. Sets up the MVC structure.
+ */
 public class MainApplication extends Application {
 
+    /** Primary stage. */
     private Stage primaryStage;
+    /** Model component of the game. */
     private GameModel model;
+    /** Controller component of the game. */
     private GameController controller;
-    
+
+    /** Top menu bar. */
     private GameMenuBar menuBar;
+    /** 9x9 view of the world map. */
     private GameWorldMapView worldMapView;
+    /** VBox containing the world map view. */
     private VBox worldMapContainer;
+    /** Builder controls pane. */
     private GameControlsPane controlsPane;
+    /** Inventory pane. */
     private GameInventoryPane inventoryPane;
+    /** VBox containing all elements on the right of the world map view. */
     private VBox rightBox;
 
+    /** Scene of the primary stage. */
     private Scene scene;
 
+    /**
+     * Mapping of key code to the button which should be clicked when that
+     * key is pressed.
+     */
     private final Map<KeyCode, Button> keyBindings = new HashMap<>();
 
-    private double verticalExtra;
-    private double horizontalExtra;
+    /** Horizontal gap between grid columns. */
     private final double hGap = 10;
+    /** Padding around elements of the grid. */
     private final double gridPadding = 10;
 
+    /** Whether layout debugging is currently enabled (bounds shaded). */
     private boolean debugEnabled = false;
 
-    public void start(Stage primaryStage) throws Exception {
+    /**
+     * Start the game application.
+     * @param primaryStage Primary stage.
+     */
+    public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-
 
         primaryStage.setTitle("DigDrop");
 
-        GridPane rootGrid = new GridPane();
-        rootGrid.setPadding(new Insets(gridPadding));
-        rootGrid.setHgap(hGap);
-//        rootGrid.setStyle("-fx-background-color: purple;");
+        // This grid contains everything except the menu bar.
+        GridPane mainGrid = new GridPane();
+        VBox.setVgrow(mainGrid, Priority.ALWAYS);
+        mainGrid.setPadding(new Insets(gridPadding));
+        mainGrid.setHgap(hGap);
 
         model = new GameModel();
         controller = new GameController(model);
 
-        // Container for menu and main content.
-        VBox container = new VBox();
-        menuBar = new GameMenuBar(primaryStage, model,
-                controller, controller);
-        container.getChildren().addAll(menuBar, rootGrid);
-        VBox.setVgrow(rootGrid, Priority.ALWAYS);
+        model.addListener(WorldMapLoadedEvent.class, this::activateControls);
+
+        // Just in case later, we separate this out from the main controller.
+        MessageController messenger = controller;
+
+        menuBar = new GameMenuBar(primaryStage, model, controller, messenger);
+
+        // Root container contains the main grid as well as the menu bar.
+        VBox rootContainer = new VBox();
+        rootContainer.getChildren().addAll(menuBar, mainGrid);
+
+        // Container for the world map view. The container grows to all the
+        // available space, then the map view itself only expands as big as it
+        // can while staying square.
+        worldMapContainer = new VBox();
+        Utilities.setMaxWidthHeight(worldMapContainer);
+        worldMapContainer.setAlignment(Pos.TOP_CENTER);
+        mainGrid.add(worldMapContainer, 0, 0);
 
         worldMapView = new GameWorldMapView(model);
         Utilities.setBorder(worldMapView, Color.BLACK);
-
-        worldMapContainer = new VBox();
-        Utilities.setMaxWidthHeight(worldMapContainer);
         worldMapContainer.getChildren().add(worldMapView);
-        worldMapContainer.setAlignment(Pos.TOP_CENTER);
 
-        rootGrid.add(worldMapContainer, 0, 0);
-
+        // Contains all elements right of the world map view.
         rightBox = new VBox();
         rightBox.setSpacing(30);
+        rightBox.setAlignment(Pos.TOP_CENTER);
 
+        // Builder controls view. Disable by default.
         controlsPane = new GameControlsPane(model, controller, controller);
         controlsPane.setDisable(true);
-        GridPane.setValignment(controlsPane, VPos.TOP);
-        GridPane.setVgrow(controlsPane, Priority.NEVER);
-
+        // Inventory view.
         inventoryPane = new GameInventoryPane(model, controller, controller);
         inventoryPane.setDisable(true);
-        GridPane.setValignment(inventoryPane, VPos.TOP);
 
+        // Add controls to right box and add right box.
         rightBox.getChildren().addAll(controlsPane, inventoryPane);
-        rootGrid.add(rightBox, 1, 0);
-        model.addListener(WorldMapLoadedEvent.class, this::activateControls);
+        mainGrid.add(rightBox, 1, 0);
 
-        controlsPane.setMaxWidth(Double.MAX_VALUE);
-
+        // Column dimensions.
         ColumnConstraints col0 = new ColumnConstraints();
         col0.setHgrow(Priority.ALWAYS);
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPrefWidth(150);
         col1.setMinWidth(150);
-        rootGrid.getColumnConstraints().addAll(col0, col1);
-
+        mainGrid.getColumnConstraints().addAll(col0, col1);
+        // Row expands as space becomes available.
         RowConstraints row0 = new RowConstraints();
         row0.setPercentHeight(100);
-        rootGrid.getRowConstraints().add(row0);
+        mainGrid.getRowConstraints().add(row0);
 
-        scene = new Scene(container);
+        // Construct and apply a scene with the root controller.
+        scene = new Scene(rootContainer);
         primaryStage.setScene(scene);
 
-
+        // Resize world map view by listening to width and height changes.
+        // The delayBinding only resizes after no size changes have occurred
+        // in 200ms, as resizing requires a full redraw of the world map.
         PauseTransition pauseTransition = new PauseTransition(Duration.millis(200));
         Utilities.<Number>delayBinding(pauseTransition,
                 primaryStage.widthProperty(), this::setWorldMapViewDimensions);
         Utilities.<Number>delayBinding(pauseTransition,
                 primaryStage.heightProperty(), this::setWorldMapViewDimensions);
 
+        // Helper method to populate the key bindings mapping.
         setKeyBindings();
-
+        // Listen to key presses.
         scene.setOnKeyPressed(this::keyPressHandler);
 
-        primaryStage.setHeight(585);
+        // Add application icons of multiple sizes.
         for (int i = 0; i < 4; i++) {
             primaryStage.getIcons().add(new Image("file:src/images/icon"+i+".png"));
         }
-
+        // Set starting height of window.
+        primaryStage.setHeight(585);
+        // Set starting height of world map view. Must be square and divisible
+        // by 9.
         worldMapView.setPrefWidth(495);
         worldMapView.setPrefHeight(495);
 
@@ -149,18 +184,31 @@ public class MainApplication extends Application {
         primaryStage.setMinHeight(585);
     }
 
+    /**
+     * Activates the builder and inventory controls.
+     * @param e Event.
+     */
     @SuppressWarnings("unused")
     private void activateControls(BaseBlockWorldEvent e) {
         controlsPane.setDisable(false);
         inventoryPane.setDisable(false);
     }
 
+    /**
+     * Updates the world map dimensions based on the window dimensions.
+     * @param observable Observable property.
+     * @param oldValue Old value of property.
+     * @param newValue New value of property.
+     */
     @SuppressWarnings("unused")
     private void setWorldMapViewDimensions(ObservableValue<? extends Number> observable,
                                            Number oldValue, Number newValue) {
         int cols = worldMapView.columns;
+        // Constrain to the smallest limiting size of the following:
+        // Container sizes.
         double size = Math.min(worldMapContainer.getWidth(),
                 worldMapContainer.getHeight());
+        // Width of window.
         size = Math.min(size, scene.getWidth()-180);
         size = Math.min(size, scene.getHeight()-45.5);
         size = Math.max(size, cols);
@@ -168,21 +216,27 @@ public class MainApplication extends Application {
         // seamless edges.
         size = cols*Math.floor(size/cols);
 
+        // Set width and height to this size, making it square.
         worldMapView.setPrefWidth(size);
         worldMapView.setPrefHeight(size);
     }
 
+    /**
+     * Key press handler.
+     * @param keyEvent Key event.
+     */
     private void keyPressHandler(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.S && keyEvent.isControlDown()) {
-            return; // Used by save shortcut.
+            return; // Used by save shortcut. Do nothing.
         }
-        // Debug layout.
+
         // Get and click the equivalent button.
         Button actionButton = keyBindings.get(keyEvent.getCode());
         if (actionButton != null) {
             actionButton.fire();
         }
 
+        // Extra key bindings which don't have an associated button.
         switch (keyEvent.getCode()) {
             case Z:
                 worldMapView.setHeightsVisible(!worldMapView.isHeightsVisible());
@@ -194,6 +248,8 @@ public class MainApplication extends Application {
                 worldMapView.setAmbientOcclusionOn(
                         !worldMapView.isAmbientOcclusionOn());
                 break;
+            // Debug keys for showing layout information.
+            /*
             case OPEN_BRACKET: // Print layout info.
                 debugPrintSize(worldMapView);
                 debugPrintSize(worldMapContainer);
@@ -209,6 +265,7 @@ public class MainApplication extends Application {
             case CLOSE_BRACKET:
                 toggleDebugLayout();
                 break;
+            */
             // These don't work with the provided WorldMap implementation.
             /*case J: // Creative mode hacks.
                 model.getCurrentTile().getBlocks().add(new StoneBlock());
@@ -226,21 +283,9 @@ public class MainApplication extends Application {
         }
     }
 
-    private void toggleDebugLayout() {
-        debugEnabled = !debugEnabled;
-        if (debugEnabled) {
-            Utilities.setBackground(worldMapContainer, Color.PURPLE);
-            Utilities.setBackground(controlsPane, Color.GREEN);
-            Utilities.setBackground(inventoryPane, Color.YELLOW);
-            Utilities.setBackground(rightBox, Color.RED);
-        } else {
-            Utilities.setBackground(worldMapContainer, null);
-            Utilities.setBackground(controlsPane, null);
-            Utilities.setBackground(inventoryPane, null);
-            Utilities.setBackground(rightBox, null);
-        }
-    }
-
+    /**
+     * Sets all the keys which are handled by simulating a button click.
+     */
     private void setKeyBindings() {
         // Move builder buttons.
         keyBindings.put(KeyCode.W,
@@ -268,6 +313,24 @@ public class MainApplication extends Application {
     }
 
     /**
+     * Toggles highlighting backgrounds of elements.
+     */
+    private void toggleDebugLayout() {
+        debugEnabled = !debugEnabled;
+        if (debugEnabled) {
+            Utilities.setBackground(worldMapContainer, Color.PURPLE);
+            Utilities.setBackground(controlsPane, Color.GREEN);
+            Utilities.setBackground(inventoryPane, Color.YELLOW);
+            Utilities.setBackground(rightBox, Color.RED);
+        } else {
+            Utilities.setBackground(worldMapContainer, null);
+            Utilities.setBackground(controlsPane, null);
+            Utilities.setBackground(inventoryPane, null);
+            Utilities.setBackground(rightBox, null);
+        }
+    }
+
+    /**
      * Prints the given node and its width and height.
      * @param node Node with getWidth() and getHeight().
      */
@@ -285,6 +348,10 @@ public class MainApplication extends Application {
         }
     }
 
+    /**
+     * Prints the count of each class in the given collection.
+     * @param collection Collection.
+     */
     private void debugPrintClasses(Collection<?> collection) {
         Map<Class, Integer> count = new HashMap<>();
         for (Object o : collection) {
