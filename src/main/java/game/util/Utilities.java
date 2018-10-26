@@ -76,8 +76,8 @@ public class Utilities {
     public static <T> void delayBinding(PauseTransition pause,
                                         ObservableValue<T> property,
                                         ChangeListener<? super T> listener) {
-        property.addListener((prop, oldValue, newValue) -> {
-            pause.setOnFinished(e -> listener.changed(prop, oldValue, newValue));
+        property.addListener((prop, oldVal, newVal) -> {
+            pause.setOnFinished(e -> listener.changed(prop, oldVal, newVal));
             pause.playFromStart();
         });
     }

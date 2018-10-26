@@ -17,7 +17,6 @@ import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -157,9 +156,9 @@ public class MainApplication extends Application {
         // in 200ms, as resizing requires a full redraw of the world map.
         PauseTransition pauseTransition = new PauseTransition(Duration.millis(200));
         Utilities.<Number>delayBinding(pauseTransition,
-                primaryStage.widthProperty(), this::setWorldMapViewDimensions);
+                primaryStage.widthProperty(), this::updateMapSize);
         Utilities.<Number>delayBinding(pauseTransition,
-                primaryStage.heightProperty(), this::setWorldMapViewDimensions);
+                primaryStage.heightProperty(), this::updateMapSize);
 
         // Helper method to populate the key bindings mapping.
         setKeyBindings();
@@ -203,8 +202,8 @@ public class MainApplication extends Application {
      * @param newValue New value of property.
      */
     @SuppressWarnings("unused")
-    private void setWorldMapViewDimensions(ObservableValue<? extends Number> observable,
-                                           Number oldValue, Number newValue) {
+    private void updateMapSize(ObservableValue<? extends Number> observable,
+                               Number oldValue, Number newValue) {
         int cols = worldMapView.columns;
         // Constrain to the smallest limiting size of the following:
         // Container sizes.
@@ -272,16 +271,19 @@ public class MainApplication extends Application {
             /*
             case J: // Creative mode hacks for building maps.
                 model.getCurrentTile().getBlocks().add(new StoneBlock());
-                model.notifyListeners(new BlocksChangedEvent(model.getCurrentPosition()));
+                model.notifyListeners(
+                        new BlocksChangedEvent(model.getCurrentPosition()));
                 break;
             case K:
                 model.getCurrentTile().getBlocks().add(new GrassBlock());
-                model.notifyListeners(new BlocksChangedEvent(model.getCurrentPosition()));
+                model.notifyListeners(
+                        new BlocksChangedEvent(model.getCurrentPosition()));
                 break;
             case L:
                 int size = model.getCurrentTile().getBlocks().size();
                 model.getCurrentTile().getBlocks().remove(size-1);
-                model.notifyListeners(new BlocksChangedEvent(model.getCurrentPosition()));
+                model.notifyListeners(
+                        new BlocksChangedEvent(model.getCurrentPosition()));
                 break;
             */
         }
@@ -343,11 +345,14 @@ public class MainApplication extends Application {
             // This is really bad practice but Node, Scene and Region have no
             // common superclass exposing these methods, but they are all
             // present. Otherwise, we would need 3 almost identical methods.
-            String w = node.getClass().getMethod("getWidth").invoke(node).toString();
-            String h = node.getClass().getMethod("getHeight").invoke(node).toString();
+            String w = node.getClass().getMethod("getWidth")
+                    .invoke(node).toString();
+            String h = node.getClass().getMethod("getHeight")
+                    .invoke(node).toString();
             System.out.println("(" + node.getClass().getName() + ") " + node);
             System.out.println("  " + w + "x" + h);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+        } catch (NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
             e.printStackTrace();
         }
     }
@@ -359,7 +364,8 @@ public class MainApplication extends Application {
     private void debugPrintClasses(Collection<?> collection) {
         Map<Class, Integer> count = new HashMap<>();
         for (Object o : collection) {
-            count.put(o.getClass(), 1+count.computeIfAbsent(o.getClass(), x -> 0));
+            count.put(o.getClass(),
+                    1+count.computeIfAbsent(o.getClass(), x -> 0));
         }
         System.out.println(count);
     }

@@ -76,7 +76,8 @@ public class GameInventoryPane extends VBox implements InventoryView {
      * @param event Event.
      */
     private void updateInventory(InventoryChangedEvent event) {
-        for (Map.Entry<BlockType, Integer> blockCount : model.getInventoryCount().entrySet()) {
+        Map<BlockType, Integer> counts = model.getInventoryCount();
+        for (Map.Entry<BlockType, Integer> blockCount : counts.entrySet()) {
             BlockType block = blockCount.getKey();
             if (!carryableBlocks.contains(block)) {
                 // Ignore non-carryable blocks. These shouldn't be in the

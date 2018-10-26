@@ -19,9 +19,9 @@ import java.util.Map;
  * <p>Implementing classes should manage the state of the world map, as this
  * abstract base class is stateless.</p>
  *
- * <p>This is an abstract class because it needs to extend {@link EventDispatcher}.
- * In MVC, classes which use the model always need both its state and events
- * so it is reasonable to tie them together.</p>
+ * <p>This is an abstract class because it needs to extend the class
+ * {@link EventDispatcher}. In MVC, classes which use the model always need
+ * both its state and events so it is reasonable to tie them together.</p>
  *
  * <p>This class exposes no methods to set the world map or current position.
  * It is intended to be used by the view layer to ensure changes go through

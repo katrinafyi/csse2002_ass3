@@ -114,7 +114,8 @@ public class TileSquare extends StackPane implements TileView {
         if (isBuilderTile) {
             steveImage = ratioImageView();
             loadAndSetImage(steveImage, "file:src/images/steve_shadow.png");
-            steveImage.fitWidthProperty().bind(this.maxWidthProperty().multiply(0.8));
+            steveImage.fitWidthProperty().bind(
+                    this.maxWidthProperty().multiply(0.8));
             this.getChildren().add(steveImage);
         }
     }

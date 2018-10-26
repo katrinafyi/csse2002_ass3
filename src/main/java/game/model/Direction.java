@@ -30,8 +30,8 @@ public enum Direction {
     }
 
     /**
-     * Returns this direction as a relative position shift, assuming x+ is right
-     * and y+ is down.
+     * Returns this direction as a relative position shift,
+     * assuming x+ is towards the right and y+ is down.
      * @return Position object.
      */
     public Position asPosition() {

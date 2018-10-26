@@ -41,7 +41,8 @@ public class EventDispatcher<T> {
      * @param listener Callback accepting an event object.
      * @param <U> Event type.
      */
-    public <U extends T> void addListener(Class<U> eventType, Consumer<U> listener) {
+    public <U extends T> void addListener(Class<U> eventType,
+                                          Consumer<U> listener) {
         getOrInsert(eventType).add(listener);
     }
 
@@ -53,7 +54,8 @@ public class EventDispatcher<T> {
      * @param listener Listener to remove.
      * @param <U> Event type the listener was registered with.
      */
-    public <U extends T> void removeListener(Class<U> eventType, Consumer<U> listener) {
+    public <U extends T> void removeListener(Class<U> eventType,
+                                             Consumer<U> listener) {
         getOrInsert(eventType).remove(listener);
     }
 

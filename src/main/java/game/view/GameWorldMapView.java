@@ -41,7 +41,8 @@ public class GameWorldMapView extends UniformGridPane {
     /** Mapping of position to tile square instances. */
     private final Map<Position, TileSquare> tileSquareMap = new HashMap<>();
     /** Cache of tile heights, used for computing AO. */
-    private final Cache<Position, Integer> tileHeights = new Cache<>(this::getTileHeight);
+    private final Cache<Position, Integer>
+            tileHeights = new Cache<>(this::getTileHeight);
     /** 2-dimensional array of tile panes. Indexed as tilePanes[col][row]. */
     private final Pane[][] tilePanes;
 

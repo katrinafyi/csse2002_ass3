@@ -19,7 +19,8 @@ public class Cache<K, V> extends HashMap<K, V> {
     /**
      * Global cache of JavaFX images.
      */
-    private static final Cache<String, Image> imageCache = new Cache<>(Image::new);
+    private static final Cache<String, Image>
+            imageCache = new Cache<>(Image::new);
 
     /**
      * Function to cache results of. Used to generate missing values.
